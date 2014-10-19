@@ -1,0 +1,108 @@
+CHANGES IN VERSION 2014.10.1 (first new version of October 2014)
+------------------------
+
+NEW FEATURES
+
+    o planning to add two-dimensional spline fits to age and calendar year.    
+
+    o mapCancs is now called within mkSEER to make a cancer field in those files as well.  
+
+Notes
+
+    o published paper scripts now use the cancer field instead of histo2 (which is no longer included in pickfields by default) and 
+      plots now also use quartz() when on a mac. The courses folder is now called examples; these scripts were also updated
+      and some were removed. 
+
+
+CHANGES IN VERSION 2014.4.2
+------------------------
+
+NEW FEATURES
+
+    o added US 2000 populations as 19-, 86-, and 100-age group data.frames.    
+
+    o created mkSEER2 to create pooled db files directly into e.g. ~\data\SEER\mrgd  
+
+
+SIGNIFICANT USER-LEVEL CHANGES
+
+    o mkHema87 was removed. Its functionality is now included in mkAbomb
+
+Notes
+
+    o fixed pickFields() to make country and state of birth strings rather than integers
+
+
+
+CHANGES IN VERSION 2014.4.1
+------------------------
+
+NEW FEATURES
+
+    o changed default seerHome directory to ~\data\SEER to no longer assume admin rights
+
+    o updated 2010 to 2011 in mkSEER and in several help pages to match April 15,2014 SEER release
+
+    o changed mkSEER SQL default to TRUE 
+
+    o added pops single ages (popsa) to binary files and all.db  
+
+
+
+CHANGES IN VERSION 2013.4.3
+------------------------
+
+NEW FEATURES
+
+    o added mkAbomb() to convert RERF file lsshempy.csv into a binary and SQLite database
+
+    o added mkHema87() to convert RERF file HEMA87.DAT into a binary with column names
+
+    o sq vs ad lung incidence and survival added to doc/courses
+
+    o JCO 2013 survival plots added to doc/papers/JCO2013
+
+    o activeMS is now doc/papers/radiatEnvironBiophys2013
+
+SIGNIFICANT USER-LEVEL CHANGES
+
+    o old demos are now examples in doc/courses
+
+Notes
+
+    o vignettes are not possible since SEER and Abomb data must be signed off on. 
+
+
+
+CHANGES IN VERSION 2013.4.1
+------------------------
+
+NEW FEATURES
+
+    o Now handles SEER data release of April 24, 2013
+
+    o Package version number now matches latest SEER release date.
+
+
+SIGNIFICANT USER-LEVEL CHANGES
+
+    o No longer handles SEER data released in 2012.
+
+Notes
+
+    o The SEER SAS file changed: fields are no longer a continuum.  
+      The implication is that getFields is now field name centric, since 
+      I can no longer count on all fields being in the SAS file.
+      
+    o Survival is now already in months in SEER, so mapping it is no longer needed. 
+      Indeed, the SAS file no longer includes a field for survival with years and 
+      months as two character strings in a field of 4 chars, though this field does
+      still remain in the SEER data files. 
+
+
+CHANGES IN VERSION 0.3.0
+------------------------
+
+NEW FEATURES
+
+    o eod13 and eod2 are now set to strings in pickFields to avoid errors when picked 

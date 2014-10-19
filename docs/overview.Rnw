@@ -1,0 +1,53 @@
+%\VignetteIndexEntry{SEERaBomb Overview}
+%\VignetteKeyword{SEER}
+\documentclass{article}
+\begin{document}
+%\SweaveOpts{concordance=TRUE}
+%\SweaveOpts{concordance=TRUE}
+\title{SEERaBomb Overview}
+\author{Tom Radivoyevitch}
+
+\maketitle
+
+\section*{Introduction}
+\verb@SEERaBomb@ is for SEER and Japanese A-bomb survivor data analysts.  
+It contributes speed to SEER analyses by reducing 
+file sizes to contain only items of interest.  
+To obtain the data please visit the links in 
+\verb@gettingData.pdf@ in the package's \verb@doc@ folder wherein use cases are also given in R scripts in the \verb@examples@ 
+and \verb@papers@ directories.   
+
+\section*{SEER Data R Binaries}
+The \verb@incidence@ directory of the SEER data contains a SAS file that defines the field names, 
+their starting positions, and their fixed widths. This file is used here to: 
+1) present the field choices (see \verb@fieldNames.html@ and the 
+output of \verb@getFields()@); and 2) given user choices, automatically determine the sequence of widths needed 
+to extract the data of interest using the speedy R package LaF. 
+\verb@getFields()@ has one parameter, \verb@seerHome="~/data/SEER"@, 
+which should be overridden if the SEER data lives elsewhere. 
+Its data.frame output and the SEER file \verb@seerdic.pdf@ in the SEER incidence directory 
+must be thorougly examined to determine 
+which fields will be useful. Once this is determined, the output 
+and list of field choices, the default of which is 
+\begin{verbatim} 
+picks=c("casenum","reg","race","sex","agedx","yrbrth",
+  "seqnum","yrdx","histo2","histo3","radiatn","agerec",
+   "ICD9","histrec","numprims","COD","surv"),
+\end{verbatim}
+must then be inputted into \verb@pickFields()@. 
+
+The output of \verb@pickFields()@ contains
+not only pulled rows from the input, but also
+inserted rows with widths computed to fill the gaps of no interest. Knowing these gap sizes enables 
+fast file reading by \verb@LaF@ in \verb@mkSEER()@. This function  
+produces R Data binaries in SEER dataset subdirectories
+of \verb@seerHome@ such as \verb@"~/data/SEER/00"@ for SEER18 data (which was collected since 2000).
+
+This work was supported by the Cleveland Clinic Foundation and by the National Cancer Institute and Tufts Integrative 
+Cancer Biology Program under U54CA149233-029689. 
+<<mkSEER>>=
+library(SEERaBomb)
+df=getFields()
+(df=pickFields(df))
+@
+\end{document}

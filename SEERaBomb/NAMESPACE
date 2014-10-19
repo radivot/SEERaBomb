@@ -1,0 +1,4 @@
+useDynLib(SEERaBomb)
+import(LaF,RSQLite,dplyr)
+importFrom(Rcpp, evalCpp)
+exportPattern("^[[:alpha:]]+")

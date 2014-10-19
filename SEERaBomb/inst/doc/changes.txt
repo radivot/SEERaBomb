@@ -1,0 +1,16 @@
+This package aims to make SEER and A-bomb data analyses more readily reproducible.
+
+Ver 0.01.1  5/27/2012. First Draft containing mkSEER, getFields and pickFields 
+            Set up separate repository so installation works without submission to CRAN via 
+            install.packages(c("LaF","RSQLite","bbmle","SEERaBomb"),
+            repos=c("http://cran.cwru.edu/","http://epbi-radivot.cwru.edu/"))   
+            6/17/2012. Submitted to CRAN 
+
+                   
+Ver 0.2.1  New version now allows this (i.e. getting all fields) without error
+           (df=getFields())
+           (dff=pickFields(df,picks=df$names))
+                
+Ver 0.3.0  Hereafter changes are documented in the NEWS file 
+
+                   
