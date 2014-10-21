@@ -2,7 +2,7 @@
 \alias{mk2D}
 \title{Make two dimensional spline fits of cancer incidences.}
 \description{This function produces 2D spline fits to incidence versus age and calendar year, with interactions, that is useful for producing expected numbers of cases under a null hypothesis that prior cancers do not impact subsequent cancer risks.}
-\usage{mk2D(seerSet, knots=10, write=FALSE, outDir="~/Results",txt=NULL)} 
+\usage{mk2D(seerSet, knots=5, write=FALSE, outDir="~/Results",txt=NULL)} 
 \arguments{
   \item{seerSet}{Object of class seerSet, i.e. the list output of the function seerSet. }
   \item{knots}{The base number of knots to use. Overrides for some cancers will be hard-coded into this function.  }

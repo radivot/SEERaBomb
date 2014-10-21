@@ -6,5 +6,8 @@ head(canc)
 head(popsa)
 sSetL=seerSet(canc,popsa,picks=c("CML","CMML","MDS","AML","CLL","ALL"))
 str(sSetL)
-FL=mk2D(sSetL,txt="leuks") # output value is a file list, but real work is in filling these files.
-plot2D(FL)
+pmL=mk2D(sSetL,txt="leuks") # pooled race male leukemias 
+plot2D(pmL)
+
+canc%>%filter(cancer=="MDS")%>%group_by(yrdx)%>%summarise(count=n())
+canc%>%filter(cancer=="CMML")%>%group_by(yrdx)%>%summarise(count=n())

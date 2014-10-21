@@ -21,3 +21,30 @@ getPY(survTimes,binS[5],binS,brks)# 1st and 2nd survivals contribute 2 and 10 ye
                   .Dimnames=list(c("1","10"),c("py", "ageL", "year", "ageR"))))
 fillPYM(PYtest, mats)
 
+# first run mkRRtsx (in examples) up to saving pm5 to a file, which is loaded here
+system.time(load("~/Results/pm5.RData")) # 1 secs to load. 
+#make sure year and age limits are right
+range(pm5$D$age)
+range(pm5$canc$age)
+range(pm5$popsa$age)
+range(pm5$D$year)
+range(pm5$canc$year)
+range(pm5$popsa$year)
+#see what things look like MDS and CMML
+library(rehape2)
+D=pm5$D
+EI=split(D,D$cancer) # expected incidences per 100,000 py, broken down by cancers
+EI=lapply(EI,function(x) acast(x, age~year, value.var="Eincid")) # convert 3 cols of df to matrices
+EI[["MDS"]]
+EI[["CMML"]]
+
+L=post1PYO(pm5$canc,brks=c(0,2,5),binIndx=1,Trt="rad" )
+O=L$O
+L$LPYM[["prostate"]]
+L$LPYM[["MDS"]]
+L$LPYM[["CMML"]]
+E=getE2(L$LPYM,pm5$D) # make sure matrices are comformable
+O/E
+
+
+

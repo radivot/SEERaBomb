@@ -1,4 +1,4 @@
-mk2D<-function(seerSet, knots=10, write=FALSE, outDir="~/Results", txt=NULL) {
+mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL) {
   if(!file.exists(outDir))  {   print(paste("Creating directory",outDir))
                                 dir.create(outDir,recursive=TRUE)    }
 #   require(dplyr)

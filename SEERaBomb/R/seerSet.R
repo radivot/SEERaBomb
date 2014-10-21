@@ -1,4 +1,4 @@
-seerSet<-function(canc,popsa,ageStart=15,ageEnd=84,Sex="male", Race="pool", picks=NULL) {
+seerSet<-function(canc,popsa,ageStart=15.00,ageEnd=84.99,Sex="male", Race="pool", picks=NULL) {
   # gimic to get rid of unwanted notes in R CMD check
   agedx=age86=cancer=yrdx=sex=race=surv=modx=yrbrth=NULL 
   #   require(dplyr)

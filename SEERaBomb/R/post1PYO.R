@@ -37,7 +37,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad" ) {
   LPYinM=lapply(LPYin,as.matrix)
   LPYM=NULL
   # creat a matrix of zeros that is repeatedly the starting point of age-year PY accrual
-  yrs=1974:2012
+  yrs=1973:2011
   ages=0.5:125.5
   Zs=matrix(0,ncol=length(yrs),nrow=length(ages))
   colnames(Zs)=yrs

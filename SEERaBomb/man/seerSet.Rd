@@ -4,7 +4,7 @@
 \description{This function coordinates slicing of cancers and population person years. It also removes
         cancer factor levels no longer present after slicing, and place the results into a list that 
         can be attached or with-ed to immediately specify the specs of the slicing.}
-\usage{seerSet(canc,popsa,ageStart=15,ageEnd=84,Sex="male", Race="pool", picks=NULL)} 
+\usage{seerSet(canc,popsa,ageStart=15.00,ageEnd=84.99,Sex="male", Race="pool", picks=NULL)} 
 \arguments{
   \item{canc}{data.frame of cancers that should include at least the columns/fields age86, sex, race, yrdx and cancer }
   \item{popsa}{data.frame of single-age population person years.  }
