@@ -3,9 +3,10 @@
 \title{Gets PY contributions to a particular time since exposure interval from survivals}
 \description{A vector survival times in years is the main input. This function gives their 
 person year (PY) contributions to a particular interval.}
-\usage{getPY()} 
+\usage{getPY(surv, bin, binS, brks)} 
 \arguments{
-  \item{binLab}{The label of the specific bin of interest.  }
+  \item{surv}{The total survival time of the patient.  }
+  \item{bin}{The label of the specific bin of interest.  }
   \item{binS}{The character vector of bin labels in which binLab exists.  }
   \item{brks}{The numeric vector of break points used by cut to create binS. }
 }

@@ -5,7 +5,7 @@ library(SEERaBomb)
 (df=getFields("/Users/radivot/data/SEER")) # so use absolute path. Here df holds the full set of data field (df) options
 (rdf=pickFields(df)) # this is a reduced data field (rdf) dataframe (note fewer rows AND one extra integer/string column)
 # for (i in c("73","92","00")) mkSEER(df,dataset=i,mkDFs=T) #(old way) populates binaries into these folders
-mkSEER2(df,seerHome="/Users/radivot/data/SEER") #(new way) makes merged (all cancer) binaries in SEER data folder mrgd
+mkSEER2(rdf,seerHome="/Users/radivot/data/SEER") #(new way) makes merged (all cancer) binaries in SEER data folder mrgd
 
 # these are the default picks for pickFields (see its help page)
 defPicks=c("casenum","reg","race","sex","agedx",
@@ -25,15 +25,14 @@ picks=c("casenum","reg","race","sex","agedx",
 (rdf=pickFields(df,picks))
 
 
-## STAGES: so if you want to explore different stage fields, you may want something like this
-df=getFields()
+## STAGES: if you want to explore different stage fields, you may want something like this
 picks=c("casenum","reg","race","sex","agedx","yrbrth",
         "seqnum","yrdx","histo2","histo3","eod10sz","eod10nd","cssize","dajcct","dajccn","dajccm","dajccs", "radiatn","agerec",
         "siterwho","ICD9","ICD10","histrec","hststga","ajccstg","aj3seer","ssg77","ssg2000",
         "numprims","COD","histssg2000","dthclass","odthclass","surv",
         "dajcc7t","dajcc7n","dajcc7m","dajcc7stg")
-(df=pickFields(df,picks))
-mkSEER2(df,outFile="cancStgs",writePops=F) #80 secs + 120 secs
+(rdf=pickFields(df,picks))
+mkSEER2(rdf,outFile="cancStgs",writePops=F) #80 secs + 120 secs
 
 
 ## ALL COLUMNS ######## make one with all columns just to see how big things 
@@ -41,9 +40,8 @@ mkSEER2(df,outFile="cancStgs",writePops=F) #80 secs + 120 secs
 #gain speed by focusing only on fields of interest. The resulting binaries are 
 #thus not likely to be useful on a regular basis, but may be useful from a
 #computer programming perspective for checking out speed in the limit of using all fields.
-df=getFields()
-df=pickFields(df,picks=df$names)
-mkSEER2(df,outFile="cancAll",writePops=F) #210 secs, i.e. 3.5 minutes. 3-fold more columns=> ~4.5-fold more time
+rdf=pickFields(df,picks=df$names)
+mkSEER2(rdf,outFile="cancAll",writePops=F) #210 secs, i.e. 3.5 minutes. 3-fold more columns=> ~4.5-fold more time
 # making the SQL db was an additional 248 secs, i.e. ~4 minutes. 
 
 # If you want to check to see what fields you have in a binary right now, you can do this

@@ -6,15 +6,15 @@
 using namespace Rcpp;
 
 // fillPYM
-NumericMatrix fillPYM(SEXP PY_, SEXP PYM_);
-RcppExport SEXP SEERaBomb_fillPYM(SEXP PY_SEXP, SEXP PYM_SEXP) {
+NumericMatrix fillPYM(SEXP PY, SEXP PYM);
+RcppExport SEXP SEERaBomb_fillPYM(SEXP PYSEXP, SEXP PYMSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< SEXP >::type PY_(PY_SEXP );
-        Rcpp::traits::input_parameter< SEXP >::type PYM_(PYM_SEXP );
-        NumericMatrix __result = fillPYM(PY_, PYM_);
+        Rcpp::traits::input_parameter< SEXP >::type PY(PYSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type PYM(PYMSEXP );
+        NumericMatrix __result = fillPYM(PY, PYM);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);

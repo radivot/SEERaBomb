@@ -3,7 +3,7 @@
 \title{Gets the lower and upper limit integers and vector position of a cut bin/interval}
 \description{ This function may be useful in situations where you want to keep interval information (e.g. produced by cut) in 
 strings but you also need to pull numeric attributes out of it at times.}
-\usage{getBinInfo()} 
+\usage{getBinInfo(binLab, binS)} 
 \arguments{
   \item{binLab}{The label of the specific bin of interest.  }
   \item{binS}{The character vector of bin labels in which binLab exists.  }

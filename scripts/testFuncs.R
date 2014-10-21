@@ -1,3 +1,5 @@
+library(devtools); install_github("radivot/SEERaBomb",subdir="SEERaBomb")
+library(SEERaBomb)
 rm(list=ls()) 
 library(dplyr)
 library(reshape2) 

@@ -21,7 +21,7 @@ mapCancs<-function(D){
   cancer[(ICD9>=1720)&(ICD9<=1729)]="melanoma"
   cancer[(ICD9>=1730)&(ICD9<=1739)]="skin"
   cancer[(ICD9>=1740)&(ICD9<=1749)]="breast"
-  cancer[(ICD9==175)|((ICD9>=1750)&(ICD9<=1759))]="breastM"
+  cancer[(ICD9==175)|((ICD9>=1750)&(ICD9<=1759))]="breast"
   cancer[ICD9==179]="uterus"
   cancer[(ICD9>=1800)&(ICD9<=1809)]="cervix"
 #   cancer[ICD9==181]="pla"

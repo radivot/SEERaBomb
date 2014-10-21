@@ -1,0 +1,10 @@
+rm(list=ls()) 
+library(SEERaBomb)
+load("~/data/SEER/mrgd/cancDef.RData")
+load("~/data/SEER/mrgd/popsa.RData")
+head(canc)
+head(popsa)
+sSetL=seerSet(canc,popsa,picks=c("CML","CMML","MDS","AML","CLL","ALL"))
+str(sSetL)
+FL=mk2D(sSetL,txt="leuks") # output value is a file list, but real work is in filling these files.
+plot2D(FL)
