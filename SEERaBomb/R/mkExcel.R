@@ -1,5 +1,6 @@
-mkExcel=function(L,fn,outDir="~/Results") {
-  unlink(f<-paste0(outDir,"/",fn,".xlsx"))
+mkExcel=function(seerSet,outDir="~/Results",txt=NULL) {
+  if (is.null(seerSet$L)) load(seerSet$fL) else L=seerSet$L
+  unlink(f<-paste0(outDir,"/",seerSet$bfn,txt,".xlsx"))
   wb <- loadWorkbook(f,create=T) 
   intvs=names(L[["noRad"]][["Obs"]]) 
   picks=rownames(L[["noRad"]][["Obs"]][[intvs[1]]])
@@ -21,7 +22,7 @@ mkExcel=function(L,fn,outDir="~/Results") {
         #     print(R)
       }
       #   D
-      colnames(D)=paste0(intvs,ifelse(R=="noRad"," after no IR"," after IR"))
+      colnames(D)=paste(intvs,"after",R)
       rownames(D)=rownames(col)
       M=cbind(M,D)
     } #rad

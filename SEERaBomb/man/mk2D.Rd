@@ -6,7 +6,9 @@
 \arguments{
   \item{seerSet}{Object of class seerSet, i.e. the list output of the function seerSet. }
   \item{knots}{The base number of knots to use. Overrides for some cancers will be hard-coded into this function.  }
-  \item{write}{Set to TRUE if you want the objects produced written to files.}
+  \item{write}{Set to TRUE if you want the list of 2D spline fit objects written to files. This list is over 300 MB and
+               takes over 60 seconds to write, so leave false unless you need it, e.g. to experiment with tsx
+              use (currently not recommended) instead of tsx2 use.}
   \item{outDir}{folder that will hold the output files.}
   \item{txt}{Additional text to distinguish files with different cancer lists, 
   which should only occur during spline fit development. }

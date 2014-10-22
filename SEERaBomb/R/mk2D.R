@@ -39,11 +39,10 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL) {
     seerSet$D=tbl_df(D)
     seerSet$bfn=bfn
     if (write) {
-      print("writing L2D file ...")
-      f<-paste0(outDir,"/",bfn) 
-      fL<-paste0(f,"L.RData");    #fD<-paste0(f,"D.RData");   fS<-paste0(f,"S.RData") 
-      print(fL);save(L2D,file=fL);  # print(fD); save(D,file=fD);   print(fS);save(seerSet,file=fS)
-      seerSet$fL=fL
+      fL2D<-paste0(outDir,"/",bfn,"L2D.RData");    
+      cat("writing L2D file ...",fL2D,":\n")
+      save(L2D,file=fL2D)  
+      seerSet$fL2D=fL2D
     }
     seerSet
   }) # end with
