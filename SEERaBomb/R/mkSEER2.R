@@ -39,8 +39,8 @@ mkSEER2<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
       popsaL[[ii]]=tbl_df(laf[,colNames2[-c(2,5)]] )
 
       if (grepl("plus",i)) {#5/21/14 fixed systematic lower 73 incidence due to 73 PY being also in 92
-        popgaL[[ii]]=popgaL[[ii]]%.%filter(reg%in%c(29,31,35,37)) 
-        popsaL[[ii]]=popsaL[[ii]]%.%filter(reg%in%c(29,31,35,37)) 
+        popgaL[[ii]]=popgaL[[ii]]%>%filter(reg%in%c(29,31,35,37)) 
+        popsaL[[ii]]=popsaL[[ii]]%>%filter(reg%in%c(29,31,35,37)) 
         cat("Removing SEER 9 person years from:\n",i,"\nbefore pooling into one file.\n")
       }
       ii=ii+1
@@ -50,28 +50,28 @@ mkSEER2<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
     popga$reg=as.integer(popga$reg+1500)
     popsa$reg=as.integer(popsa$reg+1500)
     
-    popga=popga%.%
-      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %.%
-      mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %.%
-      mutate(reg=mapRegs(reg)) %.%
-      mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[age19+1]) %.%
-      mutate(sex=factor(sex,labels=c("male","female"))) %.%
-      group_by(db,reg,race,sex,age19,year) %.%
-      #       summarise(py=sum(py))%.%   #summing here  over counties and hispanic origin or not, which are in popga as rows but not as columns
+    popga=popga%>%
+      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
+      mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
+      mutate(reg=mapRegs(reg)) %>%
+      mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[age19+1]) %>%
+      mutate(sex=factor(sex,labels=c("male","female"))) %>%
+      group_by(db,reg,race,sex,age19,year) %>%
+      #       summarise(py=sum(py))%>%   #summing here  over counties and hispanic origin or not, which are in popga as rows but not as columns
       #       group_by(add=F) # clear grouping
       summarise(py=sum(py))
     popga=as.data.frame(popga) # clears everything, down to the data.frame
     
     #     class(popga)
     
-    popsa=popsa%.%    # note: here age groups indices 0-18 are replaced by actual ages 1-85, so no need to remap
-      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %.%
-      mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %.%
-      mutate(reg=mapRegs(reg)) %.%    
-      mutate(age86=age86+0.5) %.%    
-      mutate(sex=factor(sex,labels=c("male","female"))) %.%
-      group_by(db,reg,race,sex,age86,year) %.%
-      #       summarise(py=sum(py))%.%   #summing here  over counties and hispanic origin or not, which are in popga as rows but not as columns
+    popsa=popsa%>%    # note: here age groups indices 0-18 are replaced by actual ages 1-85, so no need to remap
+      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
+      mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
+      mutate(reg=mapRegs(reg)) %>%    
+      mutate(age86=age86+0.5) %>%    
+      mutate(sex=factor(sex,labels=c("male","female"))) %>%
+      group_by(db,reg,race,sex,age86,year) %>%
+      #       summarise(py=sum(py))%>%   #summing here  over counties and hispanic origin or not, which are in popga as rows but not as columns
       #       group_by(add=F) # clear grouping
       summarise(py=sum(py))
     popsa=as.data.frame(popsa) # clears everything down to the data.frame
@@ -108,14 +108,14 @@ mkSEER2<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
     canc=rbind_all(DFL)
     colnames(canc)<-y
     
-    canc=canc%.%
-      filter(agedx<200)%.%
-      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %.%
-      mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %.%
-      mutate(reg=mapRegs(reg)) %.%
-      mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[agerec+1]) %.%
-      mutate(age86=as.numeric(as.character(cut(agedx,c(0:85,150),right=F,labels=c(0.5:85,90)))))%.%
-#       select(-agerec)%.%
+    canc=canc%>%
+      filter(agedx<200)%>%
+      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
+      mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
+      mutate(reg=mapRegs(reg)) %>%
+      mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[agerec+1]) %>%
+      mutate(age86=as.numeric(as.character(cut(agedx,c(0:85,150),right=F,labels=c(0.5:85,90)))))%>%
+#       select(-agerec)%>%
       mutate(sex=factor(sex,labels=c("male","female")))
     canc=mapCancs(canc)
     delT=proc.time() - ptm  
