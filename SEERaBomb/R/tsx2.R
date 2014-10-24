@@ -22,7 +22,7 @@ tsx2=function(seerSet,brks=c(0,2,5)){ #, outDir="~/Results",txt=NULL) { # FL for
         #         print(D)
         Exp[[bin]]=getE2(L1$LPYM,D)
         Obs[[bin]]=L1$O
-        mids=c(mids,L1$mid)
+        mids=c(mids,L1$binMidPnt)
       } # loop on tsx bins
       L[[R]]$mids=mids
       L[[R]]$Obs=Obs
