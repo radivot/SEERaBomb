@@ -56,9 +56,11 @@ L$O/E
 (BL=tsx2(pm5,brks=c(0,0.5,2,5)) )
 str(BL)
 names(BL)
-names(BL[["noRad"]][["Obs"]]) 
-rownames(BL[["noRad"]][["Obs"]][["(0,2]"]])
+names(BL$L)
+names(BL[["L"]][["b0_0.5_2_5"]][["noRad"]][["Obs"]]) 
+(BL[["L"]][["b0_0.5_2_5"]][["noRad"]][["Obs"]]) 
+head(BL[["L"]][["b0_0.5_2_5"]][["noRad"]][["Obs"]][["(0.5,2]"]])
 library(XLConnect)
-mkExcel(BL,pm5$bfn)
+mkExcel(BL,"b0_0.5_2_5")
 
 
