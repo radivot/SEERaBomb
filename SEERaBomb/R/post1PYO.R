@@ -14,7 +14,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad" ) {
   #       D$cancer=factor(D$cancer) # get rid of opposite sex cancer types
   D0=canc%>%filter(seqnum==0,surv<200,surv>LL,trt==Trt)
   D1=canc%>%filter(seqnum==1,trt==Trt)%>%select(casenum,cancer,yrdx,agedx,trt)  
-  D2=canc%>% filter(seqnum==2) # D2 holds second primaries
+  D2=canc%>%filter(seqnum==2) # D2 holds second primaries
   D1=D1%>%filter(casenum%in%D2$casenum) # reduce firsts to just those with a second in D2 
   names(D1)[2:5]=c("cancer1","yrdx1","agedx1","trt1") #rename D1 cols so as not to join by them.
 # D2 colnames  db  casenum	reg	race	sex	agedx	yrbrth	seqnum	modx	yrdx	radiatn	surv	cancer	trt

@@ -4,6 +4,7 @@ tsx2=function(seerSet,brks=c(0,2,5)){ #, outDir="~/Results",txt=NULL) { # FL for
   ptm <- proc.time()
   L=with(seerSet, {
     trts=levels(canc$trt)
+    yearEnd=max(popsa$year)
     print(trts)
     L=list()
     for (R in trts) 
@@ -20,7 +21,7 @@ tsx2=function(seerSet,brks=c(0,2,5)){ #, outDir="~/Results",txt=NULL) { # FL for
         binIndx=getBinInfo(bin,binS)["index"]
         L1=post1PYO(canc,brks,binIndx,Trt=R )
         #         print(D)
-        Exp[[bin]]=getE2(L1$LPYM,D)
+        Exp[[bin]]=getE2(L1$LPYM,D,ageStart,ageEnd,yearEnd)
         Obs[[bin]]=L1$O
         mids=c(mids,L1$binMidPnt)
       } # loop on tsx bins
