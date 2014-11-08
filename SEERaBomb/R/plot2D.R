@@ -1,5 +1,5 @@
-plot2D<-function(L, outDir="~/Results/plots") {
-  with(L, {
+plot2D<-function(seerSet, outDir="~/Results/plots") {
+  with(seerSet, {
     #     if(!file.exists(fD)) stop(paste0(fD,"does not exist!")) 
     #     load(fD) # brings in dataframe D
     if(nchar(bfn)==0) {bfn="tmp"

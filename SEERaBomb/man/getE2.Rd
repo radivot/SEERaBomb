@@ -4,10 +4,13 @@
 \description{Converts the LPYM list of matrices produced by post1PYO into a matrix corresponding to the observed cases 
 matrix produced by post1PYO. This is seperated out because it is time consuming and alternative approaches should 
 be pursued.}
-\usage{getE2(LPYM,D)} 
+\usage{getE2(LPYM,D,ageStart,ageEnd,yearEnd)} 
 \arguments{
   \item{LPYM}{List of first cancer PY matrices produced by post1PYO.}
   \item{D}{D component of seerSet list produced by mk2D. }
+  \item{ageStart}{ageStart component of seerSet. }
+  \item{ageEnd}{ageEnd component of seerSet. }
+  \item{yearEnd}{The most recent year in the SEER datasets. }
 }
 
 \value{A matrix of expected cases with first cancers labeling the rows and second cancers labeling the columns.}

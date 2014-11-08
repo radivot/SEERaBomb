@@ -8,10 +8,10 @@ Description: This package contains codes that setup SEER
      It also includes SEER and Japanese A-Bomb survivor data analysis examples. 
      Using it may improve the uniformity and exchangeability of SEER and A-bomb R scripts. 
 Maintainer: Tomas Radivoyevitch <radivot@ccf.org>
-Depends: RSQLite, LaF, dplyr, rgl, mgcv
-Suggests:  bbmle, XLConnect
+Depends: RSQLite, LaF, dplyr, rgl, XLConnect
+Suggests:  bbmle
 License: GPL (>= 2)
-Imports: Rcpp (>= 0.11.3), reshape2
+Imports: Rcpp (>= 0.11.3), reshape2, mgcv, DBI
 LinkingTo: Rcpp
 LazyData: yes
 URL: http://epbi-radivot.cwru.edu/SEERaBomb/SEERaBomb.html
