@@ -1,5 +1,5 @@
 useDynLib(SEERaBomb)
-import(LaF,RSQLite,dplyr,rgl,mgcv,XLConnect)
+import(LaF,RSQLite,dplyr,rgl,XLConnect)
 importFrom(Rcpp, evalCpp)
 importFrom(DBI, dbDriver)
 importFrom(mgcv, gam,s,ti)
