@@ -3,8 +3,8 @@ mkExcel=function(seerSet,tsxn,outDir="~/Results",txt=NULL) {
   unlink(f<-paste0(outDir,"/",seerSet$bfn,tsxn,txt,".xlsx"))
   wb <- loadWorkbook(f,create=T) 
   intvs=names(L[["noRad"]][["Obs"]]) 
-  picks=rownames(L[["noRad"]][["Obs"]][[intvs[1]]])
-  for (icanc in picks) {
+#   picks=rownames(L[["noRad"]][["Obs"]][[intvs[1]]])
+  for (icanc in seerSet$cancerS) {
     #    icanc="prostate"
     createSheet(wb, name = icanc)
     M=NULL
@@ -27,7 +27,7 @@ mkExcel=function(seerSet,tsxn,outDir="~/Results",txt=NULL) {
       M=cbind(M,D)
     } #rad
     #     writeWorksheet(wb, data.frame("second cancer"=picks,M), sheet = icanc,rownames=1)
-    writeWorksheet(wb, cbind("2nd cancer"=picks,M), sheet = icanc,rownames=1)
+    writeWorksheet(wb, cbind("2nd cancer"=seerSet$picks,M), sheet = icanc,rownames=1)
     setColumnWidth(wb,sheet = icanc, column = 1, width = 2500)
     for (j in 2:(dim(M)[2]+1)) setColumnWidth(wb,sheet = icanc, column = j, width = 4700)
     #     for (j in 1:(dim(M)[2]+1)) setColumnWidth(wb,sheet = icanc, column = j, width = 5600)

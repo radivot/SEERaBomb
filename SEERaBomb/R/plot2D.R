@@ -1,4 +1,4 @@
-plot2D<-function(seerSet, outDir="~/Results/plots") {
+plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots") {
   with(seerSet, {
     #     if(!file.exists(fD)) stop(paste0(fD,"does not exist!")) 
     #     load(fD) # brings in dataframe D
@@ -23,11 +23,13 @@ plot2D<-function(seerSet, outDir="~/Results/plots") {
       with(pd,surface3d(x=ages,y=yrs,z=matrix(log10(Eincid),ncol=nyrs),alpha=0.8,col="red"))
       clear3d(type="lights")
       light3d(theta = -90, phi = 75) 
-      cat(i,"  ...  hit return at command prompt to save and move on:\n")
+      cat(i,"  ...  hit return at command prompt to move on:\n")
       readline() # way to pause until input
-      rgl.snapshot(filename=paste0(outDir,"/",i,".png"),fmt="png", top=TRUE)
+      if (write) {
+      rgl.snapshot(filename=(f<-paste0(outDir,"/",i,".png")),fmt="png", top=TRUE)
+      cat("writing file:",f,"\n")
+      }
     } #i loop over cancers
-    
   }) # end with 
     
 }  # plot2D function
