@@ -1,9 +1,10 @@
-tsx2=function(seerSet,brks=c(0,2,5)){ #, outDir="~/Results",txt=NULL) { # FL for file list
+tsx2=function(seerSet,brks=c(0,2,5),trts=NULL){ #, outDir="~/Results",txt=NULL) { # FL for file list
   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=L2D=NULL 
   print(binS<-levels(cut(brks+0.1,breaks=c(brks,100)))) #this is just to make a vector of tsx interval/row names 
   ptm <- proc.time()
   L=with(seerSet, {
-    trts=levels(canc$trt)
+    if (is.null(trts)) trts=levels(canc$trt)
+    seerSet$trts=trts
     yearEnd=max(popsa$year)
     print(trts)
     L=list()
@@ -21,8 +22,8 @@ tsx2=function(seerSet,brks=c(0,2,5)){ #, outDir="~/Results",txt=NULL) { # FL for
         binIndx=getBinInfo(bin,binS)["index"]
         L1=post1PYO(canc,brks,binIndx,Trt=R )
         #         print(D)
-        Exp[[bin]]=getE2(L1$LPYM,D,ageStart,ageEnd,yearEnd)
-        Obs[[bin]]=L1$O
+        Exp[[bin]]=getE2(L1$LPYM,D,ageStart,ageEnd,yearEnd,cancerS,picks)
+        Obs[[bin]]=L1$O[cancerS,picks]
         mids=c(mids,L1$binMidPnt)
       } # loop on tsx bins
       L[[R]]$mids=mids

@@ -13,7 +13,7 @@ plot2D<-function(seerSet, outDir="~/Results/plots") {
     #     head(D,2)
     print("If rgl is being loaded for the first time in this R session, make the plot bigger and get a nice angle on it before hitting returns at the R command prompt.")
     for (i in picks) {
-      pd=D%.%filter(cancer==i)%.%select(year,age,incid,Eincid)
+      pd=D%>%filter(cancer==i)%>%select(year,age,incid,Eincid)
       #     head(pd)
       #     sapply(pd,class)
       (nyrs=length(yrs<-unique(pd$year)))

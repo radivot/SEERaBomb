@@ -4,7 +4,7 @@
 \description{This function coordinates slicing of cancers and population person years. It also removes
         cancer factor levels no longer present after slicing, and place the results into a list that 
         can be attached or with-ed to immediately specify the specs of the slicing.}
-\usage{seerSet(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool", picks=NULL)} 
+\usage{seerSet(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool")} 
 \arguments{
   \item{canc}{data.frame of cancers that should include at least the columns/fields age86, sex, race, yrdx and cancer }
   \item{popsa}{data.frame of single-age population person years.  }
@@ -12,9 +12,9 @@
   \item{ageEnd}{Ending age of fits. Cases and PY strictly less than this age are used.}
   \item{Sex}{Choose either "male" (default) or "female", not both: 2D spline objects are big so only one sex at a time. }
   \item{Race}{Choose either "white", "black", "other",  or "pool" (default).}
-  \item{picks}{Keep this at NULL to get all cancers, as is needed for multiple primary work. 
-  Use a charcter vector of cancer types to focus on only when trying to improve spline fits with feedback from
-  plot2D.}
+%  \item{picks}{Keep this at NULL to get all cancers, as is needed for multiple primary work. 
+%  Use a charcter vector of cancer types to focus on only when trying to improve spline fits with feedback from
+%  plot2D.}
 }
 
 \value{A list containing the subsets of canc and popsa and information regarding how they were reduced.  

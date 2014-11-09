@@ -3,8 +3,8 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 NumericMatrix fillPYM(SEXP PY, SEXP PYM) {
-    NumericMatrix PY1(PY) ;
-    NumericMatrix PYM1(PYM) ;
+    NumericMatrix PY1(PY);
+    NumericMatrix PYM1(PYM);
     int nrows = PY1.nrow(), quo,strtYrIndx,strtAgeIndx;
     double rem, pystrip;
     for (int i = 0; i < nrows ; i++) {

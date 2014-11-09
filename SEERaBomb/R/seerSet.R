@@ -1,4 +1,4 @@
-seerSet<-function(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool", picks=NULL) {
+seerSet<-function(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool") {
   # gimic to get rid of unwanted notes in R CMD check
   agedx=age86=cancer=yrdx=sex=race=surv=modx=yrbrth=NULL 
   #   require(dplyr)
@@ -9,10 +9,7 @@ seerSet<-function(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool", pick
     popsa=popsa%>%filter(race==Race) 
   }
   canc$cancer=factor(canc$cancer) # get rid of any opposite sex cancer type levels
-  if (is.null(picks)) picks=levels(canc$cancer) else { 
-    canc=canc%>%filter(cancer%in%picks)
-    canc$cancer=factor(canc$cancer) # get rid of any removed cancer type levels
-  }
+  cancerS=levels(canc$cancer)
   canc$race=factor(canc$race) # get rid of any removed race levels
   # do some mutations to help plotting and joining later
   canc=canc%>%mutate(year=yrdx) 
@@ -27,7 +24,7 @@ seerSet<-function(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool", pick
   
   
   # and package it all up
-  seerSet=list(canc=canc,popsa=popsa,ageStart=ageStart,ageEnd=ageEnd,sex=Sex,race=Race,picks=picks)
+  seerSet=list(canc=canc,popsa=popsa,ageStart=ageStart,ageEnd=ageEnd,sex=Sex,race=Race,cancerS=cancerS)
   class(seerSet)="seerSet"
   seerSet
 } # return a list that can be attached or with-ed in other functions

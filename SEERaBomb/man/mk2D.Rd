@@ -2,7 +2,7 @@
 \alias{mk2D}
 \title{Make two dimensional spline fits of cancer incidences.}
 \description{This function produces 2D spline fits to incidence versus age and calendar year, with interactions, that is useful for producing expected numbers of cases under a null hypothesis that prior cancers do not impact subsequent cancer risks.}
-\usage{mk2D(seerSet, knots=5, write=FALSE, outDir="~/Results",txt=NULL)} 
+\usage{mk2D(seerSet, knots=5, write=FALSE, outDir="~/Results",txt=NULL,picks=NULL)} 
 \arguments{
   \item{seerSet}{Object of class seerSet, i.e. the list output of the function seerSet. }
   \item{knots}{The base number of knots to use. Overrides for some cancers will be hard-coded into this function.  }
@@ -12,6 +12,7 @@
   \item{outDir}{folder that will hold the output files.}
   \item{txt}{Additional text to distinguish files with different cancer lists, 
   which should only occur during spline fit development. }
+  \item{picks}{Charcter vector of second cancers of interest.}
 }
 
 \value{A large list of objects and the base name of the three files that contain them: 1)a large list of spline fits L2D (this ends in "L.RData"), the input seerSet (with filename ending in "S.RData"), and the returned dataframe D (in a file ending in "D.RData").   

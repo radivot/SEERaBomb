@@ -1,10 +1,12 @@
-mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL) {
+mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,picks=NULL) {
   if(!file.exists(outDir))  {   print(paste("Creating directory",outDir))
                                 dir.create(outDir,recursive=TRUE)    }
 #   require(dplyr)
 #   require(mgcv) # Mixed GAM Computation Vehicle with GCV/AIC/REML smoothness estimation
   ptm <- proc.time()
   seerSet=with(seerSet, {
+    if (is.null(picks)) picks=cancerS
+    seerSet$picks=picks
     L2D=vector(mode="list",length=length(picks)) 
     names(L2D)=picks
     L2Dp=L2D; D=NULL; 
