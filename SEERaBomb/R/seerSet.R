@@ -16,13 +16,15 @@ seerSet<-function(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool", pick
   canc$race=factor(canc$race) # get rid of any removed race levels
   # do some mutations to help plotting and joining later
   canc=canc%>%mutate(year=yrdx) 
-  canc=canc%>%mutate(age=age86)%>%select(-age86) 
   popsa=popsa%>%mutate(age=age86)%>%select(-age86) 
   
   #and convert birth years and ages at diagnosis to best guesses
   canc=canc%>%mutate(surv=round(surv/12,3),yrdx=round(yrdx+modx/12,3))%>%     
     select(-modx)%>%
     mutate(yrbrth=yrbrth+0.5,agedx=agedx+0.5)
+
+  canc=canc%>%mutate(age=agedx)%>%select(-age86) 
+  
   
   # and package it all up
   seerSet=list(canc=canc,popsa=popsa,ageStart=ageStart,ageEnd=ageEnd,sex=Sex,race=Race,picks=picks)
