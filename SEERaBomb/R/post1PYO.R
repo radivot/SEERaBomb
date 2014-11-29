@@ -50,7 +50,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad" ) {
   LD12=split(D12,D12$cancer1) # for getting observed cases in this interval later. Split on first => list names of firsts
 #   lapply(LD12,function(x) table(x$cancer2)) #thyroid first yields 2 AML seconds and 25 thyroid
   O=t(sapply(LD12,function(x) table(x$cancer2)))
-  list(LPYM=LPYM,O=O,binMidPnt=binMidPnt)
+  list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,PY=PY)
 }
 
 

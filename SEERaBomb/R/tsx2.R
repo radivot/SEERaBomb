@@ -15,6 +15,7 @@ tsx2=function(seerSet,brks=c(0,2,5),trts=NULL){ #, outDir="~/Results",txt=NULL) 
       mids=NULL
       Obs=NULL
       Exp=NULL
+      PyM=NULL
       for (bin in binS) 
       {
         #       (bin=binS[1])
@@ -24,11 +25,13 @@ tsx2=function(seerSet,brks=c(0,2,5),trts=NULL){ #, outDir="~/Results",txt=NULL) 
         #         print(D)
         Exp[[bin]]=getE2(L1$LPYM,D,ageStart,ageEnd,yearEnd,cancerS,picks)
         Obs[[bin]]=L1$O[cancerS,picks]
+        PyM[[bin]]=L1$PY
         mids=c(mids,L1$binMidPnt)
       } # loop on tsx bins
       L[[R]]$mids=mids
       L[[R]]$Obs=Obs
       L[[R]]$Exp=Exp
+      L[[R]]$PyM=PyM
     } # loop on R
     L
   })

@@ -3,7 +3,7 @@
 \title{Relative risk vs time-since-exposure}
 \description{2D spline fitting results are used here to produce expected cases (E) with time (in years) since exposure (tsx), controlling for risk dedepence on 
 age and calendar year under a null hypothesis that prior cancers do not impact subsequent cancer risks. 
-In conjection with observed cases (O), relative risks (RR) are then formed as RR=O/E. }
+In conjection with observed cases (O), relative risks (RR) can then be formed as RR=O/E. }
 \usage{tsx2(seerSet,brks,trts=NULL) } % ,outDir="~/Results", txt=NULL)} 
 \arguments{
   \item{seerSet}{As made by mk2D.  }
