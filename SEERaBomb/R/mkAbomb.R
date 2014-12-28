@@ -45,9 +45,9 @@ mkAbomb<-function(AbombHome="~/data/Abomb"){
     "DS02 Bone Marrow dose Sv",    "DS02 Bone Marrow Gamma",    "DS02 Bone Marrow Neutron")
   df=data.frame(colName,desc)
   d=read.csv(file.path(AbombHome,"lsshempy.csv"),col.names=colName)
-  d=d%.%
-    mutate(D=D/1000,g=g/1000,n=n/1000)  %.%
-    filter(doseg>1)  #this group has negative doses, which means they are unknown, so take them out. 
+  d=d%>%
+    mutate(D=D/1000,g=g/1000,n=n/1000)  #%.%
+#     filter(doseg>1)  #this group has negative doses, which means they are unknown, so take them out. 
 #     filter(D>=0,py>0)%.% 
 #     mutate(dose=cut(D,c(0,.02,.4,10),include.lowest=TRUE,labels=c("low","med","high"))) 
   dbWriteTable(con, "heme", d,overwrite=TRUE)
@@ -93,7 +93,8 @@ mkAbomb<-function(AbombHome="~/data/Abomb"){
   #   d=read.csv(file.path(AbombHome,"lssinc07.csv"))
   #   dput(names(d))
   d=read.csv(file.path(AbombHome,"lssinc07.csv"),col.names=colName)
-  d=d%.%filter(doseg>1)%.%select(-ovaD,-tesD,-uteD)
+  d=d%>%select(-ovaD,-tesD,-uteD)
+#   d=d%.%filter(doseg>1)%.%select(-ovaD,-tesD,-uteD)
 
 #   d=d%.%filter(marD>=0,py>0) #%.% 
   #   mutate(dose=cut(marD,c(0,.02,.4,10),include.lowest=TRUE,labels=c("low","med","high"))) 
