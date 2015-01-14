@@ -1,89 +1,166 @@
-mkSEER<-function(df,seerHome="~/data/SEER",dataset=c("00","73","92"), SQL = TRUE, mkDFs=FALSE){
-  #	if (!require(LaF)) print("R Package LaF must be installed")
-  colTypes=c("integer","string",rep("integer",5),"double")    # double, integer, categorical and string
-  colWidths=c(4,7,2,1,1,1,2, 10) 
-  colNames = c('popyear','X0','popseer','poprace','origin','popsex', 'popage','population')
+mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
+                  indices = list(c("sex","race"), c("histo3","seqnum"),  "ICD9"),
+                  writePops=TRUE,writeRData=TRUE,writeDB=TRUE){
+#   require(dplyr); require(LaF); seerHome="~/data/SEER"
+#   outDir="mrgd";outFile="cancDef";writePops=T;writeRData=TRUE;writeDB=TRUE  # for debugging
+#   indices = list(c("sex","race"), "histo2", "histo3", "ICD9")
+  
+  # gimic to get rid of unwanted notes in R CMD check
+  db=reg=race=sex=age=agerec=year=py=agedx=age19=age86=NULL
+  
   seerHome=path.expand(seerHome)
-  dataset=match.arg(dataset)
-  dir.create(file.path(seerHome, dataset),showWarnings = FALSE)
-  cat("\n\n\nProcessing dataset",dataset," \n")
-  ptm <- proc.time()
-  for (i in c("19agegroups","singleages")) {
-    f=switch(dataset,
-             "00" = file.path(seerHome,paste0("populations/expanded.race.by.hispanic/yr2000_2011.ca_ky_lo_nj_ga/",i,".txt")),
-             "73" = file.path(seerHome,paste0("populations/white_black_other/yr1973_2011.seer9/",i,".txt")),
-             "92" = file.path(seerHome,paste0("populations/expanded.race.by.hispanic/yr1992_2011.seer9.plus.sj_la_rg_ak/",i,".txt")))
-    laf<-laf_open_fwf(f,column_types=colTypes,column_widths=colWidths,column_names = colNames)
-    if (i=="19agegroups") {
-      pops=laf[,colNames[-c(2,5)]] 
-      if (mkDFs) save(pops,file=fp<-file.path(seerHome, dataset,"pops.RData"))  }
-    else {
-      popsa=laf[,colNames[-c(2,5)]]
-      if (mkDFs) save(popsa,file=fp<-file.path(seerHome, dataset,"popsa.RData"))  
+  outD=file.path(seerHome,outDir) 
+  outF=file.path(seerHome,outDir,paste0(outFile,".RData")) 
+  outDB=file.path(seerHome,outDir,paste0(outFile,".db")) 
+  dir.create(outD,showWarnings = FALSE)   # OK if already exists, so suppress warning
+  
+  if(writePops|writeDB) {
+    cat("Making population file data.tables\n")
+    dirs=list.dirs(file.path(seerHome,"populations"))
+    dirs=dirs[grep("yr",dirs)]
+    dirs=dirs[-grep("yr2005",dirs)]
+    
+    colTypes=c("integer","string",rep("integer",5),"double")    # double, integer, categorical and string
+    colWidths=c(4,7,2,1,1,1,2, 10) 
+    colNames1 = c('year','X0','reg','race','origin','sex', 'age19','py')
+    colNames2 = c('year','X0','reg','race','origin','sex', 'age86','py')
+    
+    ptm <- proc.time()
+    popgaL=vector(mode="list",3)
+    popsaL=vector(mode="list",3)
+    ii=1
+    for (i in dirs) {
+      f=file.path(i,"19agegroups.txt") 
+      laf<-laf_open_fwf(f,column_types=colTypes,column_widths=colWidths,column_names = colNames1)
+      popgaL[[ii]]=tbl_df(laf[,colNames1[-c(2,5)]] )
+      
+      f=file.path(i,"singleages.txt") 
+      laf<-laf_open_fwf(f,column_types=colTypes,column_widths=colWidths,column_names = colNames2)
+      popsaL[[ii]]=tbl_df(laf[,colNames2[-c(2,5)]] )
+
+      if (grepl("plus",i)) {#5/21/14 fixed systematic lower 73 incidence due to 73 PY being also in 92
+        popgaL[[ii]]=popgaL[[ii]]%>%filter(reg%in%c(29,31,35,37)) 
+        popsaL[[ii]]=popsaL[[ii]]%>%filter(reg%in%c(29,31,35,37)) 
+        cat("Removing SEER 9 person years from:\n",i,"\nbefore pooling into one file.\n")
+      }
+      ii=ii+1
     }
+    popga=rbind_all(popgaL)
+    popsa=rbind_all(popsaL)
+    popga$reg=as.integer(popga$reg+1500)
+    popsa$reg=as.integer(popsa$reg+1500)
+    
+    popga=popga%>%
+      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
+      mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
+      mutate(reg=mapRegs(reg)) %>%
+      mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[age19+1]) %>%
+      mutate(sex=factor(sex,labels=c("male","female"))) %>%
+      group_by(db,reg,race,sex,age19,year) %>%
+      #       summarise(py=sum(py))%>%   #summing here  over counties and hispanic origin or not, which are in popga as rows but not as columns
+      #       group_by(add=F) # clear grouping
+      summarise(py=sum(py))
+    popga=as.data.frame(popga) # clears everything, down to the data.frame
+    
+    #     class(popga)
+    
+    popsa=popsa%>%    # note: here age groups indices 0-18 are replaced by actual ages 1-85, so no need to remap
+      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
+      mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
+      mutate(reg=mapRegs(reg)) %>%    
+      mutate(age86=age86+0.5) %>%    
+      mutate(sex=factor(sex,labels=c("male","female"))) %>%
+      group_by(db,reg,race,sex,age86,year) %>%
+      #       summarise(py=sum(py))%>%   #summing here  over counties and hispanic origin or not, which are in popga as rows but not as columns
+      #       group_by(add=F) # clear grouping
+      summarise(py=sum(py))
+    popsa=as.data.frame(popsa) # clears everything down to the data.frame
+    popsa[popsa$age86==85.5,"age86"]=90 # touch up to better guess of average age of >85 group
+    
+    
+    delT=proc.time() - ptm  
+    cat("The population files of SEER were processed in ",delT[3]," seconds.\n",sep="")
+    
+  } #if writePops or writeDB
+  
+  
+  if(writeRData|writeDB) {
+    dirs=list.dirs(file.path(seerHome,"incidence"))
+    dirs=dirs[grep("yr",dirs)]
+    dirs=dirs[-grep("yr2005",dirs)]
+    
+    y=df[which(df$names!=" "),"names"] 
+    cat("Cancer Data:\nThe following fields will be written:\n");  print(y)
+    cancers=c('breast','digothr','malegen','femgen','other','respir','colrect','lymyleuk','urinary') 
+    files=paste0(cancers,".txt")
+    DFL=vector(mode="list",length(dirs)*length(files))
+    ptm <- proc.time()
+    ii=1
+    for (i in dirs) 
+      for (j in files) {
+        f=file.path(i,toupper(j))
+        print(f)
+        laf<-laf_open_fwf(f,column_types=df$type, column_widths=df$width)
+        DFL[[ii]]=tbl_df(laf[,which(df$names!=" ")])
+        ii=ii+1
+      }
+    print("rbind_all()-ing to make DF canc")
+    canc=rbind_all(DFL)
+    colnames(canc)<-y
+    
+    canc=canc%>%
+      filter(agedx<200)%>%
+      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
+      mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
+      mutate(reg=mapRegs(reg)) %>%
+      mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[agerec+1]) %>%
+      mutate(age86=as.numeric(as.character(cut(agedx,c(0:85,150),right=F,labels=c(0.5:85,90)))))%>%
+#       select(-agerec)%>%
+      mutate(sex=factor(sex,labels=c("male","female")))
+    canc=mapCancs(canc)
+    delT=proc.time() - ptm  
+    cat("Cancer files were processed in ",delT[3]," seconds.\n")
+  } #if writeRData or writeDB
+  
+  if (writeDB) {
+    print("Deleting old version of this SQLite database file.")
+    unlink(outDB)
+    print("Creating new SQLite database file.")
+    ptm <- proc.time()
+    #     m=dbDriver("SQLite")
+    #     con <- dbConnect(m, dbname = outDB)
+    my_db <- src_sqlite(outDB, create = T)
+    #     copy_to(my_db,DF, name="canc",temporary = FALSE, indexes = indices,overwrite=TRUE) 
+    copy_to(my_db,canc, temporary = FALSE, indexes = indices,overwrite=TRUE) 
+    copy_to(my_db,popga, temporary = FALSE,overwrite=TRUE)
+    copy_to(my_db,popsa, temporary = FALSE,overwrite=TRUE)
+    #     dbWriteTable(con, "canc", DF,overwrite=TRUE)
+    #     dbWriteTable(con, "popga", popga,overwrite=TRUE)
+    #     dbWriteTable(con, "popsa", popsa,overwrite=TRUE)
+    delT=proc.time() - ptm  
+    cat("\ndata.tables were written to ",outDB," in ",delT[3]," seconds.\n")
+    cat("tables in this SQLite file are:\n")
+    #     print(dbListTables(con))   
+    #     dbDisconnect(con)
   }
   
-  #   s=switch(dataset,
-  #            "00" = file.path(seerHome,"populations/expanded.race.by.hispanic/yr2000_2011.ca_ky_lo_nj_ga/singleages.txt"),
-  #            "73" = file.path(seerHome,"populations/white_black_other/yr1973_2011.seer9/singleages.txt"),
-  #            "92" = file.path(seerHome,"populations/expanded.race.by.hispanic/yr1992_2011.seer9.plus.sj_la_rg_ak/singleages.txt"))
-  #   ptm <- proc.time()
-  #   laf<-laf_open_fwf(s,column_types=colTypes,column_widths=colWidths,column_names = colNames)
-  #   popsa<-laf[,colNames[-c(2,5)]]
-  #   save(popsa,file=fp<-file.path(seerHome, dataset,"popsa.RData"))  
-  #   delT=proc.time() - ptm  
-  #   cat("The single ages population file of SEER dataset ",dataset," was successfully written to:\n ",fp," in ",delT[3]," seconds.\n",sep="")
-  
-  if (SQL) {
-    cat("Deleting old and creating new SQLite database all.db and adding popultation tables to it.\n")
-    dbf<-file.path(seerHome, dataset,"all.db")
-    unlink(dbf)
-    m <- dbDriver("SQLite")
-    con <- dbConnect(m, dbname = dbf)
-    dbWriteTable(con, "pops", pops,overwrite=TRUE)
-    dbWriteTable(con, "popsa", popsa,overwrite=TRUE)
-  }	
-  delT=proc.time() - ptm  
-  cat("The population files of SEER dataset ",dataset," were processed in ",delT[3]," seconds.\n",sep="")
-  
-  
-  
-  ptm <- proc.time()
-  cancers=c('breast','digothr','malegen','femgen','other','respir','colrect','lymyleuk','urinary','test') 
-  p=switch(dataset,
-           "00" = file.path(seerHome,"incidence/yr2000_2011.ca_ky_lo_nj_ga/"),
-           "73" = file.path(seerHome,"incidence/yr1973_2011.seer9/"),
-           "92" = file.path(seerHome,"incidence/yr1992_2011.sj_la_rg_ak/"))
-  y=df[which(df$names!=" "),"names"]; cat("Cancer Data:\nThe following fields will be written:\n");	print(y)
-  for (k in 1:9)	{
-    laf<-laf_open_fwf(file.path(p,paste0(toupper(cancers[k]),'.TXT')), 
-                      column_types=df$type,    # double, integer, categorical and string
-                      column_widths=df$width)
-    DF=laf[,which(df$names!=" ")]
-    colnames(DF)<-y
-    DF=mapCancs(DF)
-    if (SQL) dbWriteTable(con, cancers[k], DF,overwrite=TRUE)
-    if (mkDFs) save(DF,file=fp<-file.path(seerHome,dataset,paste0(cancers[k],'.RData')))
-    cat(k,") ",cancers[k],"\n",sep="")
+  if (writeRData) {
+    print("save()-ing DF canc to disk")
+    canc=tbl_df(canc)
+    save(canc,file=outF)
+    cat("Cancer data has been written to: ",outF,"\n")
   }
-  delT=proc.time() - ptm  
-  cat("Cancer files of SEER ",dataset," were written to ",file.path(seerHome, dataset)," in ",delT[3]," seconds.\n")
-  if (SQL) {
-    cat("\nThe following tables are in ",file.path(seerHome, dataset,"all.db"),":\n")
-    print(dbListTables(con)) 	
-    dbDisconnect(con)
-  }
-#   seerHome="~/data/SEER";dataset="92"
+  
+  if (writePops) {
+    popga=tbl_df(popga)
+    popsa=tbl_df(popsa)
+    save(popga,file=file.path(outD,"popga.RData"))  
+    save(popsa,file=file.path(outD,"popsa.RData"))  
+  } #only if writePops
 #if(.Platform$OS.type=="unix") {
-  cat("\nFiles in ",file.path(seerHome, dataset),"are:\n")
-  s=dir(file.path(seerHome, dataset),full.names=T)
+  s=dir(outD,full.names=T)
   d=file.info(s)[,c("size","mtime")] 
-  rws=rownames(d)
-  dbs=sum(d$size[grep("db",rws)])
-  dfs=sum(d$size[grep("RData",rws)])
-  d$size=paste0(round(d$size/1e6,1)," MB")
+  d$size=paste0(round(d$size/1e6)," M")
   print(d) 
-  cat("\nThe RData files sum to ",round(dfs/1e6,1)," MB and the db files sum to ",
-      round(dbs/1e6,1)," MB, i.e. the fraction is ",round(dfs/dbs,2),".\n",sep="")
-#} 
+#}
 }
