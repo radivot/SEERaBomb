@@ -11,5 +11,5 @@
 
 \note{This function is used internally when generating merged R binaries and is not intended for general use. It was developed with support from the Cleveland Clinic Foundation.}
 \author{Tom Radivoyevitch (radivot@ccf.org)}
-\seealso{\code{\link{SEERaBomb-package}, \link{mkSEER2}} }
+\seealso{\code{\link{SEERaBomb-package}, \link{mapRegs}} }
 \keyword{IO}

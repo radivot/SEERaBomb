@@ -13,7 +13,7 @@ strings but you also need to pull numeric attributes out of it at times.}
 
 \note{This function was developed with support from the Cleveland Clinic Foundation.}
 \author{Tom Radivoyevitch (radivot@ccf.org)}
-\seealso{\code{\link{SEERaBomb-package}, \link{mkSEER2}} }
+\seealso{\code{\link{SEERaBomb-package}} }
 \examples{
 library(SEERaBomb)
 brks=c(0,0.25,1,3,5)  

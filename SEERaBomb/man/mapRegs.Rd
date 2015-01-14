@@ -14,7 +14,7 @@ Note that city characters are in lower case and state characters are in upper ca
 
 \note{This function was developed with support from the Taussig Cancer Institute of the Cleveland Clinic Foundation.}
 \author{Tom Radivoyevitch (radivot@ccf.org)}
-\seealso{\code{\link{SEERaBomb-package}, \link{mkSEER2}} }
+\seealso{\code{\link{SEERaBomb-package}, \link{mapCancs}} }
 \examples{
 library(SEERaBomb)
 mapRegs(1501)

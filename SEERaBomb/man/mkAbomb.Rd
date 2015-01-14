@@ -14,7 +14,7 @@ respectively, in a an SQLite database file called \file{abomb.db}.}
 in \code{hemeDesc} and \code{solidDesc}.}
 \value{None. This function is called for its side-effect of producing an SQLite database file.}
 \author{ Tom Radivoyevitch (\email{radivot@ccf.org}) }
-\seealso{\code{\link{SEERaBomb-package},\link{mkSEER},\link{mkSEER2},\link{getFields},\link{pickFields}} }
+\seealso{\code{\link{SEERaBomb-package},\link{mkSEER},\link{getFields},\link{pickFields}} }
 \examples{
 \dontrun{
 library(SEERaBomb)
