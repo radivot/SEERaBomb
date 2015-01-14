@@ -1,4 +1,4 @@
-CHANGES IN VERSION 2014.10.1 (first new version of October 2014)
+CHANGES IN VERSION 2014.3 (Third version known to work with the SEER release of 2014)
 ------------------------
 
 NEW FEATURES
@@ -13,6 +13,7 @@ NEW FEATURES
     o mapCancs is now called within mkSEER to make a cancer field in those files as well.  
 
 Notes
+    o Month is no longer in the version number and year now reflects the SEER data release year rather than the SEERaBomb release year.    
 
     o published paper scripts now use the cancer field instead of histo2 (which is no longer included in pickfields by default) and  plots now also use quartz() when on a mac. The old courses folder is now called examples; scripts therein were updated
       and some were removed. 
