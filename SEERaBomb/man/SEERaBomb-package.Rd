@@ -23,15 +23,19 @@ LazyData: \tab yes\cr
 URL: \tab \url{http://epbi-radivot.cwru.edu/SEERaBomb/SEERaBomb.html}\cr
 }
 
-\if{html}{\figure{SEERaBombFig.png}}
-\if{latex}{\figure{SEERaBombFig.png}{options: width=5in}}
 
+The main function of this package, \code{mkSEER},
+merges all three of the SEER databases. 
+This is particularly important for studies of MDS because SEER began 
+to track it only in 2001, so the 1973 and 2000 SEER databases 
+include similar numbers of MDS cases.   
+SEERaBomb is currently being developed to have new features 
+for assessing the kinetics of risks of second cancers after t
+reatments of first cancers.
+ 
 
-The most recent addition to this package is the function \code{mkSEER2}. This function will eventually replace \code{mkSEER}, as greater amounts of RAM (>=16 GB) become more common. It makes an SQLite database with all of the cancers from all of the registries merged into one table.  Using \code{mkSEER2} bypasses making intermediates of 9 cancer files *.RData in each of 3 registry folders. If only this large file is needed, \code{mkSEER2} should be used rather than \code{mkSEER} followed by 
-\code{pool}. 
-
-\if{html}{\figure{mkSEER2.png}}
-\if{latex}{\figure{mkSEER2.png}{options: width=5in}}
+\if{html}{\figure{mkSEERfig.png}}
+\if{latex}{\figure{mkSEERfig.png}{options: width=5in}}
 
 
 }
