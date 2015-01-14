@@ -1,6 +1,6 @@
 \name{getE}
 \alias{getE}
-\title{Get expected numbers of cases.  }
+\title{Get expected numbers of cases  }
 \description{Converts the LPYM list of matrices produced by post1PYO into a matrix corresponding to the observed cases 
 matrix produced by post1PYO. This is seperated out because it is time consuming and alternative approaches should 
 be pursued.}

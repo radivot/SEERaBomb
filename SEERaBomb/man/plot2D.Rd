@@ -1,6 +1,6 @@
 \name{plot2D}
 \alias{plot2D}
-\title{Plot two-dimensional spline fits of cancer incidences.}
+\title{Plot two-dimensional spline fits of cancer incidences}
 \description{This function allows checking of 2D spline fits to incidence versus age and calendar year produced by mk2D. The user
 hits any key to advance through the list of cancers}
 \usage{plot2D(seerSet, write=TRUE,outDir="~/Results/plots")} 

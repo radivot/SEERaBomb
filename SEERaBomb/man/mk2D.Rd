@@ -1,6 +1,6 @@
 \name{mk2D}
 \alias{mk2D}
-\title{Make two dimensional spline fits of cancer incidences.}
+\title{Make two dimensional spline fits of cancer incidences}
 \description{This function produces 2D spline fits to incidence versus age and calendar year, with interactions, that is useful for producing expected numbers of cases under a null hypothesis that prior cancers do not impact subsequent cancer risks.}
 \usage{mk2D(seerSet, knots=5, write=FALSE, outDir="~/Results",txt=NULL,picks=NULL)} 
 \arguments{

@@ -1,20 +1,21 @@
 \name{mkExcel}
 \alias{mkExcel}
-\title{Makes an excel file that contains relative risks vs. time-since-exposure}
+\title{Makes an excel file that contains relative risks vs. time-since-diagnosis}
 \description{Expected cases (E) under a null hypothesis that prior cancers do not impact subsequent cancer risks 
 and observed cases (O) yields relative risks (RR=O/E) and their CI.  Here sheet tabs are first cancers, 
 sheet rows are second cancers, and columns are times intervals since first cancer diagnosis.}
 \usage{mkExcel(seerSet,tsxn,outDir="~/Results", txt=NULL)} 
 \arguments{
   \item{seerSet}{As made by tsx2.  }
-  \item{tsxn}{Time since exposure set name. The seerSet base file name (bfn) + tsxn + txt will be the excel file name.}
+  \item{tsdn}{Time since diagnosis set name. The seerSet base file name (bfn) + tsdn + txt will be the excel file name.}
   \item{outDir}{folder that will hold the output file.}
   \item{txt}{If needed, additional text in file name to make it unique, e.g. for a modification in a
                cancer or treatment definition. }
 }
 
 \value{None. The output files are for a given sex and race.
-   Second cancer relative risks are given as functions of tsx and different first cancers and first cancer therapies 
+   Second cancer relative risks are given as functions of tsd 
+   and different first cancers and first cancer therapies 
    (typically irradiated or not). 
      }
 

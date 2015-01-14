@@ -1,8 +1,8 @@
 \name{getPY}
 \alias{getPY}
-\title{Gets PY contributions to a particular time since exposure interval from survivals}
-\description{A vector survival times in years is the main input. This function gives their 
-person year (PY) contributions to a particular interval.}
+\title{Gets PY contributions to a particular tsd interval from survival times}
+\description{A vector of survival times in years is the main input. This function gives their 
+person year (PY) contributions to a particular time since diagnosis (tsd) interval.}
 \usage{getPY(surv, bin, binS, brks)} 
 \arguments{
   \item{surv}{The total survival time of the patient.  }

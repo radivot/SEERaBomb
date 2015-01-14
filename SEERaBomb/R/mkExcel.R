@@ -1,5 +1,5 @@
 mkExcel=function(seerSet,tsxn,outDir="~/Results",txt=NULL) {
-  if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsx2 on your seerSet object!") else L=seerSet$L[[tsxn]]
+  if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else L=seerSet$L[[tsxn]]
   unlink(f<-paste0(outDir,"/",seerSet$bfn,tsxn,txt,".xlsx"))
   wb <- loadWorkbook(f,create=T) 
   intvs=names(L[["noRad"]][["Obs"]]) 

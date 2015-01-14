@@ -1,6 +1,6 @@
 \name{mkSEER}
 \alias{mkSEER}
-\title{ Make SEER binaries Version 2}
+\title{ Make SEER data binaries with all three SEER databases combined.}
 \description{Converts SEER ASCII text files into large R binaries with cancers and registries pooled.}
 \usage{mkSEER(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
                   indices = list(c("sex","race"), c("histo3","seqnum"),  "ICD9"),

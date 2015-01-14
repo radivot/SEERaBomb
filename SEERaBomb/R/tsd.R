@@ -1,6 +1,6 @@
-tsx=function(seerSet,brks=c(0,2,5),trts=NULL){ #, outDir="~/Results",txt=NULL) { # FL for file list
+tsd=function(seerSet,brks=c(0,2,5),trts=NULL){ #, outDir="~/Results",txt=NULL) { # FL for file list
   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=L2D=NULL 
-  print(binS<-levels(cut(brks+0.1,breaks=c(brks,100)))) #this is just to make a vector of tsx interval/row names 
+  print(binS<-levels(cut(brks+0.1,breaks=c(brks,100)))) #this is just to make a vector of tsd interval/row names 
   ptm <- proc.time()
   L=with(seerSet, {
     if (is.null(trts)) trts=levels(canc$trt)
@@ -35,10 +35,10 @@ tsx=function(seerSet,brks=c(0,2,5),trts=NULL){ #, outDir="~/Results",txt=NULL) {
     } # loop on R
     L
   })
-  tsxn=paste0("b",paste(brks,collapse="_"))
+  tsdn=paste0("b",paste(brks,collapse="_"))
 #   seerSet$bfn=paste0(seerSet$bfn,paste0("b",paste(brks,collapse="_")),txt)
   if(is.null(seerSet$L)) seerSet$L=list() # set to a blank list if it was never filled
-  seerSet$L[[tsxn]]=L
+  seerSet$L[[tsdn]]=L
 #   fn=paste0(outDir,"/",seerSet$bfn,".RData")
 #   cat("Writing L to ",fn,"\n")
 #   save(L,file=fn)

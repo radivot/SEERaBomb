@@ -1,8 +1,8 @@
 \name{getBinInfo}
 \alias{getBinInfo}
-\title{Gets the lower and upper limit integers and vector position of a cut bin/interval}
-\description{ This function may be useful in situations where you want to keep interval information (e.g. produced by cut) in 
-strings but you also need to pull numeric attributes out of it at times.}
+\title{Gets the lower and upper limit and index of a tsd bin}
+\description{ This function extracts time since diagnosis (tsd) interval information 
+in strings produced by cut.}
 \usage{getBinInfo(binLab, binS)} 
 \arguments{
   \item{binLab}{The label of the specific bin of interest.  }

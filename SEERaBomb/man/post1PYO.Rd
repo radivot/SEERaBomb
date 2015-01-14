@@ -1,6 +1,6 @@
 \name{post1PYO}
 \alias{post1PYO}
-\title{Get person-years at risk and observed cases after first cancers. }
+\title{Get person-years at risk and observed cases after first cancers }
 \description{Converts a canc data.frame into a list of objects containing information regarding person years at risk
 for a second cancer after having a first cancer, and the number observed, in a defined time since exposure interval
 and after a defined first cancer form of therapy.  }

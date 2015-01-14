@@ -30,14 +30,13 @@ This is particularly important for studies of MDS because SEER began
 to track it only in 2001, so the 1973 and 2000 SEER databases 
 include similar numbers of MDS cases.   
 SEERaBomb is currently being developed to have new features 
-for assessing the kinetics of risks of second cancers after t
-reatments of first cancers.
+for assessing the kinetics of risks of second cancers after treatments of first cancers.
  
 
 \if{html}{\figure{mkSEERfig.png}}
 \if{latex}{\figure{mkSEERfig.png}{options: width=5in}}
 
-
+Our version of mkSEER is now mkSEERold; it pooled cancer files but it didn't pool databases.
 }
 
 
@@ -46,6 +45,6 @@ reatments of first cancers.
         Its maintenance is being supported by the Cleveland Clinic Foundation.}
 
 \author{ Tom Radivoyevitch (\email{radivot@ccf.org}) }
-\seealso{\code{\link{getFields},\link{pickFields},\link{mkSEER} }}
+\seealso{\code{\link{getFields},\link{pickFields},\link{mkSEER},\link{mkSEERold} }}
 
 \keyword{package}
