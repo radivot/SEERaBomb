@@ -8,7 +8,11 @@
 #purl("quick-start.Rnw")
 
 require(knitr)
+<<<<<<< HEAD
 setwd("/Users/radivot/githubs/SEERaBomb/docs")
+=======
+setwd("/Users/radivot/github/SEERaBomb/docs")
+>>>>>>> 3ab0ceb52bcb1d349d194bfb23210fb50cf274bd
 knit2pdf("overview.Rnw",clean=TRUE)      
 file.remove("overview.tex")
 #purl("overview.Rnw")
