@@ -40,8 +40,7 @@ The output of \verb@pickFields()@ contains
 not only pulled rows from the input, but also
 inserted rows with widths computed to fill the gaps of no interest. Knowing these gap sizes enables 
 fast file reading by \verb@LaF@ in \verb@mkSEER()@. This function  
-produces R Data binaries in SEER dataset subdirectories
-of \verb@seerHome@ such as \verb@"~/data/SEER/00"@ for SEER18 data (which was collected since 2000).
+produces R Data binaries that can be then be accessed efficiently from an R script.
 
 This work was supported by the Cleveland Clinic Foundation and by the National Cancer Institute and Tufts Integrative 
 Cancer Biology Program under U54CA149233-029689. 
