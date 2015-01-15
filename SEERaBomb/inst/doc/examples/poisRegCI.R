@@ -15,7 +15,7 @@ if (0) {  # switch this to 1 (i.e. run this chunk) if you never ran it before
 	library(SEERaBomb)
 	(df=getFields())
 	(df=pickFields(df))
-	mkSEER(df,dataset="00",SQL=TRUE)  # SQL=F is OK here too but SQL=T covers the SQL.R demo as well
+	mkSEERold(df,dataset="00",SQL=TRUE)  # SQL=F is OK here too but SQL=T covers the SQL.R demo as well
 }
 
 

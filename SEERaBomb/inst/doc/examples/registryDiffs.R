@@ -14,31 +14,31 @@ D=canc
 mds="all"
 mds="clean"
 cutyr=2003
-if (mds=="clean") D=canc%.%filter(yrdx>=cutyr,cancer%in%CANCS,histo3!=9989) else
-  D=canc%.%filter(yrdx>=cutyr,cancer%in%CANCS)
+if (mds=="clean") D=canc%>%filter(yrdx>=cutyr,cancer%in%CANCS,histo3!=9989) else
+  D=canc%>%filter(yrdx>=cutyr,cancer%in%CANCS)
 
 
 
-D=D%.%mutate(year=yrdx) #let year=yrdx to match population column below
-P=popga%.%filter(year>=cutyr)
+D=D%>%mutate(year=yrdx) #let year=yrdx to match population column below
+P=popga%>%filter(year>=cutyr)
 r=data.frame(reg=levels(D$reg))
 c=data.frame(cancer=CANCS)
 cr=merge(c,r)
 head(D)
-m=D%.%group_by(cancer,db,reg,age19)%.%summarize(cases=n())
+m=D%>%group_by(cancer,db,reg,age19)%>%summarize(cases=n())
 
-p=P%.%group_by(db,reg,age19)%.%summarise(py=sum(py))
+p=P%>%group_by(db,reg,age19)%>%summarise(py=sum(py))
 p=left_join(cr,p)
 d=left_join(p,m)
 d[is.na(d$cases),"cases"]=0 #join left missings where zero's should be, so fix this
 
 head(d)
 
-d1=d%.%  
-  group_by(cancer,db,reg,age19,add=F)%.%
-  summarize(cases=sum(cases),py=sum(py)/1e5)%.%
-  left_join(us19)%.%
-  mutate(ai=cases/py)%.%
+d1=d%>%  
+  group_by(cancer,db,reg,age19,add=F)%>%
+  summarize(cases=sum(cases),py=sum(py)/1e5)%>%
+  left_join(us19)%>%
+  mutate(ai=cases/py)%>%
   summarize(vr=sum(cases*prop^2/py^2),stdIncid=weighted.mean(ai,w=prop),
             stdLo=stdIncid-1.96*sqrt(vr),stdHi=stdIncid+1.96*sqrt(vr))
 

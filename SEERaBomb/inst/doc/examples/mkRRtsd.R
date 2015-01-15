@@ -51,9 +51,9 @@ plot2D(pm5)
 
 system.time(load("~/Results/pm5.RData")) # 1 secs to load. 
 L=post1PYO(pm5$canc,brks=c(0,2,5),binIndx=1,Trt="rad" )
-E=getE2(L$LPYM,pm5$D)
+E=getE(L$LPYM,pm5$D)
 L$O/E
-(BL=tsx2(pm5,brks=c(0,0.5,2,5)) )
+(BL=tsd(pm5,brks=c(0,0.5,2,5)) )
 str(BL)
 names(BL)
 names(BL$L)

@@ -4,8 +4,8 @@ library(SEERaBomb)
 # (df=getFields("~/data/SEER")) # this doesn't fly in windows since ~ maps to /users/radivot/documents
 (df=getFields("/Users/radivot/data/SEER")) # so use absolute path. Here df holds the full set of data field (df) options
 (rdf=pickFields(df)) # this is a reduced data field (rdf) dataframe (note fewer rows AND one extra integer/string column)
-# for (i in c("73","92","00")) mkSEER(df,dataset=i,mkDFs=T) #(old way) populates binaries into these folders
-mkSEER2(rdf,seerHome="/Users/radivot/data/SEER") #(new way) makes merged (all cancer) binaries in SEER data folder mrgd
+# for (i in c("73","92","00")) mkSEERold(df,dataset=i,mkDFs=T) #(old way) populates binaries into these folders
+mkSEER(rdf,seerHome="/Users/radivot/data/SEER") #(new way) makes merged (all cancer) binaries in SEER data folder mrgd
 
 # these are the default picks for pickFields (see its help page)
 defPicks=c("casenum","reg","race","sex","agedx",
@@ -32,7 +32,7 @@ picks=c("casenum","reg","race","sex","agedx","yrbrth",
         "numprims","COD","histssg2000","dthclass","odthclass","surv",
         "dajcc7t","dajcc7n","dajcc7m","dajcc7stg")
 (rdf=pickFields(df,picks))
-mkSEER2(rdf,outFile="cancStgs",writePops=F) #80 secs + 120 secs
+mkSEER(rdf,outFile="cancStgs",writePops=F) #80 secs + 120 secs
 
 
 ## ALL COLUMNS ######## make one with all columns just to see how big things 
@@ -41,7 +41,7 @@ mkSEER2(rdf,outFile="cancStgs",writePops=F) #80 secs + 120 secs
 #thus not likely to be useful on a regular basis, but may be useful from a
 #computer programming perspective for checking out speed in the limit of using all fields.
 rdf=pickFields(df,picks=df$names)
-mkSEER2(rdf,outFile="cancAll",writePops=F) #210 secs, i.e. 3.5 minutes. 3-fold more columns=> ~4.5-fold more time
+mkSEER(rdf,outFile="cancAll",writePops=F) #210 secs, i.e. 3.5 minutes. 3-fold more columns=> ~4.5-fold more time
 # making the SQL db was an additional 248 secs, i.e. ~4 minutes. 
 
 # If you want to check to see what fields you have in a binary right now, you can do this

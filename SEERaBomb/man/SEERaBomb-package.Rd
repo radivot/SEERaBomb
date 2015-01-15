@@ -26,25 +26,25 @@ URL: \tab \url{http://epbi-radivot.cwru.edu/SEERaBomb/SEERaBomb.html}\cr
 
 The main function of this package, \code{mkSEER},
 merges all three of the SEER databases. 
-This is particularly important for studies of MDS because SEER began 
+This is particularly important for studies of Myelodysplastic Syndromes (MDS) because SEER began 
 to track it only in 2001, so the 1973 and 2000 SEER databases 
-include similar numbers of MDS cases.   
-SEERaBomb is currently being developed to have new features 
-for assessing the kinetics of risks of second cancers after treatments of first cancers.
+have similar numbers of cases.   
+We are developing SEERaBomb to answer questions regarding  
+the kinetics of risks of second cancers after diagnoses of first cancers.
  
-
 \if{html}{\figure{mkSEERfig.png}}
 \if{latex}{\figure{mkSEERfig.png}{options: width=5in}}
 
-Our version of mkSEER is now mkSEERold; it pooled cancer files but it didn't pool databases.
+The old version of mkSEER merged cancer files but it didn't merge databases. 
+To avoid breaking scripts that expect separate databases, that old version is still available, but it is now called mkSEERold.
 }
 
 
 \note{ This package was created with support from the National Cancer Institute and Tufts Integrative 
         Cancer Biology Program under U54CA149233-029689. 
-        Its maintenance is being supported by the Cleveland Clinic Foundation.}
+        Continued development is being supported by the Cleveland Clinic Foundation.}
 
 \author{ Tom Radivoyevitch (\email{radivot@ccf.org}) }
-\seealso{\code{\link{getFields},\link{pickFields},\link{mkSEER},\link{mkSEERold} }}
+\seealso{\code{\link{getFields},\link{pickFields},\link{mkSEER},\link{mkSEERold},\link{mkAbomb} }}
 
 \keyword{package}
