@@ -8,7 +8,7 @@
 #purl("quick-start.Rnw")
 
 require(knitr)
-setwd("/Users/radivot/soft/SEERaBomb/docs")
+setwd("/Users/radivot/githubs/SEERaBomb/docs")
 knit2pdf("overview.Rnw",clean=TRUE)      
 file.remove("overview.tex")
 #purl("overview.Rnw")
