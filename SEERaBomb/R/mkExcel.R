@@ -1,6 +1,6 @@
-mkExcel=function(seerSet,tsxn,outDir="~/Results",txt=NULL) {
-  if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else L=seerSet$L[[tsxn]]
-  unlink(f<-paste0(outDir,"/",seerSet$bfn,tsxn,txt,".xlsx"))
+mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL) {
+  if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else L=seerSet$L[[tsdn]]
+  unlink(f<-paste0(outDir,"/",seerSet$bfn,tsdn,txt,".xlsx"))
   wb <- loadWorkbook(f,create=T) 
   intvs=names(L[["noRad"]][["Obs"]]) 
 #   picks=rownames(L[["noRad"]][["Obs"]][[intvs[1]]])
