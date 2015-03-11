@@ -25,8 +25,9 @@ seerSet<-function(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool") {
   }
   canc$cancer=factor(canc$cancer) # get rid of any opposite sex cancer type levels
   cancerS=levels(canc$cancer)
-  canc$race=factor(canc$race) # get rid of any removed race levels
   
+#   canc$race=factor(canc$race) # get rid of any removed race levels
+  canc=canc%>%select(-sex,-race,-yrbrth)  
   # and package it all up
   seerSet=list(canc=canc,popsa=popsa,ageStart=ageStart,ageEnd=ageEnd,sex=Sex,race=Race,cancerS=cancerS)
   class(seerSet)="seerSet"

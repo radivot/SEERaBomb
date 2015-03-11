@@ -1,6 +1,7 @@
 post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad" ) { 
   # to get rid of check notes. Using list inputs and with will shield these
-  surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=seqnum=sex=race=reg=yrdx1=yrdiff=NULL 
+#   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=seqnum=sex=race=reg=yrdx1=yrdiff=NULL 
+  surv=yrdx=db=casenum=cancer=trt=agedx=yrdx1=seqnum=yrdiff=NULL 
   yrdx2=cancer1=cancer2=py=year=ageL=ageR=agedx1=NULL 
   if(sum(canc$trt==Trt,na.rm=T)==0) stop(paste0("canc must have a trt column containing",Trt))
   binS=levels(cut(brks+0.1,breaks=c(brks,100)))
@@ -18,7 +19,8 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad" ) {
   D1=D1%>%filter(casenum%in%D2$casenum) # reduce firsts to just those with a second in D2 
   names(D1)[2:5]=c("cancer1","yrdx1","agedx1","trt1") #rename D1 cols so as not to join by them.
 # D2 colnames  db  casenum	reg	race	sex	agedx	yrbrth	seqnum	modx	yrdx	radiatn	surv	cancer	trt
-  D2=D2%>%select(casenum,cancer,yrdx,agedx,sex,race,yrbrth) # reduce D2 to cols we want to slap on 
+#   D2=D2%>%select(casenum,cancer,yrdx,agedx,sex,race,yrbrth) # reduce D2 to cols we want to slap on 
+  D2=D2%>%select(casenum,cancer,yrdx,agedx) # reduce D2 to cols we want to slap on 
 #   D2=D2%>%select(casenum,cancer,yrdx,agedx) # reduce D2 to cols we want to slap on 
   names(D2)[2:4]=c("cancer2","yrdx2","agedx2") # and rename cols not to join by them
   D12=left_join(D2,D1,by="casenum") #Keeps all D2 rows, inserts missing where D1 doesn't match. 

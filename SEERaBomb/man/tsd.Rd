@@ -4,11 +4,13 @@
 \description{2D spline fitting results are used here to produce expected cases (E) with time (in years) since diagnosis (tsd) of the first cancer, controlling for risk dedepence on 
 age and calendar year under a null hypothesis that prior cancers do not impact subsequent cancer risks. 
 In conjunction with observed cases (O), relative risks (RR) can then be formed as RR=O/E. }
-\usage{tsd(seerSet,brks,trts=NULL) } % ,outDir="~/Results", txt=NULL)} 
+\usage{tsd(seerSet,brks,trts=NULL,PYM=FALSE) } % ,outDir="~/Results", txt=NULL)} 
 \arguments{
   \item{seerSet}{As made by mk2D.  }
   \item{brks}{A vector of integer break years used to form time since diagnosis bins. }
   \item{trts}{A character vector of treatments of interest. Default of NULL => all levels in canc$trt }
+  \item{PYM}{Set true if in addition to Obs and Exp cases per time interval you also want PY strips
+             for each individual, i.e. first and second cancer info.}
 %  \item{outDir}{folder that will hold the output file.}
 %    \item{txt}{If needed, additional text in file name to make it unique, e.g. for a modification in a
 %               a cancer or treatment definition. }

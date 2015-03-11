@@ -1,5 +1,5 @@
-tsd=function(seerSet,brks=c(0,2,5),trts=NULL){ #, outDir="~/Results",txt=NULL) { # FL for file list
-  surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=L2D=NULL 
+tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE){ #, outDir="~/Results",txt=NULL) { # FL for file list
+#   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=L2D=NULL 
   print(binS<-levels(cut(brks+0.1,breaks=c(brks,100)))) #this is just to make a vector of tsd interval/row names 
   ptm <- proc.time()
   L=with(seerSet, {
@@ -31,7 +31,7 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL){ #, outDir="~/Results",txt=NULL) {
       L[[R]]$mids=mids
       L[[R]]$Obs=Obs
       L[[R]]$Exp=Exp
-      L[[R]]$PyM=PyM
+      if (PYM) L[[R]]$PyM=PyM
     } # loop on R
     L
   })
