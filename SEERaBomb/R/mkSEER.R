@@ -1,13 +1,31 @@
 mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
-                  indices = list(c("sex","race"), c("histo3","seqnum"),  "ICD9"),
-                  writePops=TRUE,writeRData=TRUE,writeDB=TRUE){
-#   require(dplyr); require(LaF); seerHome="~/data/SEER"
-#   outDir="mrgd";outFile="cancDef";writePops=T;writeRData=TRUE;writeDB=TRUE  # for debugging
-#   indices = list(c("sex","race"), "histo2", "histo3", "ICD9")
+                 indices = list(c("sex","race"), c("histo3","seqnum"),  "ICD9"),
+                 writePops=TRUE,writeRData=TRUE,writeDB=TRUE){
+  #   require(dplyr); require(LaF); seerHome="~/data/SEER"
+  #   outDir="mrgd";outFile="cancDef";writePops=T;writeRData=TRUE;writeDB=TRUE  # for debugging
+  #   indices = list(c("sex","race"), "histo2", "histo3", "ICD9")
   
   # gimic to get rid of unwanted notes in R CMD check
   db=reg=race=sex=age=agerec=year=py=agedx=age19=age86=NULL
   
+  mkPopsae=function(popsa) {
+      data(stdUS) #load us 2000 standard population up to 99+ and use it for the extrapolation
+    props=stdUS$prop[86:100]
+    props=props/sum(props)
+    elders=popsa%>%filter(age86==90)%>%group_by(db,reg,race,sex,year) 
+#      head(elders,2)
+#      head(popsa,2)
+    grow=function(x) data.frame(x,age=85.5:99.5,PY=x$py*props) 
+    elders=elders%>%do(grow(.))%>%select(-age86,-py) # elder now has 234*15 = 3510 rows 
+    nms=names(elders)
+    names(elders)[which(nms=="PY")]<-c("py")
+    nelders=popsa%>%filter(age86<90)
+    nms=names(nelders)
+    names(nelders)[which(nms=="age86")]<-c("age")
+    elders=elders[,names(nelders)] # reorder columns to match
+    rbind(nelders,elders) # this now becomes popsa extended (i.e. popsae) 
+  }
+# mkPopsae(popsa)
   seerHome=path.expand(seerHome)
   outD=file.path(seerHome,outDir) 
   outF=file.path(seerHome,outDir,paste0(outFile,".RData")) 
@@ -37,7 +55,7 @@ mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
       f=file.path(i,"singleages.txt") 
       laf<-laf_open_fwf(f,column_types=colTypes,column_widths=colWidths,column_names = colNames2)
       popsaL[[ii]]=tbl_df(laf[,colNames2[-c(2,5)]] )
-
+      
       if (grepl("plus",i)) {#5/21/14 fixed systematic lower 73 incidence due to 73 PY being also in 92
         popgaL[[ii]]=popgaL[[ii]]%>%filter(reg%in%c(29,31,35,37)) 
         popsaL[[ii]]=popsaL[[ii]]%>%filter(reg%in%c(29,31,35,37)) 
@@ -76,7 +94,7 @@ mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
       summarise(py=sum(py))
     popsa=as.data.frame(popsa) # clears everything down to the data.frame
     popsa[popsa$age86==85.5,"age86"]=90 # touch up to better guess of average age of >85 group
-    
+    popsae=mkPopsae(popsa)  # extend popsa to fill in ages 85-99 based on the US STD 2000 population  
     
     delT=proc.time() - ptm  
     cat("The population files of SEER were processed in ",delT[3]," seconds.\n",sep="")
@@ -115,9 +133,10 @@ mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
       mutate(reg=mapRegs(reg)) %>%
       mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[agerec+1]) %>%
       mutate(age86=as.numeric(as.character(cut(agedx,c(0:85,150),right=F,labels=c(0.5:85,90)))))%>%
-#       select(-agerec)%>%
+      #       select(-agerec)%>%
       mutate(sex=factor(sex,labels=c("male","female")))
     canc=mapCancs(canc)
+    canc=mapTrts(canc)
     delT=proc.time() - ptm  
     cat("Cancer files were processed in ",delT[3]," seconds.\n")
   } #if writeRData or writeDB
@@ -134,6 +153,7 @@ mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
     copy_to(my_db,canc, temporary = FALSE, indexes = indices,overwrite=TRUE) 
     copy_to(my_db,popga, temporary = FALSE,overwrite=TRUE)
     copy_to(my_db,popsa, temporary = FALSE,overwrite=TRUE)
+    copy_to(my_db,popsae, temporary = FALSE,overwrite=TRUE)
     #     dbWriteTable(con, "canc", DF,overwrite=TRUE)
     #     dbWriteTable(con, "popga", popga,overwrite=TRUE)
     #     dbWriteTable(con, "popsa", popsa,overwrite=TRUE)
@@ -154,13 +174,15 @@ mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
   if (writePops) {
     popga=tbl_df(popga)
     popsa=tbl_df(popsa)
+    popsae=tbl_df(popsae)
     save(popga,file=file.path(outD,"popga.RData"))  
     save(popsa,file=file.path(outD,"popsa.RData"))  
+    save(popsae,file=file.path(outD,"popsae.RData"))  
   } #only if writePops
-#if(.Platform$OS.type=="unix") {
+  #if(.Platform$OS.type=="unix") {
   s=dir(outD,full.names=T)
   d=file.info(s)[,c("size","mtime")] 
   d$size=paste0(round(d$size/1e6)," M")
   print(d) 
-#}
+  #}
 }
