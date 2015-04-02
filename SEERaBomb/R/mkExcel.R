@@ -2,6 +2,7 @@ mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL) {
   if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else L=seerSet$L[[tsdn]]
   unlink(f<-paste0(outDir,"/",seerSet$bfn,tsdn,txt,".xlsx"))
   wb <- loadWorkbook(f,create=T) 
+   OL=NULL
   intvs=names(L[["noRad"]][["Obs"]]) 
 #   picks=rownames(L[["noRad"]][["Obs"]][[intvs[1]]])
   for (icanc in seerSet$cancerS) {
@@ -28,9 +29,11 @@ mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL) {
     } #rad
     #     writeWorksheet(wb, data.frame("second cancer"=picks,M), sheet = icanc,rownames=1)
     writeWorksheet(wb, cbind("2nd cancer"=seerSet$picks,M), sheet = icanc,rownames=1)
+     OL[[icanc]]=M
     setColumnWidth(wb,sheet = icanc, column = 1, width = 2500)
     for (j in 2:(dim(M)[2]+1)) setColumnWidth(wb,sheet = icanc, column = j, width = 4700)
     #     for (j in 1:(dim(M)[2]+1)) setColumnWidth(wb,sheet = icanc, column = j, width = 5600)
-    saveWorkbook(wb)
   } #icanc
+    saveWorkbook(wb)
+    invisible(OL)
 }

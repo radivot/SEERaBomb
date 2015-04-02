@@ -13,10 +13,10 @@ sheet rows are second cancers, and columns are times intervals since first cance
                cancer or treatment definition. }
 }
 
-\value{None. The output files are for a given sex and race.
-   Second cancer relative risks are given as functions of tsd 
-   and different first cancers and first cancer therapies 
-   (typically irradiated or not). 
+\value{The output files are for a given sex and race.
+   Relative risks by second cancers (as rows) are given as functions of tsd 
+   and different first cancers (sheets) and first cancer therapies 
+   (typically irradiated or not). A corresponding list of dataframes is returned invisibly. 
      }
 
 \note{Examples are not possible without data. After the SEER data is installed, see the script mkRRtsx.R in the examples folder. This function was developed with support from the Cleveland Clinic Foundation.}
