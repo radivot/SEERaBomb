@@ -4,7 +4,7 @@
 \description{Converts a canc data.frame into a list of objects containing information regarding person years at risk
 for a second cancer after having a first cancer, and the number observed, in a defined time since exposure interval
 and after a defined first cancer form of therapy.  }
-\usage{post1PYO(canc, brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd=2012)} 
+\usage{post1PYO(canc, brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd)} 
 \arguments{
   \item{canc}{Input canc data.frame that is already sex, and possibly race, specific, but not cancer specific, as 
               treatment of any first cancer could potentially cause any second cancer.}

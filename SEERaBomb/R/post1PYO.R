@@ -2,7 +2,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd ) {
   # to get rid of check notes. Using list inputs and with will shield these
 #   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=seqnum=sex=race=reg=yrdx1=yrdiff=NULL 
   surv=yrdx=db=casenum=cancer=trt=agedx=yrdx1=seqnum=yrdiff=NULL 
-  yrdx2=cancer1=cancer2=py=year=ageL=ageR=agedx1=NULL 
+  yrdx2=yrdiffn=cancer1=cancer2=py=year=ageL=ageR=agedx1=NULL 
   if(sum(canc$trt==Trt,na.rm=T)==0) stop(paste0("canc must have a trt column containing",Trt))
   binS=levels(cut(brks+0.1,breaks=c(brks,100)))
 #   canc=canc%>%mutate(surv=round(surv/12,3),yrdx=round(yrdx+modx/12,3))%>%     
