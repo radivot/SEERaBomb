@@ -1,4 +1,4 @@
-post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad" ) { 
+post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd ) { 
   # to get rid of check notes. Using list inputs and with will shield these
 #   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=seqnum=sex=race=reg=yrdx1=yrdiff=NULL 
   surv=yrdx=db=casenum=cancer=trt=agedx=yrdx1=seqnum=yrdiff=NULL 
@@ -21,14 +21,17 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad" ) {
 # D2 colnames  db  casenum	reg	race	sex	agedx	yrbrth	seqnum	modx	yrdx	radiatn	surv	cancer	trt
 #   D2=D2%>%select(casenum,cancer,yrdx,agedx,sex,race,yrbrth) # reduce D2 to cols we want to slap on 
   D2=D2%>%select(casenum,cancer,yrdx,agedx) # reduce D2 to cols we want to slap on 
-#   D2=D2%>%select(casenum,cancer,yrdx,agedx) # reduce D2 to cols we want to slap on 
   names(D2)[2:4]=c("cancer2","yrdx2","agedx2") # and rename cols not to join by them
   D12=left_join(D2,D1,by="casenum") #Keeps all D2 rows, inserts missing where D1 doesn't match. 
   D12=D12%>%filter(!is.na(yrdx1)) # removes firsts before 1973
-  D12=D12%>%mutate(yrdiff=cut(yrdx2-yrdx1,breaks=c(-1,brks,100),include.lowest = TRUE))
+  D12=D12%>%mutate(yrdiffn=yrdx2-yrdx1)
+  D12$yrdiffn[D12$yrdiffn==0]=0.33/12 # if first and second are in the same month, assume 1/3 of a month apart
+  D12=D12%>%mutate(yrdiff=cut(yrdiffn,breaks=c(-1,brks,100),include.lowest = TRUE))
+#   D12=D12%>%mutate(yrdiff=cut(yrdx2-yrdx1,breaks=c(-1,brks,100),include.lowest = TRUE))
   D12=D12%>%filter(yrdiff==bin)
   PY0=D0%>%mutate(py=getPY(surv,bin,binS,brks),ageL=agedx+brks[binIndx],year=floor(yrdx+brks[binIndx])) 
-  PY1=D12%>%mutate(py=getPY(yrdx2-yrdx1,bin,binS,brks),ageL=agedx1+brks[binIndx],year=floor(yrdx1+brks[binIndx])) 
+  PY1=D12%>%mutate(py=getPY(yrdiffn,bin,binS,brks),ageL=agedx1+brks[binIndx],year=floor(yrdx1+brks[binIndx])) 
+#   PY1=D12%>%mutate(py=getPY(yrdx2-yrdx1,bin,binS,brks),ageL=agedx1+brks[binIndx],year=floor(yrdx1+brks[binIndx])) 
   PY=rbind(PY0%>%mutate(cancer1=cancer,cancer2="none")%>%select(cancer1,cancer2,py,ageL,year),PY1%>%select(cancer1,cancer2,py,ageL,year))
   #       head(PY)
   n=dim(PY)[1]
@@ -39,7 +42,8 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad" ) {
   LPYinM=lapply(LPYin,as.matrix)
   LPYM=NULL
   # creat a matrix of zeros that is repeatedly the starting point of age-year PY accrual
-  yrs=1973:2011
+#   yrs=1973:2012
+  yrs=1973:yearEnd
   ages=0.5:125.5
   Zs=matrix(0,ncol=length(yrs),nrow=length(ages))
   colnames(Zs)=yrs

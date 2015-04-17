@@ -5,7 +5,7 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE){ #, outDir="~/Results",t
   L=with(seerSet, {
     if (is.null(trts)) trts=levels(canc$trt)
     seerSet$trts=trts
-    yearEnd=max(popsa$year)
+#     yearEnd=max(popsa$year)
     print(trts)
     L=list()
     for (R in trts) 
@@ -21,7 +21,7 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE){ #, outDir="~/Results",t
         #       (bin=binS[1])
         print(bin)
         binIndx=getBinInfo(bin,binS)["index"]
-        L1=post1PYO(canc,brks,binIndx,Trt=R )
+        L1=post1PYO(canc,brks,binIndx,Trt=R,yearEnd )
         #         print(D)
         Exp[[bin]]=getE(L1$LPYM,D,ageStart,ageEnd,yearEnd,cancerS,picks)
         Obs[[bin]]=L1$O[cancerS,picks]

@@ -11,7 +11,8 @@ seerSet<-function(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool") {
     # let year be yrdx as a whole integer to free it to become a real
     canc=canc%>%mutate(year=yrdx) 
     #and convert birth years and ages at diagnosis to best guesses
-    canc=canc%>%mutate(surv=round(surv/12,3),yrdx=round(yrdx+modx/12,3))%>%     
+#     canc=canc%>%mutate(surv=round(surv/12,3),yrdx=round(yrdx+modx/12,3))%>%     
+    canc=canc%>%mutate(surv=round((surv+0.5)/12,3),yrdx=round(yrdx+(modx-0.5)/12,3))%>%    #modx=1=January 
       select(-modx)%>%
       mutate(yrbrth=yrbrth+0.5,agedx=agedx+0.5)
     canc=canc%>%mutate(age=agedx)%>%select(-age86) 
@@ -29,7 +30,7 @@ seerSet<-function(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool") {
 #   canc$race=factor(canc$race) # get rid of any removed race levels
   canc=canc%>%select(-sex,-race,-yrbrth)  
   # and package it all up
-  seerSet=list(canc=canc,popsa=popsa,ageStart=ageStart,ageEnd=ageEnd,sex=Sex,race=Race,cancerS=cancerS)
+  seerSet=list(canc=canc,popsa=popsa,ageStart=ageStart,ageEnd=ageEnd,sex=Sex,race=Race,cancerS=cancerS,yearEnd=max(popsa$year))
   class(seerSet)="seerSet"
   seerSet
 } # return a list that can be attached or with-ed in other functions
