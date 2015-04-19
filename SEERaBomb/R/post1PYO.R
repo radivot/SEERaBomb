@@ -8,9 +8,8 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd ) {
 #   canc=canc%>%mutate(surv=round(surv/12,3),yrdx=round(yrdx+modx/12,3))%>%     
 #     select(db,casenum:yrdx,radiatn,surv,cancer,trt)%>%
 #     mutate(yrbrth=yrbrth+0.5,agedx=agedx+0.5)
-  print(head(canc,2))
   bin=binS[binIndx]
-  print(bin)
+#   print(bin)
   (LL=getBinInfo(bin,binS)["LL"])
   #       D$cancer=factor(D$cancer) # get rid of opposite sex cancer types
   D0=canc%>%filter(seqnum==0,surv<200,surv>LL,trt==Trt)
@@ -48,11 +47,22 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd ) {
   Zs=matrix(0,ncol=length(yrs),nrow=length(ages))
   colnames(Zs)=yrs
   rownames(Zs)=ages
-  head(Zs)
+#   head(Zs)
+#   print(tail(D12,2))
+# print(sapply(LPYinM,dim))
+
+#  print(gc())
   for (i in names(LPYinM)) {
     PYM=Zs+0   # fake out system to allocate fresh memory for each instance of the matrix, i.e. each first cancer
+#     print(i)
+#     print(head(LPYinM[[i]]))
+#     print(head(PYM))
     LPYM[[i]]=fillPYM(LPYinM[[i]],PYM)
+#     print(head(LPYM[[i]]))
+     rm(PYM) #this seemed to help it have fewer crashes
+#      gc()
   } 
+
   LD12=split(D12,D12$cancer1) # for getting observed cases in this interval later. Split on first => list names of firsts
 #   lapply(LD12,function(x) table(x$cancer2)) #thyroid first yields 2 AML seconds and 25 thyroid
   O=t(sapply(LD12,function(x) table(x$cancer2)))

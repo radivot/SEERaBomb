@@ -10,11 +10,11 @@ seerSet<-function(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool") {
   if (!"age"%in%names(canc)) { #assume  first time here
     # let year be yrdx as a whole integer to free it to become a real
     canc=canc%>%mutate(year=yrdx) 
-    #and convert birth years and ages at diagnosis to best guesses
+#      canc$surv[canc$surv==0]=0.5   # push zero PY to 1 month to get empty py delivered at same times as 2nd cancers
 #     canc=canc%>%mutate(surv=round(surv/12,3),yrdx=round(yrdx+modx/12,3))%>%     
     canc=canc%>%mutate(surv=round((surv+0.5)/12,3),yrdx=round(yrdx+(modx-0.5)/12,3))%>%    #modx=1=January 
       select(-modx)%>%
-      mutate(yrbrth=yrbrth+0.5,agedx=agedx+0.5)
+      mutate(yrbrth=yrbrth+0.5,agedx=agedx+0.5) #convert birth years and ages at diagnosis to best guesses
     canc=canc%>%mutate(age=agedx)%>%select(-age86) 
   }  
   
@@ -27,7 +27,7 @@ seerSet<-function(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool") {
   canc$cancer=factor(canc$cancer) # get rid of any opposite sex cancer type levels
   cancerS=levels(canc$cancer)
   
-#   canc$race=factor(canc$race) # get rid of any removed race levels
+  #   canc$race=factor(canc$race) # get rid of any removed race levels
   canc=canc%>%select(-sex,-race,-yrbrth)  
   # and package it all up
   seerSet=list(canc=canc,popsa=popsa,ageStart=ageStart,ageEnd=ageEnd,sex=Sex,race=Race,cancerS=cancerS,yearEnd=max(popsa$year))
