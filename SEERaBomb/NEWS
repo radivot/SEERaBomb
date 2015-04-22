@@ -1,4 +1,22 @@
-CHANGES IN VERSION 2014.3 (Third version known to work with the SEER release of 2014)
+CHANGES IN VERSION 2015.1 (First version working with the SEER release of 2015)
+------------------------
+
+NEW FEATURES
+
+    o tsd (time since diagnosis) replaces tsx (time since exposure) since not all SEER pts are treated/exposed. 
+
+    o mkSEER (mkSEER2->mkSEER and mkSEER>-mkSEERold) uses stdUS 2000 to extend single age popsa to popsae. It also 
+      makes a trt column for radiation therapy by default.
+
+
+Notes
+    o random crashes from the C++ code have been debugged. Variants of fillPYM in straight C and R used to debug it
+      are now in the new folder doc/extraFuncs
+
+
+
+
+CHANGES IN VERSION 2014.3 
 ------------------------
 
 NEW FEATURES

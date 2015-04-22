@@ -20,10 +20,17 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE){ #, outDir="~/Results",t
       {
         #       (bin=binS[1])
         print(bin)
+#         print("new")
         binIndx=getBinInfo(bin,binS)["index"]
+#        print("prePost")
+#         L1=post1PYO(seerSet$canc,brks,binIndx,Trt=R,seerSet$yearEnd )
         L1=post1PYO(canc,brks,binIndx,Trt=R,yearEnd )
         #         print(D)
+#        print("outOfPost")
+#         Exp[[bin]]=getE(L1$LPYM,seerSet$D,seerSet$ageStart,seerSet$ageEnd,seerSet$yearEnd,seerSet$cancerS,seerSet$picks)
+#        print("outOfGetE")
         Exp[[bin]]=getE(L1$LPYM,D,ageStart,ageEnd,yearEnd,cancerS,picks)
+#         Obs[[bin]]=L1$O[seerSet$cancerS,seerSet$picks]
         Obs[[bin]]=L1$O[cancerS,picks]
         PyM[[bin]]=L1$PY
         mids=c(mids,L1$binMidPnt)
@@ -33,8 +40,8 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE){ #, outDir="~/Results",t
       L[[R]]$Exp=Exp
       if (PYM) L[[R]]$PyM=PyM
     } # loop on R
-    L
-  })
+     L
+   })
   tsdn=paste0("b",paste(brks,collapse="_"))
 #   seerSet$bfn=paste0(seerSet$bfn,paste0("b",paste(brks,collapse="_")),txt)
   if(is.null(seerSet$L)) seerSet$L=list() # set to a blank list if it was never filled

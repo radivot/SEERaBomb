@@ -13,7 +13,7 @@ fillPYM(PY,PYM)
 
 \arguments{
   \item{PY}{Tall input matrix of individual survival time person years at risk.  }
-  \item{PYM}{PY histogram or coverage matrix with age and calendar years both a single year resolution.  }
+  \item{PYM}{PY histogram or coverage matrix with age and calendar years both at single year resolution.  }
 }
 
 \value{The second argument is the output. The matrix should be filled with zeros in R before calling this 
@@ -24,10 +24,15 @@ function. After the call, it will be filled. It works like this because it is im
 
 
 \examples{
-(mats=matrix(0,ncol=20,nrow=70))
-(PYtest=structure(c(3.5, 11.25, 51.5, 58.5, 1974, 1976, 55, 69.75),.Dim = c(2L,4L), 
-                  .Dimnames=list(c("1","10"),c("py", "ageL", "year", "ageR"))))
-fillPYM(PYtest, mats)
+  yrs=1973:1990
+  ages=0.5:70.5
+  mat=matrix(0,ncol=length(yrs),nrow=length(ages))
+  colnames(mat)=yrs
+  rownames(mat)=ages
+(PYin=structure(c(3.5, 11.25,5.2, 51.5, 58.5,0.75, 1974, 1976,1978),.Dim = c(3L,3L), 
+                  .Dimnames=list(c("1","2","3"),c("py", "ageL", "year"))))
+fillPYM(PYin, mat)
+
 \dontrun{
 }
 }
