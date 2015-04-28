@@ -1,4 +1,4 @@
-mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL) {
+mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL,flip=FALSE) {
   if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else L=seerSet$L[[tsdn]]
   unlink(f<-paste0(outDir,"/",seerSet$bfn,tsdn,txt,".xlsx"))
   wb <- loadWorkbook(f,create=T) 
@@ -12,12 +12,18 @@ mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL) {
     for (R in names(L)) {
       D=NULL
       for (intv in intvs) {
-        O=L[[R]][["Obs"]][[intv]][icanc,,drop=F]
-        E=L[[R]][["Exp"]][[intv]][icanc,,drop=F]
+        if (flip) {
+          O=L[[R]][["Obs"]][[intv]][,icanc,drop=F]
+          E=L[[R]][["Exp"]][[intv]][,icanc,drop=F]
+        } else {
+          O=L[[R]][["Obs"]][[intv]][icanc,,drop=F]
+          E=L[[R]][["Exp"]][[intv]][icanc,,drop=F]
+        }
         RR=O/E
         LL=qchisq(.025,2*O) /(2*E)
         UL=qchisq(.975,2*O+2)/(2*E)
-        col=as.data.frame(round(cbind(t(RR),t(LL),t(UL),O=t(O),E=t(E)),2))
+        if (flip) col=as.data.frame(round(cbind(RR,LL,UL,O=O,E=E),2)) else
+          col=as.data.frame(round(cbind(t(RR),t(LL),t(UL),O=t(O),E=t(E)),2))
         names(col)=c("RR","LL","UL","O","E")
         D=cbind(D,paste0(col$RR,"(",col$LL,",",col$UL,") O=",O))
         #     print(R)
