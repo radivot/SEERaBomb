@@ -27,11 +27,11 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE){ #, outDir="~/Results",t
         L1=post1PYO(canc,brks,binIndx,Trt=R,yearEnd )
         #         print(D)
 #        print("outOfPost")
-#         Exp[[bin]]=getE(L1$LPYM,seerSet$D,seerSet$ageStart,seerSet$ageEnd,seerSet$yearEnd,seerSet$cancerS,seerSet$picks)
+#         Exp[[bin]]=getE(L1$LPYM,seerSet$D,seerSet$ageStart,seerSet$ageEnd,seerSet$yearEnd,seerSet$cancerS,seerSet$secondS)
 #        print("outOfGetE")
-        Exp[[bin]]=getE(L1$LPYM,D,ageStart,ageEnd,yearEnd,cancerS,picks)
-#         Obs[[bin]]=L1$O[seerSet$cancerS,seerSet$picks]
-        Obs[[bin]]=L1$O[cancerS,picks]
+        Exp[[bin]]=getE(L1$LPYM,D,ageStart,ageEnd,yearEnd,cancerS,secondS)
+#         Obs[[bin]]=L1$O[seerSet$cancerS,seerSet$secondS]
+        Obs[[bin]]=L1$O[cancerS,secondS]
         PyM[[bin]]=L1$PY
         mids=c(mids,L1$binMidPnt)
       } # loop on tsx bins

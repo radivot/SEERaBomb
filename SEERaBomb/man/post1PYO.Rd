@@ -9,9 +9,9 @@ and after a defined first cancer form of therapy.  }
   \item{canc}{Input canc data.frame that is already sex, and possibly race, specific, but not cancer specific, as 
               treatment of any first cancer could potentially cause any second cancer.}
   \item{brks}{A vector of integer break years used to form time since exposure bins. }
-  \item{binIndx}{The index of the interval for which py are to be computed by calling this function (i.e. post1PY).}
+  \item{binIndx}{The index of the interval for which py are to be computed by calling this function.}
   \item{Trt}{The treatment for the first cancers. Note that the second cancer treatment is irrelevant here, so 
-  the input canc must not be reduced to only cancers of a certain treatment type. }
+  the input canc must not be reduced to only certain treatment types. }
   \item{yearEnd}{This is taken from the seerSet object.}
 }
 
@@ -20,7 +20,7 @@ element is a matrix of cases observed in this interval after this treatment, whe
 are second cancers. The third element is a trivial scalar, the py-weighted midpoint of the time interval selected.
      }
 
-\note{Examples are not possible without data. After the SEER data is installed, see the script mkRRtsx.R in the examples folder. This function was developed with support from the Cleveland Clinic Foundation.}
+\note{After the SEER data is installed, see the script mkRRtsx.R in the examples folder. This function was developed with support from the Cleveland Clinic Foundation.}
 \author{Tom Radivoyevitch (radivot@ccf.org)}
 \seealso{\code{\link{SEERaBomb-package}, \link{getE},\link{seerSet}} }
 \keyword{IO}

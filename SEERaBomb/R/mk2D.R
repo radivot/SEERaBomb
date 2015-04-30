@@ -1,17 +1,17 @@
-mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,picks=NULL) {
+mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secondS=NULL) {
   if(!file.exists(outDir))  {   print(paste("Creating directory",outDir))
                                 dir.create(outDir,recursive=TRUE)    }
 #   require(dplyr)
 #   require(mgcv) # Mixed GAM Computation Vehicle with GCV/AIC/REML smoothness estimation
   ptm <- proc.time()
   seerSet=with(seerSet, {
-    if (is.null(picks)) picks=cancerS
-    seerSet$picks=picks
-    L2D=vector(mode="list",length=length(picks)) 
-    names(L2D)=picks
+    if (is.null(secondS)) secondS=cancerS
+    seerSet$secondS=secondS
+    L2D=vector(mode="list",length=length(secondS)) 
+    names(L2D)=secondS
     L2Dp=L2D; D=NULL; 
     knotsIn=knots
-    for (i in picks) {
+    for (i in secondS) {
       knots=knotsIn
       if (i=="ALL" & ageStart<15) knots=20   # make some knot numbers conditional, like this
       if (i=="otherCIS" & knots<10) knots=10   # 5 doesn't cut it for this, 10 does
@@ -37,7 +37,7 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,picks
       prd=as.numeric(predict(L2D[[i]]))
       L2Dp[[i]]=cbind(cancer=i,X,Ecases=exp(prd),Eincid=1e5*exp(prd)/X$py  )
       D=rbind(D,L2Dp[[i]])
-    } # i loop on cancers in picks
+    } # i loop on cancers in secondS
     bfn<-paste0(substr(race,1,1),toupper(substr(sex,1,1)),"s",ageStart,"e",ageEnd,txt) #base of file names
     seerSet$D=tbl_df(D)
     seerSet$bfn=bfn

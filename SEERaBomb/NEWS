@@ -3,7 +3,7 @@ CHANGES IN VERSION 2015.1 (First version working with the SEER release of 2015)
 
 NEW FEATURES
 
-    o tsd (time since diagnosis) replaces tsx (time since exposure) since not all SEER pts are treated/exposed. 
+    o simSeerSet simulates a seerSet class object for two cancer types, A and B. 
 
     o mkSEER (mkSEER2->mkSEER and mkSEER>-mkSEERold) uses stdUS 2000 to extend single age popsa to popsae. It also 
       makes a trt column for radiation therapy by default.
@@ -11,7 +11,7 @@ NEW FEATURES
 
 Notes
     o random crashes from the C++ code have been debugged. Variants of fillPYM in straight C and R used to debug it
-      are now in the new folder doc/extraFuncs
+      are now in the folder doc/extraFuncs
 
 
 
@@ -21,17 +21,19 @@ CHANGES IN VERSION 2014.3
 
 NEW FEATURES
 
+    o added seetSet to make objects of class seerSet for the pipeline seerSet->mk2D->tsd.    
+
     o added mk2D that makes two-dimensional spline fits of incidence versus age and calendar year and plot2D to look at them.    
 
-    o added tsx and tsx2 (using getE and getE2, respectively) to go through time since exposures and exposure types
+    o added tsd to compute RR over various time since diagnosis intervals
       and mkExcel to look at the results.
 
-    o added several helper functions: getBinInfo, getPY, post1PYO, getE, getE2    
+    o added helper functions: getBinInfo, getPY, post1PYO, getE    
 
     o mapCancs is now called within mkSEER to make a cancer field in those files as well.  
 
 Notes
-    o Month is no longer in the version number and year now reflects the SEER data release year rather than the SEERaBomb release year.    
+    o Month is no longer in the package version number and year now reflects the SEER data release year rather than the SEERaBomb release year.    
 
     o published paper scripts now use the cancer field instead of histo2 (which is no longer included in pickfields by default) and  plots now also use quartz() when on a mac. The old courses folder is now called examples; scripts therein were updated
       and some were removed. 
