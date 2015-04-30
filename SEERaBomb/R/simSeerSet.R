@@ -1,7 +1,11 @@
-simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-6,kb=0.04,Ab=1e-6,Rba=1e-3) {
+simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-6,kb=0.04,Ab=1e-6,Rba=1e-3,delay=1,period=4,shape=4) {
   #   agedx=age=age86=canc=yrdx=sex=race=surv=modx=yrbrth=NULL 
     cancers=NULL 
     data(stdUS)
+    if (shape<1) {
+      shape=1
+      print("Warning: shape must be 1 or higher. It was less and is being set to 1. ")
+    }
 #    N=2e9;yearEnd=2012;ka=1e-6;kb=0.04;Ab=1e-6;Rba=1e-3
   popsa=merge(data.frame(age=0.5:99.5),data.frame(year=1973:yearEnd))
   popsa$py=N/40*SEERaBomb::stdUS$prop[round(popsa$age+0.5)]
@@ -27,16 +31,25 @@ simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-6,kb=0.04,Ab=1e-6,Rba=1e-3) {
   sum(cancA$surv)
   cancA$casenum=1:dim(cancA)[1]
   cancA$seqnum=0
-  cancA$seconds=rpois(dim(cancA)[1],Rba*cancA$surv)
+#   cancA$seconds=rpois(dim(cancA)[1],Rba*cancA$surv)
+  cancA$seconds=rpois(dim(cancA)[1],10*Ab*exp(kb*cancA$age)*cancA$surv)
   sum(cancA$seconds)
   cancA$seqnum[cancA$seconds>0]=1
   cancBA=cancA[cancA$seconds>0,]
   cancBA$seqnum=2
   cancBA$cancer="B"
-  cancBA$surv=6 # big enough to die after 5 years
-  cancBA$yrdx=cancBA$yrdx+5*rbeta(dim(cancBA)[1],4,2)
+#   cancBA$surv=delay+period+1 # big enough to die after the cancer
+#   cancBA$yrdx=cancBA$yrdx+delay+period*rbeta(dim(cancBA)[1],shape,shape)
+#   cancBA$yrdx=cancBA$yrdx+runif(dim(cancBA)[1],delay,delay+period)
+#   cancBA$yrdx=cancBA$yrdx+pmin(runif(dim(cancBA)[1],delay,delay+period),cancBA$surv)
+   cancBA$yrdx=cancBA$yrdx+pmin(delay+period*rbeta(dim(cancBA)[1],shape,shape),cancBA$surv)
   cancBA$seconds=NULL
   cancA$seconds=NULL
+#   hist(rbeta(1e4,1,1))
+#   hist(rbeta(1e4,2,2))
+#    hist(rbeta(1e4,4,4))
+#    hist(rbeta(1e4,40,40))
+#     hist(rbeta(1e4,0,0))
 #   head(cancBA)
 #   head(cancA[60:65,])
   cancA=rbind(cancA,cancBA)
