@@ -12,7 +12,6 @@
 sf (san francisco) and "1520" for dM (detroit Michigan), or just the symbol if the rowname is given.
 Note that city characters are in lower case and state characters are in upper case.}
 
-\note{This function was developed with support from the Taussig Cancer Institute of the Cleveland Clinic Foundation.}
 \author{Tom Radivoyevitch (radivot@ccf.org)}
 \seealso{\code{\link{SEERaBomb-package}, \link{mapCancs}} }
 \examples{

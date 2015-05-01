@@ -13,7 +13,6 @@ person year (PY) contributions to a particular time since diagnosis (tsd) interv
 
 \value{A vector as long as the survival vector input of PY at risk in a particular interval.}
 
-\note{This function was developed with support from the Cleveland Clinic Foundation.}
 \author{Tom Radivoyevitch (radivot@ccf.org)}
 \seealso{\code{\link{SEERaBomb-package}, \link{getBinInfo}} }
 \examples{

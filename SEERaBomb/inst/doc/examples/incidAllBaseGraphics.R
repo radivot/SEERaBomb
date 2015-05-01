@@ -36,7 +36,8 @@ for (k in c(1:9))
 	if (k==9) { canc=c("Bladder","Kidney"); code=list(c(1880,1889),c(1890,1891))}
 	for (j in 1:length(code))
 	{	
-		windows(width=12,height=5)
+# 		windows(width=12,height=5)
+		quartz(width=12,height=5)
 		par(mfrow=c(1,3),mar=c(4.7,0,2,0),oma=c(0,7.1,4,0),lwd=3,cex.lab=2.8,cex.axis=2.5,cex.main=2.8)
 		Indx=(DF$ICD9>=code[[j]][1])&(DF$ICD9<=code[[j]][2])&(DF$numprims==1) 
 		incdf=incdm=vector(3,mode="list"); 

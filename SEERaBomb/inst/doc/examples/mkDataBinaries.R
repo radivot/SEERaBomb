@@ -4,7 +4,7 @@ library(SEERaBomb)
 # (df=getFields("~/data/SEER")) # this doesn't fly in windows since ~ maps to /users/radivot/documents
 (df=getFields("/Users/radivot/data/SEER")) # so use absolute path. Here df holds the full set of data field (df) options
 (rdf=pickFields(df)) # this is a reduced data field (rdf) dataframe (note fewer rows AND one extra integer/string column)
-# for (i in c("73","92","00")) mkSEERold(df,dataset=i,mkDFs=T) #(old way) populates binaries into these folders
+# for (i in c("73","92","00")) mkSEERold(rdf,dataset=i,mkDFs=T) #(old way) populates binaries into these folders
 mkSEER(rdf,seerHome="/Users/radivot/data/SEER") #(new way) makes merged (all cancer) binaries in SEER data folder mrgd
 
 # these are the default picks for pickFields (see its help page)
