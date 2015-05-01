@@ -6,7 +6,7 @@ simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,Rba=1e-3,delay=1
     shape=1
     print("Warning: shape must be 1 or higher. It was less and is being set to 1. ")
   }
-#   N=2e9;yearEnd=2012;ka=1e-5;kb=0.04;Ab=1e-5;Rba=1e-3;delay=1;period=4;shape=1;library(dplyr)
+  #   N=2e9;yearEnd=2012;ka=1e-5;kb=0.04;Ab=1e-5;Rba=1e-3;delay=1;period=4;shape=1;library(dplyr)
   popsa=merge(data.frame(age=0.5:99.5),data.frame(year=1973:yearEnd))
   popsa$py=N/40*SEERaBomb::stdUS$prop[round(popsa$age+0.5)]
   #   sum(popsa$py)
@@ -17,92 +17,93 @@ simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,Rba=1e-3,delay=1
   sum(A$cancers)
   cancA=A[rep(seq_len(nrow(A)), times=A$cancers),]%>%select(-cancers)
   head(cancA,10)
-  # the approach in this chunk is way too slow
-  #   A=A%>%group_by(year,age) 
-  #   myGrow=function(d) {
-  #     D=data.frame(NULL)
-  #     if (d$cancers>0) for (i in 1:d$cancers) D=rbind(D,d)
-  #     D   }
-  #   cancA=A%>%do(myGrow(.))%>%select(-cancers)
   #   cancA$surv=rexp(dim(cancA)[1],rate=0.1)
   cancA$surv=runif(dim(cancA)[1],0,20)
-  #   mean(canc$surv)
-  #   median(canc$surv)
+  mean(cancA$surv)
   cancA$cancer="A"
+  trts=c("rad","noRad")
+  cancA$trt=sample(trts,dim(cancA)[1],replace=T)
   cancA$yrdx=cancA$year+runif(dim(cancA)[1],max=0.9999)
   cancA$casenum=1:dim(cancA)[1]
   cancA$seqnum=0
+  table(cancA$trt)
+  #   rownames(cancA)=cancA$casenum  # can't do as rownames since IDs are not unique
+  head(cancA)
   
-  
-  ######first treatment induced B cases
-  py=cancA$surv
-  head(py,40)
+  ###### treatment of A with rad induces B
+  cancAr=cancA%>%filter(trt=="rad")
+  py=cancAr$surv
   py=ifelse(py<=delay,0,py-delay)
   py=ifelse(py>=period,period,py)
-  sum(py==0)
-  #   subCancA=cancA[py>0,]
-  #   py=py[py>0,]
-  #   head(py,40)
-  pyi=floor(py)
-  #   sum(pyi==1)
-  pyr=py-pyi
-  #   head(pyi,40)
-  #   head(pyr,40)
-  #    cancA$seconds=rpois(dim(cancA)[1],Rba*py)
-  #   cancA$seconds=rpois(dim(cancA)[1],5*Ab*exp(kb*(cancA$age+(py+delay)/2))*py) #induced is 5x > background risk
-  myexpi=function(age1,pyi1) sum(exp(kb*(age1+0.5+delay + 0:(pyi1-1))))
-  expis=mapply(myexpi,cancA$age,pyi)
-  myexpr=function(age1,pyi1,pyr1) pyr1*exp(kb*(age1+delay+pyi1+pyr1/2))
-  exprs=mapply(myexpr,cancA$age,pyi,pyr)
-  cancA$seconds=rpois(dim(cancA)[1],5*Ab*(expis+exprs) ) 
-  sum(cancA$seconds)
-  table(cancA$seconds,cut(py,breaks=seq(0,4,0.1)))
-  cancA$seqnum[cancA$seconds>0]=1
-  cancBA=cancA[cancA$seconds>0,]
-  cancBA$seqnum=2
-  cancBA$cancer="B"
+  cancAr$seconds=rpois(dim(cancAr)[1],4*(Ab/kb)*(exp(kb*(cancAr$age+py+delay))-exp(kb*(cancAr$age+delay)) ) )
+  sum(cancAr$seconds)
+  cancAr$seqnum[cancAr$seconds>0]=1
+  cancBAr=cancAr[cancAr$seconds>0,]
+  cancBAr$seqnum=2
+  cancBAr$cancer="B"
+  cancBAr$trt="noRad"
+  
+  py=py[cancAr$seconds>0]
+  Y=runif(dim(cancBAr)[1],Ab*exp(kb*(cancBAr$age+delay)),Ab*exp(kb*(cancBAr$age+py+delay)))
+  ages=(log(Y)-log(Ab))/kb
+  cancBAr$yrdx=cancBAr$yrdx+ages-cancBAr$age
+  
+  
   #   cancBA$yrdx=cancBA$yrdx+delay+period*rbeta(dim(cancBA)[1],shape,shape)
-  #   cancBA$yrdx=cancBA$yrdx+pmin(runif(dim(cancBA)[1],delay,delay+period),cancBA$surv)
   #   cancBA$yrdx=cancBA$yrdx+runif(dim(cancBA)[1],delay+1e-4,delay+period-1e-4)
-  cancBA$yrdx=cancBA$yrdx+runif(dim(cancBA)[1],delay,     delay+period)
-  cancBA$seconds=NULL
-  cancA$seconds=NULL
+  #   cancBA$yrdx=cancBA$yrdx+     runif(dim(cancBA)[1],delay,delay+period)
+  #   cancBA$yrdx=cancBA$yrdx+pmin(runif(dim(cancBA)[1],delay,delay+period),cancBA$surv)
+  cancBAr$seconds=NULL
+  cancAr$seconds=NULL
+  cancA[cancA$casenum%in%cancAr$casenum,]=cancAr
   #   hist(rbeta(1e4,1,1))
   #    hist(rbeta(1e4,4,4))
-  cancA=rbind(cancA,cancBA)
+  
   
   ######now background B after A cases
   py=cancA$surv
-  pyi=floor(py)
-  pyr=py-pyi
-  expis=mapply(myexpi,cancA$age,pyi)
-  exprs=mapply(myexpr,cancA$age,pyi,pyr)
-  cancA$seconds=rpois(dim(cancA)[1],Ab*(expis+exprs) ) 
-#   sum(cancA$seconds)
-#   table(cancA$seconds,cut(py,breaks=seq(0,4,0.1)))
+  cancA$seconds=rpois(dim(cancA)[1],(Ab/kb)*(exp(kb*(cancA$age+py))-exp(kb*cancA$age) ) )
+  sum(cancA$seconds)
+  #   table(cancA$seconds,cut(py,breaks=seq(0,4,0.1)))
   cancA$seqnum[cancA$seconds>0]=1
   cancBA=cancA[cancA$seconds>0,]
+  py=py[cancA$seconds>0]
   cancBA$seqnum=2
   cancBA$cancer="B"
-  cancBA$yrdx=cancBA$yrdx+runif(dim(cancBA)[1],0,py)
+  Y=runif(dim(cancBA)[1],Ab*exp(kb*cancBA$age),Ab*exp(kb*(cancBA$age+py)))
+  ages=(log(Y)-log(Ab))/kb
+  cancBA$yrdx=cancBA$yrdx+ages-cancBA$age
+  #   range(ages)
+  #   head(cancBA)
+  #   cancBA$yrdx=cancBA$yrdx+runif(dim(cancBA)[1],0,py)
   cancBA$seconds=NULL
   cancA$seconds=NULL
-# head(cancBA)
-# head(cancA)
-  cancA=rbind(cancA,cancBA)
+  head(cancBA)
+  # head(cancA)
+  
   
   ######now background B
   B=cbind(popsa[,1:2],cancers=rpois(dim(popsa)[1],Ab*exp(kb*popsa$age)*popsa$py))
   cancB=B[rep(seq_len(nrow(B)), times=B$cancers),]%>%select(-cancers)
   cancB$surv=rexp(dim(cancB)[1],rate=0.5)
   cancB$cancer="B"
+  cancB$trt="noRad"
   cancB$yrdx=cancB$year+runif(dim(cancB)[1],max=0.9999)
-  cancB$casenum=1:dim(cancB)[1]
+  cancB$casenum=(1e7+1):(1e7+dim(cancB)[1])
   cancB$seqnum=0
+  head(cancB)
   
-  ######  merge A and B
-  canc=rbind(cancA,cancB)
-  canc$trt="noRad"
+  ######  merge in B
+  
+  
+  canc=rbind(cancA,cancBAr)
+  canc=rbind(canc,cancBA)
+  canc=rbind(canc,cancB)
+  head(canc)
+  tail(canc)
+  table(canc$seqnum)
+  
+  
   canc$trt=factor(canc$trt)
   canc$cancer=factor(canc$cancer)
   head(canc)
