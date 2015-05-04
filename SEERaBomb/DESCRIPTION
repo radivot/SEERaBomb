@@ -1,7 +1,7 @@
 Package: SEERaBomb
-Title: SEER and A-Bomb Data Analysis Tools
+Title: SEER and Atomic Bomb Survivor Data Analysis Tools
 Version: 2015.1
-Date: 2015-5-1
+Date: 2015-5-4
 Author: Tomas Radivoyevitch
 Description: Creates SEER (Surveillance, Epidemiology and End Results) and A-bomb data binaries 
              from ASCII sources and provides tools for estimating SEER second cancer risks.      

@@ -1,12 +1,12 @@
-simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,delay=1,period=4) {
+simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,tauA=10,tauB=1,delay=1,period=4) {
   #   agedx=age=age86=canc=yrdx=sex=race=surv=modx=yrbrth=NULL 
   trt=cancers=NULL 
-  data(stdUS)
+  data(stdUS, envir = environment())
   #   if (shape<1) {
   #     shape=1
   #     print("Warning: shape must be 1 or higher. It was less and is being set to 1. ")
   #   }
-  #   N=2e9;yearEnd=2012;ka=1e-5;kb=0.04;Ab=1e-5;Rba=1e-3;delay=1;period=4;shape=1;library(dplyr)
+  #   N=2e9;yearEnd=2012;ka=1e-5;kb=0.04;Ab=1e-5;tauA=10;tauB=5;delay=1;period=4;shape=1;library(dplyr)
   popsa=merge(data.frame(age=0.5:99.5),data.frame(year=1973:yearEnd))
   popsa$py=N/40*SEERaBomb::stdUS$prop[round(popsa$age+0.5)]
   #   sum(popsa$py)
@@ -16,7 +16,7 @@ simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,delay=1,period=4
   head(A)
   sum(A$cancers)
   cancA=A[rep(seq_len(nrow(A)), times=A$cancers),]%>%select(-cancers)
-  cancA$surv=rexp(dim(cancA)[1],rate=0.1)
+  cancA$surv=rexp(dim(cancA)[1],rate=1/tauA)
   cancA$yrdx=cancA$year+runif(dim(cancA)[1],max=0.9999)
   head(cancA,10)
   #   cancA$surv=runif(dim(cancA)[1],0,20)
@@ -91,7 +91,7 @@ simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,delay=1,period=4
   ######now background B
   B=cbind(popsa[,1:2],cancers=rpois(dim(popsa)[1],Ab*exp(kb*popsa$age)*popsa$py))
   cancB=B[rep(seq_len(nrow(B)), times=B$cancers),]%>%select(-cancers)
-  cancB$surv=rexp(dim(cancB)[1],rate=0.2)
+  cancB$surv=rexp(dim(cancB)[1],rate=1/tauB)
   cancB$yrdx=cancB$year+runif(dim(cancB)[1],max=0.9999)
   cancB=trimSurv(cancB)
   cancB$cancer="B"
