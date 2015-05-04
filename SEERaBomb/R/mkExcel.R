@@ -1,9 +1,10 @@
 mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL,flip=FALSE) {
   if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else L=seerSet$L[[tsdn]]
+  if (!dir.exists(outDir)) dir.create(outDir,recursive=T)
   unlink(f<-paste0(outDir,"/",seerSet$bfn,tsdn,txt,ifelse(flip,"F",""),".xlsx"))
   wb <- loadWorkbook(f,create=T) 
    OL=NULL
-  intvs=names(L[["noRad"]][["Obs"]]) 
+  intvs=names(L[[1]][["Obs"]]) 
 #   picks=rownames(L[["noRad"]][["Obs"]][[intvs[1]]])
   for (icanc in seerSet$cancerS) {
     #    icanc="prostate"
@@ -13,13 +14,16 @@ mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL,flip=FALSE) {
       D=NULL
       for (intv in intvs) {
         if (flip) {
-          O=L[[R]][["Obs"]][[intv]][,icanc,drop=F]
-          E=L[[R]][["Exp"]][[intv]][,icanc,drop=F]
+          O=L[[R]][["Obs"]][[intv]][,icanc,drop=FALSE]
+          E=L[[R]][["Exp"]][[intv]][,icanc,drop=FALSE]
         } else {
-          O=L[[R]][["Obs"]][[intv]][icanc,,drop=F]
-          E=L[[R]][["Exp"]][[intv]][icanc,,drop=F]
+          O=L[[R]][["Obs"]][[intv]][icanc,,drop=FALSE]
+          E=L[[R]][["Exp"]][[intv]][icanc,,drop=FALSE]
         }
+        print(O)
+        print(E)
         RR=O/E
+        print(RR)
         LL=qchisq(.025,2*O) /(2*E)
         UL=qchisq(.975,2*O+2)/(2*E)
         if (flip) col=as.data.frame(round(cbind(RR,LL,UL,O=O,E=E),2)) else
@@ -34,7 +38,8 @@ mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL,flip=FALSE) {
       M=cbind(M,D)
     } #rad
     #     writeWorksheet(wb, data.frame("second cancer"=picks,M), sheet = icanc,rownames=1)
-    writeWorksheet(wb, cbind("2nd cancer"=seerSet$picks,M), sheet = icanc,rownames=1)
+    if (flip) writeWorksheet(wb, cbind("1st cancer"=seerSet$cancerS,M), sheet = icanc,rownames=1) else
+              writeWorksheet(wb, cbind("2nd cancer"=seerSet$cancerS,M), sheet = icanc,rownames=1)
      OL[[icanc]]=M
     setColumnWidth(wb,sheet = icanc, column = 1, width = 2500)
     for (j in 2:(dim(M)[2]+1)) setColumnWidth(wb,sheet = icanc, column = j, width = 4700)

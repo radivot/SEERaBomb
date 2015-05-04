@@ -1,7 +1,7 @@
 \name{pickFields}
 \alias{pickFields}
 \title{Pick SEER fields of interest}
-\description{ This function truncates the full set of SEER data fields into a smaller set of interest.}
+\description{ Reduces the full set of SEER data fields to a smaller set of interest.}
 \usage{pickFields(sas,picks=c("casenum","reg","race","sex","agedx",
         "yrbrth","seqnum","modx","yrdx","histo3","radiatn","recno",
         "agerec","ICD9","numprims","COD","surv"))} 
@@ -22,13 +22,11 @@ because it tailors/streamlines the database to your interests.}
 \value{The SAS-based input data frame \code{sas}, shortened to just the rows of \code{picks}, and then expanded to include 
 spacer rows of fields of no interest pooled into single strings: the width of such a spacer row is equal to 
 the distance in bytes between the fields of interest above and below it. This data frame is then 
-used by \code{laf_open_fwf()} of \pkg{LaF} in \code{mkSEER()} to read the SEER files. It is made visible to users to allow checking of 
-their choices. Proper use of this function, and of the SEER data in general,
+used by \code{laf_open_fwf()} of \pkg{LaF} in \code{mkSEER()} to read the SEER files.  Proper use of this function, and of the SEER data in general,
 requires an understanding of the contents of \file{seerdic.pdf} in the \file{incidence} directory of \code{seerHome}.
 }
 
-\note{ This work was supported by the National Cancer Institute and Tufts Integrative 
-        Cancer Biology Program under U54CA149233-029689. Maintenance is supported by the Cleveland Clinic Foundation.}
+
 \author{Tom Radivoyevitch (radivot@ccf.org)}
 \seealso{\code{\link{SEERaBomb-package}, \link{getFields}, \link{pickFields}, \link{mkSEER}} }
 \examples{

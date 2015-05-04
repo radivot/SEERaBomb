@@ -64,9 +64,9 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd ) {
     rownames(Zs)=ages
 #     head(Zs)
   #   print(tail(D12,2))
-  print(Trt)
+#   print(Trt)
   print(bin)
-  print(sapply(LPYinM,dim))
+#   print(sapply(LPYinM,dim))
 #   print(dim(sapply(LPYinM,dim)))
   
 #   #  print(gc())

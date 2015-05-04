@@ -20,31 +20,30 @@
 cancers A and B
 where the incidence of A increases linearly with age and B increase exponentially in age.
 Survival times are assumed to be exponentially distributed with means of 10 years for A and 2 years for B.
-Radiation therapy of A is assumed to increase RR of B to 5 uniformly for period years after delay years.}
+Radiation therapy of A is assumed to increase RR of B to 5 uniformly for \code{period} years after \code{delay} years.}
 
 \note{This function was developed with support from the Cleveland Clinic Foundation.}
 \author{Tom Radivoyevitch (radivot@ccf.org)}
 \seealso{\code{\link{SEERaBomb-package}, \link{seerSet},\link{mk2D}, \link{plot2D}} }
 \examples{
 library(SEERaBomb)
-pm=simSeerSet()
-pm=mk2D(pm,secondS="B") 
+n=simSeerSet()
+n=mk2D(n,secondS="B") 
 mybrks=c(0,0.75,0.9,1.1,1.25,2,2.5,3,3.5,4,4.75,4.9,5.1,5.25,6)
-pm=tsd(pm,brks=mybrks,trts=c("rad","noRad")) 
+n=tsd(n,brks=mybrks,trts=c("rad","noRad")) 
 (lab=paste0("b",paste(mybrks,collapse="_")))
-LM=pm$L[[lab]]$'rad'
-LMn=pm$L[[lab]]$'noRad'
-library(reshape2)
-mkD<-function(LM) { 
-  MO=melt(sapply(LM$Obs,sum))
-  ME=melt(sapply(LM$Exp,sum))
-  names(MO)=c("O")
-  M=cbind(MO,E=ME$value,t=LM$mids)
+LM=n$L[[lab]]$'rad'
+LMn=n$L[[lab]]$'noRad'
+mkD<-function(LM) {
+  t=LM$mids
+  O=sapply(LM$Obs,sum)
+  E=sapply(LM$Exp,sum)
+  M=data.frame(O,E,t)
   mutate(M,RR=O/E,L=qchisq(.025,2*O)/(2*E),U=qchisq(.975,2*O+2)/(2*E))
 }
 D=rbind(cbind(mkD(LMn),rad="no"),cbind(mkD(LM),rad="yes"))
 library(ggplot2)
-theme_update(legend.position = c(.1, .815),
+theme_update(legend.position = c(.8, .815),
              axis.text=element_text(size=rel(1.2)),
              axis.title=element_text(size=rel(1.3)),
              legend.title=element_text(size=rel(1.2)),
@@ -52,6 +51,7 @@ theme_update(legend.position = c(.1, .815),
 g=qplot(x=t,y=RR,col=rad,data=D,geom=c("line","point"),
         xlab="Years Since First Cancer Diagnosis",ylab="Relative Risk")
 g+geom_abline(intercept=1, slope=0)+geom_errorbar(aes(ymin=L,ymax=U,width=.05))
+
 }
 
 \keyword{IO}

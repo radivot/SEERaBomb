@@ -29,4 +29,4 @@ with(pm,getE(L$LPYM,D,ageStart,ageEnd,yearEnd,cancerS,secondS))
 
 \author{Tom Radivoyevitch (radivot@ccf.org)}
 \seealso{\code{\link{SEERaBomb-package}, \link{seerSet}} }
-\keyword{IO}
+\keyword{internal}

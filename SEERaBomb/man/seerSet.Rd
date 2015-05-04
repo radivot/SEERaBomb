@@ -1,29 +1,51 @@
 \name{seerSet}
 \alias{seerSet}
-\title{Joins SEER cancers and population person years in a single list}
-\description{This function coordinates slicing of cancers and population person years. It also removes
-        cancer factor levels no longer present after slicing, and place the results into a list that 
-        can be attached or with-ed to immediately specify the specs of the slicing.}
-\usage{seerSet(canc,popsa,ageStart=15,ageEnd=85,Sex="male", Race="pool")} 
+\title{Join SEER cancers and PY}
+\description{Creates a sex-specific list of cancer and population person year (PY) data frames, possibly specific 
+to a race and interval of ages at diagnosis. }
+\usage{seerSet(canc,popsa,Sex, Race="pool",ageStart=15,ageEnd=85)} 
 \arguments{
-  \item{canc}{data.frame of cancers that should include at least the columns/fields age86, sex, race, yrdx and cancer }
-  \item{popsa}{data.frame of single-age population person years.  }
-  \item{ageStart}{Starting age of fits. Cases and PY greater than or equal to this age are used.}
-  \item{ageEnd}{Ending age of fits. Cases and PY strictly less than this age are used.}
-  \item{Sex}{Choose either "male" (default) or "female", not both: 2D spline objects are big so only one sex at a time. }
-  \item{Race}{Choose either "white", "black", "other",  or "pool" (default).}
-%  \item{picks}{Keep this at NULL to get all cancers, as is needed for multiple primary work. 
-%  Use a charcter vector of cancer types to focus on only when trying to improve spline fits with feedback from
-%  plot2D.}
+  \item{canc}{Data frame of cancers that includes agedx, sex, race, yrdx, modx, surv and cancer. }
+  \item{popsa}{Data frame of population PY at 1-year age resolution.  }
+  \item{Sex}{"male"  or "female". }
+  \item{Race}{"white", "black", "other",  or "pool" (default).}
+  \item{ageStart,ageEnd}{canc and popsa will be reduced to ages in ageEnd>age>=ageStart.}
 }
 
-\value{A list containing the subsets of canc and popsa and information regarding how they were reduced.  
-  In the outputs, age86 is renamed as age and yrdx is copied into year, to prepare for joinings and plots.
-  Within canc, it is critical that users relevel cancer if needed, and 
-   define a trt column, before using mk2D.}
 
-\note{It is critical that users define a trt column in canc before sending it into here. If users want to define a cancer
-differently from the defaults, that should also be done to canc before entry here.After the data is installed, see the script mkRRtsx.R in the examples folder. This function was developed with support from the Cleveland Clinic Foundation.}
+\details{In the output: 1) 0.5 years is added to ages at diagnosis (agedx) 
+  to reverse SEER flooring to integers; 2) 0.5 months is added to survival months (again, to reverse flooring) 
+  before dividing by 12 to convert to years; 
+3) year of diagnosis integers are converted to reals by adding to them the month of diagnosis (modx) - 0.5 
+divided by 12 (note that a modx of 1 represents anytime in the month of January).
+If ageEnd>85, popsae (extended to ages up to 99) should be used as the input for popsa. 
+If popsa is used, the age86 column of popsa will be replaced by an age column.
+The age86 and yrbrth columns of a canc are not used and will be removed if they happen to be present; 
+users should manually remove any other columns not needed to minimize seerSet object sizes.
+Sex and race columns in inputs are removed from outputs as they are specified
+in other (scalar) seerSet elements. Also removed from canc are cancer factor levels not present for that sex. 
+}
+   
+\value{A list containing sex specific subsets of canc and popsa and information regarding how they were reduced. }
+  
+
 \author{Tom Radivoyevitch (radivot@ccf.org)}
 \seealso{\code{\link{SEERaBomb-package}, \link{mk2D}, \link{plot2D}} }
+\examples{
+library(SEERaBomb)
+simSeerSet() # without data, a simulated seerSet
+\dontrun{ 
+#  else, with data ...
+load("~/data/SEER/mrgd/cancDef.RData") #load in canc
+load("~/data/SEER/mrgd/popsae.RData") # load in popsae
+# trim columns
+library(dplyr)  
+canc=canc\%>\%select(-reg,-recno,-agerec,-numprims,-COD,
+          -age19,-age86,-radiatn,-ICD9,-db,-histo3) 
+popsae=popsae\%>\%select(-reg,-db)   
+seerSet(canc,popsae,Sex="male",ageStart=0,ageEnd=100) 
+}
+
+}
+
 \keyword{IO}

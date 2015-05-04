@@ -3,7 +3,7 @@
 %\docType{package} %dirk has this in his function help page
 
 \title{Fills age-year person year (PY) matrix}
-\description{This function converts a matrix with lots of individual PY contributions and starting ages and years as rows, 
+\description{This internal function converts a matrix with lots of individual PY contributions and starting ages and years as rows, 
 into a population-level PY histrogram matrix of (1-year age)x(1-year year) resolution bins. The output matrix is
 more square-like (currently at 40 calendar years by 126 age years) than the tall dataframe-like input matrix.
 }
@@ -32,4 +32,5 @@ function. After the call, it will be filled; this function uses pointers in Rcpp
                   .Dimnames=list(c("1","2","3"),c("py", "ageL", "year"))))
 fillPYM(PYin, mat)
 }
+\keyword{internal}
 

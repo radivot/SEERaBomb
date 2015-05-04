@@ -2,10 +2,10 @@ simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,delay=1,period=4
   #   agedx=age=age86=canc=yrdx=sex=race=surv=modx=yrbrth=NULL 
   trt=cancers=NULL 
   data(stdUS)
-#   if (shape<1) {
-#     shape=1
-#     print("Warning: shape must be 1 or higher. It was less and is being set to 1. ")
-#   }
+  #   if (shape<1) {
+  #     shape=1
+  #     print("Warning: shape must be 1 or higher. It was less and is being set to 1. ")
+  #   }
   #   N=2e9;yearEnd=2012;ka=1e-5;kb=0.04;Ab=1e-5;Rba=1e-3;delay=1;period=4;shape=1;library(dplyr)
   popsa=merge(data.frame(age=0.5:99.5),data.frame(year=1973:yearEnd))
   popsa$py=N/40*SEERaBomb::stdUS$prop[round(popsa$age+0.5)]
@@ -16,14 +16,20 @@ simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,delay=1,period=4
   head(A)
   sum(A$cancers)
   cancA=A[rep(seq_len(nrow(A)), times=A$cancers),]%>%select(-cancers)
-  head(cancA,10)
-     cancA$surv=rexp(dim(cancA)[1],rate=0.1)
-#   cancA$surv=runif(dim(cancA)[1],0,20)
-  mean(cancA$surv)
-  cancA$cancer="A"
-  trts=c("rad","noRad")
-  cancA$trt=sample(trts,dim(cancA)[1],replace=T)
+  cancA$surv=rexp(dim(cancA)[1],rate=0.1)
   cancA$yrdx=cancA$year+runif(dim(cancA)[1],max=0.9999)
+  head(cancA,10)
+  #   cancA$surv=runif(dim(cancA)[1],0,20)
+  #   mean(cancA$surv)
+  trimSurv=function(x) {
+    x$surv=ifelse(x$surv+x$age>123,123-x$age,x$surv)
+    x$surv=ifelse(x$surv+x$yrdx>yearEnd+0.9999,yearEnd+0.9999-x$yrdx,x$surv)
+    x
+  }
+  cancA=trimSurv(cancA)
+  cancA$cancer="A"
+  trts=c("noRad","rad")
+  cancA$trt=sample(trts,dim(cancA)[1],replace=T)
   cancA$casenum=1:dim(cancA)[1]
   cancA$seqnum=0
   table(cancA$trt)
@@ -85,10 +91,11 @@ simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,delay=1,period=4
   ######now background B
   B=cbind(popsa[,1:2],cancers=rpois(dim(popsa)[1],Ab*exp(kb*popsa$age)*popsa$py))
   cancB=B[rep(seq_len(nrow(B)), times=B$cancers),]%>%select(-cancers)
-  cancB$surv=rexp(dim(cancB)[1],rate=0.5)
-  cancB$cancer="B"
-  cancB$trt="noRad"
+  cancB$surv=rexp(dim(cancB)[1],rate=0.2)
   cancB$yrdx=cancB$year+runif(dim(cancB)[1],max=0.9999)
+  cancB=trimSurv(cancB)
+  cancB$cancer="B"
+  cancB$trt=sample(trts,dim(cancB)[1],replace=T)
   cancB$casenum=(1e7+1):(1e7+dim(cancB)[1])
   cancB$seqnum=0
   head(cancB)

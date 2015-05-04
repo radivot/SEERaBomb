@@ -1,8 +1,8 @@
 \name{getPY}
 \alias{getPY}
-\title{Gets PY contributions to a particular tsd interval from survival times}
-\description{A vector of survival times in years is the main input. This function gives their 
-person year (PY) contributions to a particular time since diagnosis (tsd) interval.}
+\title{Get tsd interval PY}
+\description{Gets person year (PY) contributions to a particular time since diagnosis (tsd) interval
+     from survival times.}
 \usage{getPY(surv, bin, binS, brks)} 
 \arguments{
   \item{surv}{The total survival time of the patient.  }
@@ -24,4 +24,4 @@ getPY(survTimes,binS[1],binS,brks)# all contribute 0.25 to first interval
 getPY(survTimes,binS[4],binS,brks)# 3rd and 4th survivals contribute 0 and 0.7 to (3,6]
 getPY(survTimes,binS[5],binS,brks)# 1st and 2nd survival contribute 2 and 10 years to (6,100]
 }
-\keyword{IO}
+\keyword{internal}

@@ -17,11 +17,9 @@ stdUS
   }
 }
 
-\details{This population data is used to map age specific incidence rate vectors
-into summarizing scalars. It allows differences in cancer incidence rates across different
+\details{This population data can be used to map age specific incidence rate vectors
+into summarizing scalars. It allows cancer incidence rates across different
 SEER registries to be compared without concerns of differences in age distributions of the populations. 
-This statement also holds for differences in age-distributions between sexes; males 
-and females are pooled to produce a single reference population to enable such sex comparisons. 
   }
 
 \examples{

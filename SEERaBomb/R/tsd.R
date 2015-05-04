@@ -11,7 +11,7 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE){ #, outDir="~/Results",t
     for (R in trts) 
     { 
       #     R="rad"
-      print(R)
+       print(R)
       mids=NULL
       Obs=NULL
       Exp=NULL
@@ -19,19 +19,11 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE){ #, outDir="~/Results",t
       for (bin in binS) 
       {
         #       (bin=binS[1])
-        print(bin)
-#         print("new")
+#         print(bin)
         binIndx=getBinInfo(bin,binS)["index"]
-#        print("prePost")
-#         L1=post1PYO(seerSet$canc,brks,binIndx,Trt=R,seerSet$yearEnd )
         L1=post1PYO(canc,brks,binIndx,Trt=R,yearEnd )
-        #         print(D)
-#        print("outOfPost")
-#         Exp[[bin]]=getE(L1$LPYM,seerSet$D,seerSet$ageStart,seerSet$ageEnd,seerSet$yearEnd,seerSet$cancerS,seerSet$secondS)
-#        print("outOfGetE")
         Exp[[bin]]=getE(L1$LPYM,D,ageStart,ageEnd,yearEnd,cancerS,secondS)
-#         Obs[[bin]]=L1$O[seerSet$cancerS,seerSet$secondS]
-        Obs[[bin]]=L1$O[cancerS,secondS]
+        Obs[[bin]]=L1$O[cancerS,secondS,drop=FALSE]
         PyM[[bin]]=L1$PY
         mids=c(mids,L1$binMidPnt)
       } # loop on tsx bins
