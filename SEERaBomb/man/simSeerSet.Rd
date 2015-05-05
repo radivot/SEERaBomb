@@ -29,6 +29,7 @@ Radiation therapy of A is assumed to increase RR of B to 5 uniformly for \code{p
 \author{Tom Radivoyevitch (radivot@ccf.org)}
 \seealso{\code{\link{SEERaBomb-package}, \link{seerSet},\link{mk2D}, \link{plot2D}} }
 \examples{
+\dontrun{
 library(SEERaBomb)
 n=simSeerSet()
 n=mk2D(n,secondS="B") 
@@ -54,7 +55,7 @@ theme_update(legend.position = c(.8, .815),
 g=qplot(x=t,y=RR,col=rad,data=D,geom=c("line","point"),
         xlab="Years Since First Cancer Diagnosis",ylab="Relative Risk")
 g+geom_abline(intercept=1, slope=0)+geom_errorbar(aes(ymin=L,ymax=U,width=.05))
-
+}
 }
 
 \keyword{IO}

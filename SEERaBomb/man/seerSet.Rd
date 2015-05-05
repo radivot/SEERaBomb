@@ -32,9 +32,9 @@ in other (scalar) seerSet elements. Also removed from canc are cancer factor lev
 \author{Tom Radivoyevitch (radivot@ccf.org)}
 \seealso{\code{\link{SEERaBomb-package}, \link{mk2D}, \link{plot2D}} }
 \examples{
+\dontrun{ 
 library(SEERaBomb)
 simSeerSet() # without data, a simulated seerSet
-\dontrun{ 
 #  else, with data ...
 load("~/data/SEER/mrgd/cancDef.RData") #load in canc
 load("~/data/SEER/mrgd/popsae.RData") # load in popsae
@@ -45,7 +45,6 @@ canc=canc\%>\%select(-reg,-recno,-agerec,-numprims,-COD,
 popsae=popsae\%>\%select(-reg,-db)   
 seerSet(canc,popsae,Sex="male",ageStart=0,ageEnd=100) 
 }
-
 }
 
 \keyword{IO}
