@@ -17,6 +17,7 @@ produced by post1PYO. }
 \value{A matrix of expected cases with first cancers labeling the rows and second cancers labeling the columns.}
 
 \examples{
+\dontrun{
 library(SEERaBomb)
 pm=simSeerSet()
 pm=mk2D(pm,secondS="B") 
@@ -24,6 +25,7 @@ L=post1PYO(pm$canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd=2012 )
 names(L)
 names(pm)
 with(pm,getE(L$LPYM,D,ageStart,ageEnd,yearEnd,cancerS,secondS))
+}
 }
 
 

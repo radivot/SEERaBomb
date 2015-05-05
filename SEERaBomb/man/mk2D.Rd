@@ -26,12 +26,14 @@ D holds background/expected incidences over a 1-year resolution age-year grid. }
 \seealso{\code{\link{SEERaBomb-package}, \link{plot2D}, \link{seerSet}} }
 
 \examples{
+\dontrun{
 library(SEERaBomb)
 (pm=simSeerSet())
 (pm=mk2D(pm))
 names(pm)
 head(pm$D)
 tail(pm$D)
+}
 }
 
 

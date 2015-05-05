@@ -23,6 +23,7 @@ were irradiated or not.
 \seealso{\code{\link{SEERaBomb-package}, \link{mk2D},\link{seerSet}} }
 
 \examples{
+\dontrun{
 library(SEERaBomb)
 pm=simSeerSet()
 pm=mk2D(pm) 
@@ -37,6 +38,7 @@ LM$Exp
 table(LM$PyM$`(0,1]`$cancer2)
 table(LM$PyM$`(1,5]`$cancer2)
 table(LM$PyM$`(5,10]`$cancer2)
+}
 }
 
 \keyword{IO}
