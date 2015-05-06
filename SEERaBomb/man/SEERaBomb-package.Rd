@@ -12,7 +12,7 @@ population data frames.
 \if{latex}{\figure{mkSEERfig.png}{options: width=5in}}
 
 SEER data field positions and names change over the years and the original purpose of  
-SEERaBomb was to buffer/protect R scripts from such changes. A second purpose was to speed up SEER data computationsby 
+SEERaBomb was to buffer/protect R scripts from such changes. A second purpose was to speed up SEER data computations by 
 reducing the data [via \code{pickFields()}] to only fields of interest. SEERaBomb now has an additional purpose:
 estimating relative risks of SEER second cancers after diagnoses of first cancers, using all three SEER databases.
 
