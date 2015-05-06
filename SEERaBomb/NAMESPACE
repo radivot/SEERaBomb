@@ -1,5 +1,6 @@
 useDynLib(SEERaBomb)
-import(LaF,RSQLite,dplyr,rgl,XLConnect)
+import(dplyr)  ## depends
+import(LaF,RSQLite,rgl,XLConnect) ## needed less critically but for too many functions to list
 importFrom(Rcpp, evalCpp)
 importFrom(DBI, dbDriver)
 importFrom(mgcv, gam,s,ti)
