@@ -27,6 +27,7 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secon
           d=canc%>%filter(cancer%in%i)
           ps=popsa
         }
+      d=d%>%mutate(age=floor(age)+0.5)
       d=d%>%group_by(year,age)%>%summarise(cases=n())
       ps=ps%>%group_by(year,age)%>%summarise(py=sum(py)) 
       X=left_join(ps,d)%>%mutate(incid=1e5*cases/py)
