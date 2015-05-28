@@ -12,11 +12,12 @@ seerSet<-function(canc,popsa,Sex, Race="pool",ageStart=15,ageEnd=85) {
     canc=canc%>%mutate(year=yrdx) 
     canc=canc%>%mutate(surv=round((surv+0.5)/12,3),yrdx=round(yrdx+(modx-0.5)/12,3))%>%    #modx=1=January 
       select(-modx)%>%
-      mutate(age=agedx+0.5) #convert birth years and ages at diagnosis to best guesses
+      mutate(age=agedx+0.5) #convert ages at diagnosis to best guesses
     canc=canc%>%select(-agedx) 
   }  
   
-  canc=canc%>%filter(age>=(ageStart+0.5),age<(ageEnd+0.5),sex==Sex)
+#   canc=canc%>%filter(age>=(ageStart+0.5),age<(ageEnd+0.5),sex==Sex)
+  canc=canc%>%filter(age>=ageStart,age<ageEnd,sex==Sex)
   popsa=popsa%>%filter(age>=ageStart,age<ageEnd,sex==Sex)
   if (Race!="pool") {
     canc=canc%>%filter(race==Race)
