@@ -20,8 +20,8 @@ mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL,flip=FALSE) {
           O=L[[R]][["Obs"]][[intv]][icanc,,drop=FALSE]
           E=L[[R]][["Exp"]][[intv]][icanc,,drop=FALSE]
         }
-        print(O)
-        print(E)
+#         print(O)
+#         print(E)
         RR=O/E
 #         print(RR)
         LL=qchisq(.025,2*O) /(2*E)
