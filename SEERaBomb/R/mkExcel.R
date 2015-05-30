@@ -23,7 +23,7 @@ mkExcel=function(seerSet,tsdn,outDir="~/Results",txt=NULL,flip=FALSE) {
         print(O)
         print(E)
         RR=O/E
-        print(RR)
+#         print(RR)
         LL=qchisq(.025,2*O) /(2*E)
         UL=qchisq(.975,2*O+2)/(2*E)
         if (flip) col=as.data.frame(round(cbind(RR,LL,UL,O=O,E=E),2)) else
