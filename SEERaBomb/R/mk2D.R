@@ -1,8 +1,8 @@
 mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secondS=NULL) {
   if(!file.exists(outDir))  {   print(paste("Creating directory",outDir))
                                 dir.create(outDir,recursive=TRUE)    }
-#   require(dplyr)
-#   require(mgcv) # Mixed GAM Computation Vehicle with GCV/AIC/REML smoothness estimation
+  #   require(dplyr)
+  #   require(mgcv) # Mixed GAM Computation Vehicle with GCV/AIC/REML smoothness estimation
   ptm <- proc.time()
   seerSet=with(seerSet, {
     if (is.null(secondS)) secondS=cancerS
@@ -18,8 +18,9 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secon
       if (i=="liver" & knots<10) knots=10   # same here, to capture the cohort effect ripple
       if (i=="APL" & knots>5) knots=5   # here too many knots dive down too much into early calendary years of too few cases
       #the next if else deals with MDS and CMML starting only later. Not sure what other cancers are like this.
-      if (i=="MDS")  {d=canc%>%filter(cancer%in%i,year>2000)
-                      ps=popsa%>%filter(year>2000)
+# if (i=="MDS")  {d=canc%>%filter(cancer%in%i,year>2000)
+      if (i%in%c("MDS","MPN"))  {d=canc%>%filter(cancer%in%i,year>2000)
+                                 ps=popsa%>%filter(year>2000)
       } else 
         if (i=="CMML")  {d=canc%>%filter(cancer%in%i,year>1985) 
                          ps=popsa%>%filter(year>1985)
