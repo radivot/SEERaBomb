@@ -53,6 +53,8 @@ mapCancs<-function(D){
   cancer[(ICD9>=1920)&(ICD9<=1929)]="nerves"
   cancer[ICD9==193]="thyroid"
   cancer[ICD9==1991]="otherMalig"
+  
+  # this chunk of ICD9 codes is replaced by cleaner ICD-O3 codes below
   cancer[(ICD9>=2000)&(ICD9<2010)]="NHL"
   cancer[(ICD9>=2010)&(ICD9<2020)]="hodgkin"
   cancer[(ICD9>=2020)&(ICD9<2030)]="NHL"
@@ -61,9 +63,25 @@ mapCancs<-function(D){
   cancer[(ICD9>=2050)&(ICD9<2080)]="AML"  # same here
   cancer[(ICD9>=2080)&(ICD9<2090)]="OL" #M0 like stuff
   cancer[(ICD9==2387)]="OL"
-  cancer[(histo3>=9820)&(histo3<9840)]="ALL" # take some OL back to ALL
-  cancer[histo3==9823]="CLL" # pull out the CLLs
+  
+  # clean things with histO3 codes that trump the heme ICD9 codes above
+  cancer[(histo3>=9590)&(histo3<9560)]="NHL" 
+  cancer[(histo3>=9650)&(histo3<9670)]="hodgkin" 
+  cancer[(histo3>=9670)&(histo3<9730)]="NHL" 
+  cancer[(histo3>=9730)&(histo3<9735)]="MM" 
+  cancer[(histo3>=9735)&(histo3<9740)]="NHL" 
+  cancer[(histo3>=9740)&(histo3<=9742)]="MPN" #"mastocytosis" 
+  cancer[(histo3>=9743)&(histo3<9760)]="MPN" # assume histiocytosis is more like MPN than NHL
+#   cancer[(histo3==9751)]="MPN" #"LCH" lagerhan cell histiocytes are APCs = macrophage like, guessing MPN-like
+  cancer[(histo3>=9760)&(histo3<=9770)]="MM"  # outside of below there are ~20 cases of these
+#   this cancer[(ICD9>=2730)&(ICD9<2739)]="globinemia" yielded 5080 cases of 9761 and 9762
+
+  cancer[(histo3>=9800)&(histo3<9810)]="OL" # takes back 60 AMLs in 9808 and 9809
+
   #   cancer[(histo3==9812)|(histo3==9806)]="ALLba" #ALL with BCR-ABL (110 cases) 2010-12 + 12 mixed lineage 2011-12
+  cancer[(histo3>=9810)&(histo3<9840)]="ALL" # take some OL back to ALL
+  cancer[histo3==9823]="CLL" # pull out the CLLs
+  
   cancer[(histo3>=9840)&(histo3<9940)]="AML" # take some OL back to AML, includes next two lines
   #   cancer[(histo3==9910)]="AML" #AMKL 
   #   cancer[(histo3==9930)]="AML" #myeloid sarcoma (blasts forming tumor outside of marrow ... advanced AML)
@@ -72,19 +90,20 @@ mapCancs<-function(D){
     
   cancer[(histo3>9979)&(histo3<9990)]="MDS" ##!!!!! tMDS=9987 got mapped in with tAML=9920 in 2010
   cancer[(histo3==9920)|(histo3==9987)]="tAML" ##!!! so we have to pull both out and look at them separately
-  cancer[(histo3==9945)|(ICD9==2061)]="CMML" # the latter takes some out of 9860=AML M0
+  cancer[(histo3==9982)]="RARS" # take out to look for correlations with CLL via SF3B1 
+  cancer[(histo3==9940)]="HCL"  #hairy cell leukemia was getting into NHL (note: HCL in 20's goes to 9591=NHL)
+  cancer[(histo3==9945)]="CMML" 
   cancer[(histo3==9960)]="MDS" #"CMPD" #this got remapped to mdsMPN = 9975 in 2010
   cancer[(histo3==9975)]="MDS"  #"mdsMPN": guessing this is CMML-like, and more MDS-like than MPN-like
-  cancer[(histo3>=9740)&(histo3<=9742)]="MPN" #"mastocytosis" 
-  cancer[(histo3==9751)]="MPN" #"LCH" lagerhan cell histiocytes are APCs = macrophage like, guessing MPN-like
   cancer[(histo3==9946)]="MPN" #"jCMML" these come out of 205.1/CML
   cancer[(histo3==9950)]="MPN" #"PV"
   cancer[(histo3==9961)]="MPN" #"PMF"
   cancer[(histo3==9962)]="MPN" #"ET"
   cancer[(histo3==9963)]="MPN" #"CNL"
   cancer[(histo3==9964)]="MPN" #"CEL"
+  cancer[(histo3>=9965)&(histo3<=9967)]="MPN" # GFR mutatants 
+  cancer[(histo3>=9970)&(histo3<=9971)]="NHL" # ICD9 put it mostly there, so sweep stray 1s into it also. 
   cancer[(histo3==9876)]="MPN" #"aCML"
-  cancer[(ICD9>=2730)&(ICD9<2739)]="globinemia"
   cancer[(histo3==9530)]="meningioma"
   cancer[(histo3==9560)]="schwannoma"
   cancer[(histo3==8272)]="pituitary"
