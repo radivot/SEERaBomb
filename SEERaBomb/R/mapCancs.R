@@ -58,34 +58,36 @@ mapCancs<-function(D){
   cancer[(ICD9>=2020)&(ICD9<2030)]="NHL"
   cancer[(ICD9>=2030)&(ICD9<2040)]="MM"
   cancer[(ICD9>=2040)&(ICD9<2050)]="ALL"
-  cancer[ICD9==2041]="CLL"   # anything not chronic goes to acute
   cancer[(ICD9>=2050)&(ICD9<2080)]="AML"  # same here
-  cancer[(ICD9==2051)]="CML"  
   cancer[(ICD9>=2080)&(ICD9<2090)]="OL" #M0 like stuff
   cancer[(ICD9==2387)]="OL"
-  cancer[(ICD9>=2730)&(ICD9<2739)]="globinemia"
+  cancer[(histo3>=9820)&(histo3<9840)]="ALL" # take some OL back to ALL
+  cancer[histo3==9823]="CLL" # pull out the CLLs
   #   cancer[(histo3==9812)|(histo3==9806)]="ALLba" #ALL with BCR-ABL (110 cases) 2010-12 + 12 mixed lineage 2011-12
-  cancer[(histo3==9866)]="APL" # this will overwrite AMLs above and thus keep them exclusive
+  cancer[(histo3>=9840)&(histo3<9940)]="AML" # take some OL back to AML, includes next two lines
+  #   cancer[(histo3==9910)]="AML" #AMKL 
+  #   cancer[(histo3==9930)]="AML" #myeloid sarcoma (blasts forming tumor outside of marrow ... advanced AML)
+  cancer[histo3%in%c(9863,9875)]="CML"  # take back CMLs
+  cancer[(histo3==9866)]="APL" # andmake APL exclusive
+    
   cancer[(histo3>9979)&(histo3<9990)]="MDS" ##!!!!! tMDS=9987 got mapped in with tAML=9920 in 2010
-  cancer[(histo3==9920)|(histo3==9987)]="tAML" ##!!! so we have to pull these all out and look at them separately
-  cancer[(histo3==9945)|(ICD9==2061)]="CMML"
+  cancer[(histo3==9920)|(histo3==9987)]="tAML" ##!!! so we have to pull both out and look at them separately
+  cancer[(histo3==9945)|(ICD9==2061)]="CMML" # the latter takes some out of 9860=AML M0
   cancer[(histo3==9960)]="MDS" #"CMPD" #this got remapped to mdsMPN = 9975 in 2010
   cancer[(histo3==9975)]="MDS"  #"mdsMPN": guessing this is CMML-like, and more MDS-like than MPN-like
-  cancer[(histo3>=9740)|(histo3<=9742)]="MPN" #"mastocytosis" 
-  cancer[(histo3==9751)]="AML" #"LCH" lagerhan cell histiocytes are APCs = macrophage like, so place in AML
-  cancer[(histo3==9910)]="AML" #AMKL from OL
-  cancer[(histo3==9930)]="AML" #myeloid sarcoma (blasts forming tumor outside of marrow ... advanced AML)
+  cancer[(histo3>=9740)&(histo3<=9742)]="MPN" #"mastocytosis" 
+  cancer[(histo3==9751)]="MPN" #"LCH" lagerhan cell histiocytes are APCs = macrophage like, guessing MPN-like
   cancer[(histo3==9946)]="MPN" #"jCMML" these come out of 205.1/CML
   cancer[(histo3==9950)]="MPN" #"PV"
   cancer[(histo3==9961)]="MPN" #"PMF"
   cancer[(histo3==9962)]="MPN" #"ET"
   cancer[(histo3==9963)]="MPN" #"CNL"
   cancer[(histo3==9964)]="MPN" #"CEL"
-  cancer[(histo3==9976)]="MPN" #"aCML"
+  cancer[(histo3==9876)]="MPN" #"aCML"
+  cancer[(ICD9>=2730)&(ICD9<2739)]="globinemia"
   cancer[(histo3==9530)]="meningioma"
   cancer[(histo3==9560)]="schwannoma"
   cancer[(histo3==8272)]="pituitary"
-  cancer[histo3%in%c(9863,9875)]="CML"
   D$cancer=as.factor(cancer)
   D
 }  
