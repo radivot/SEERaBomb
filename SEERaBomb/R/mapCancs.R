@@ -89,9 +89,10 @@ mapCancs<-function(D){
   cancer[(histo3==9866)]="APL" # andmake APL exclusive
   cancer[histo3%in%c(9865,9869,9871,9896,9897,9911)]="AMLti"  # AML by tranlocation or inversion
             #  t(6,9),inv(3),inv(16),t(8,21),t(9,11),t(1,22)
-  cancer[(histo3>9979)&(histo3<9990)]="MDS" ##!!!!! tMDS=9987 got mapped in with tAML=9920 in 2010
-  cancer[(histo3==9920)|(histo3==9987)]="tAML" ##!!! so we have to pull both out and look at them separately
-  cancer[(histo3==9982)]="RARS" # take out to look for correlations with CLL via SF3B1 
+  cancer[(histo3>9979)&(histo3<9990)]="MDS" ##!!!!! tMDS=9987 got mapped in with tAML=9920 starting in 2010
+#   cancer[(histo3==9987)]="tMDS" ##!!! so we have to pull both out and correct for this
+#   cancer[(histo3==9920)]="tAML" 
+#   cancer[(histo3==9982)]="RARS" # take out to look for correlations with CLL via SF3B1 
 #   cancer[(histo3==9986)]="MDSdel5q" # take out to look for extra radiation induction (skip: confounded by tMDS)
 #9980=RA; 9981=nothing, 9983=RAEB, 9984=RAEB-T transformation (also stopped in 2010),9985=RCMD, 9989=NOS
   cancer[(histo3==9940)]="HCL"  #hairy cell leukemia was getting into NHL (note: HCL in 20's goes to 9591=NHL)
