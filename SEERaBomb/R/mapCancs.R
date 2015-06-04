@@ -93,6 +93,7 @@ mapCancs<-function(D){
   cancer[(histo3==9920)|(histo3==9987)]="tAML" ##!!! so we have to pull both out and look at them separately
   cancer[(histo3==9982)]="RARS" # take out to look for correlations with CLL via SF3B1 
 #   cancer[(histo3==9986)]="MDSdel5q" # take out to look for extra radiation induction (skip: confounded by tMDS)
+#9980=RA; 9981=nothing, 9983=RAEB, 9984=RAEB-T transformation (also stopped in 2010),9985=RCMD, 9989=NOS
   cancer[(histo3==9940)]="HCL"  #hairy cell leukemia was getting into NHL (note: HCL in 20's goes to 9591=NHL)
   cancer[(histo3==9945)]="CMML" 
   cancer[(histo3==9960)]="MDS" #"CMPD" #this got remapped to mdsMPN = 9975 in 2010
