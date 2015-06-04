@@ -10,8 +10,9 @@ getE=function(LPYM,D,ageStart,ageEnd,yearEnd,cancerS,secondS) {
   LPYM[["MPN"]]=LPYM[["MPN"]][,-c(1:28)]
   LPYM[["tAML"]]=LPYM[["tAML"]][,-c(1:28)]
   LPYM[["RARS"]]=LPYM[["RARS"]][,-c(1:28)]
+  LPYM[["AMLti"]]=LPYM[["AMLti"]][,-c(1:28)]
 #    secondS=names(EI)
-  strt01=c("MDS","MPN","tAML","RARS")
+  strt01=c("MDS","MPN","tAML","RARS","AMLti")
   (E=matrix(0,nrow=length(cancerS),ncol=length(secondS),dimnames=list(firstCanc=cancerS,secondCanc=secondS)))
   for (i in cancerS) {   #i loop on first cancers
     PY=LPYM[[i]]

@@ -72,12 +72,12 @@ mapCancs<-function(D){
   cancer[(histo3>=9735)&(histo3<9740)]="NHL" 
   cancer[(histo3>=9740)&(histo3<=9742)]="MPN" #"mastocytosis" 
   cancer[(histo3>=9743)&(histo3<9760)]="MPN" # assume histiocytosis is more like MPN than NHL
-#   cancer[(histo3==9751)]="MPN" #"LCH" lagerhan cell histiocytes are APCs = macrophage like, guessing MPN-like
+  #   cancer[(histo3==9751)]="MPN" #"LCH" lagerhan cell histiocytes are APCs = macrophage like, guessing MPN-like
   cancer[(histo3>=9760)&(histo3<=9770)]="MM"  # outside of below there are ~20 cases of these
-#   this cancer[(ICD9>=2730)&(ICD9<2739)]="globinemia" yielded 5080 cases of 9761 and 9762
-
+  #   this cancer[(ICD9>=2730)&(ICD9<2739)]="globinemia" yielded 5080 cases of 9761 and 9762
+  
   cancer[(histo3>=9800)&(histo3<9810)]="OL" # takes back 60 AMLs in 9808 and 9809
-
+  
   #   cancer[(histo3==9812)|(histo3==9806)]="ALLba" #ALL with BCR-ABL (110 cases) 2010-12 + 12 mixed lineage 2011-12
   cancer[(histo3>=9810)&(histo3<9840)]="ALL" # take some OL back to ALL
   cancer[histo3==9823]="CLL" # pull out the CLLs
@@ -87,10 +87,12 @@ mapCancs<-function(D){
   #   cancer[(histo3==9930)]="AML" #myeloid sarcoma (blasts forming tumor outside of marrow ... advanced AML)
   cancer[histo3%in%c(9863,9875)]="CML"  # take back CMLs
   cancer[(histo3==9866)]="APL" # andmake APL exclusive
-    
+  cancer[histo3%in%c(9865,9869,9871,9896,9897,9911)]="AMLti"  # AML by tranlocation or inversion
+            #  t(6,9),inv(3),inv(16),t(8,21),t(9,11),t(1,22)
   cancer[(histo3>9979)&(histo3<9990)]="MDS" ##!!!!! tMDS=9987 got mapped in with tAML=9920 in 2010
   cancer[(histo3==9920)|(histo3==9987)]="tAML" ##!!! so we have to pull both out and look at them separately
   cancer[(histo3==9982)]="RARS" # take out to look for correlations with CLL via SF3B1 
+#   cancer[(histo3==9986)]="MDSdel5q" # take out to look for extra radiation induction (skip: confounded by tMDS)
   cancer[(histo3==9940)]="HCL"  #hairy cell leukemia was getting into NHL (note: HCL in 20's goes to 9591=NHL)
   cancer[(histo3==9945)]="CMML" 
   cancer[(histo3==9960)]="MDS" #"CMPD" #this got remapped to mdsMPN = 9975 in 2010

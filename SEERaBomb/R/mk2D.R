@@ -19,7 +19,7 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secon
       if (i=="APL" & knots>5) knots=5   # here too many knots dive down too much into early calendary years of too few cases
       #the next if else deals with MDS and CMML starting only later. Not sure what other cancers are like this.
 # if (i=="MDS")  {d=canc%>%filter(cancer%in%i,year>2000)
-      if (i%in%c("MDS","MPN","tAML","RARS"))  {d=canc%>%filter(cancer%in%i,year>2000)
+      if (i%in%c("MDS","MPN","tAML","RARS","AMLti"))  {d=canc%>%filter(cancer%in%i,year>2000)
                                  ps=popsa%>%filter(year>2000)
       } else 
         if (i=="CMML")  {d=canc%>%filter(cancer%in%i,year>1985) 
