@@ -7,26 +7,48 @@ mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
   
   # gimic to get rid of unwanted notes in R CMD check
   db=reg=race=sex=age=agerec=year=py=agedx=age19=age86=NULL
-    
-  mkPopsae=function(popsa) {
-#     data(stdUS) #load us 2000 standard population up to 99+ and use it for the extrapolation
-    props=SEERaBomb::stdUS$prop[86:100] #get rid of check Note by directly getting stdUS
-    props=props/sum(props)
-    elders=popsa%>%filter(age86==90)%>%group_by(db,reg,race,sex,year) 
-    #      head(elders,2)
-    #      head(popsa,2)
-    grow=function(x) data.frame(x,age=85.5:99.5,PY=x$py*props) 
-    elders=elders%>%do_(~grow(.))%>%select(-age86,-py) # no note on check about .
-#     elders=elders%>%do(grow(.))%>%select(-age86,-py) # => Note on check about .
-    nms=names(elders)
-    names(elders)[which(nms=="PY")]<-c("py")
-    nelders=popsa%>%filter(age86<90)
-    nms=names(nelders)
-    names(nelders)[which(nms=="age86")]<-c("age")
-    elders=elders[,names(nelders)] # reorder columns to match
-    rbind(nelders,elders) # this now becomes popsa extended (i.e. popsae) 
+#   
+#   mkPopsae=function(popsa) {
+# #     data(stdUS) #load us 2000 standard population up to 99+ and use it for the extrapolation
+#     props=SEERaBomb::stdUS$prop[86:100] #get rid of check Note by directly getting stdUS
+#     props=props/sum(props)
+#     elders=popsa%>%filter(age86==90)%>%group_by(db,reg,race,sex,year) 
+#     #      head(elders,2)
+#     #      head(popsa,2)
+#     grow=function(x) data.frame(x,age=85.5:99.5,PY=x$py*props) 
+#     elders=elders%>%do_(~grow(.))%>%select(-age86,-py) # no note on check about .
+# #     elders=elders%>%do(grow(.))%>%select(-age86,-py) # => Note on check about .
+#     nms=names(elders)
+#     names(elders)[which(nms=="PY")]<-c("py")
+#     nelders=popsa%>%filter(age86<90)
+#     nms=names(nelders)
+#     names(nelders)[which(nms=="age86")]<-c("age")
+#     elders=elders[,names(nelders)] # reorder columns to match
+#     rbind(nelders,elders) # this now becomes popsa extended (i.e. popsae) 
+#   }
+
+mkPopsae=function(popsa) { # this replaces the version above it
+  rates=SEERaBomb::nvsr01[86:100,] #get rid of check Note by directly getting nvsr
+  props=cumprod(1-rates[,c("pm","pf")])
+  tots=cumsum(props)["100",]
+  for (i in 1:dim(props)[2]) props[,i]=props[,i]/tots[,i]
+  elders=popsa%>%filter(age86==90)%>%group_by(db,reg,race,sex,year) 
+  grow=function(x) {if (x$sex=="male") y=data.frame(x,age=85.5:99.5,PY=x$py*props$pm) else
+    y=data.frame(x,age=85.5:99.5,PY=x$py*props$pf)
+    y
   }
-#    mkPopsae(popsa) # for testing
+  elders=elders%>%do_(~grow(.))%>%select(-age86,-py) # no note on check about .
+  nms=names(elders)
+  names(elders)[which(nms=="PY")]<-c("py")
+  nelders=popsa%>%filter(age86<90)
+  nms=names(nelders)
+  names(nelders)[which(nms=="age86")]<-c("age")
+  elders=elders[,names(nelders)] # reorder columns to match
+  rbind(nelders,elders) # this now becomes popsa extended (i.e. popsae) 
+}
+
+#  mkPopsae(popsa) # for testing
+
   seerHome=path.expand(seerHome)
   outD=file.path(seerHome,outDir) 
   outF=file.path(seerHome,outDir,paste0(outFile,".RData")) 
