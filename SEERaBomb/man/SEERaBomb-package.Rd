@@ -43,7 +43,7 @@ development has been supported by the Cleveland Clinic Foundation.}
 \references{    Surveillance, Epidemiology, and End Results (SEER) Program
      (www.seer.cancer.gov) Research Data (1973-2012), National Cancer
      Institute, DCCPS, Surveillance Research Program, Surveillance Systems Branch,
-     released April 2014, based on the November 2014 submission.}
+     released April 2015, based on the November 2014 submission.}
 
 \author{ Tom Radivoyevitch (\email{radivot@ccf.org}) }
 \seealso{\code{\link{getFields},\link{pickFields},\link{mkSEER},\link{mkSEERold},\link{mkAbomb} }}
