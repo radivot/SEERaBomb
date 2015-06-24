@@ -59,10 +59,10 @@ mapCancs<-function(D){
 #   cancer[(ICD9>=2010)&(ICD9<2020)]="hodgkin"
 #   cancer[(ICD9>=2020)&(ICD9<2030)]="NHL"
 #   cancer[(ICD9>=2030)&(ICD9<2040)]="MM"
-  cancer[(ICD9>=2040)&(ICD9<2050)]="ALL"
+#   cancer[(ICD9>=2040)&(ICD9<2050)]="ALL"
 #   cancer[(ICD9>=2050)&(ICD9<2080)]="AML"  # same here
-  cancer[(ICD9>=2080)&(ICD9<2090)]="OL" #M0 like stuff
-  cancer[(ICD9==2387)]="OL"
+#   cancer[(ICD9>=2080)&(ICD9<2090)]="OL" #M0 like stuff
+#   cancer[(ICD9==2387)]="OL"
   
   # clean things with histO3 codes that trump the heme ICD9 codes above
   cancer[(histo3>=9590)&(histo3<9600)]="NHL" 
@@ -76,8 +76,9 @@ mapCancs<-function(D){
   cancer[(histo3>=9760)&(histo3<=9770)]="MM"  # outside of below there are ~20 cases of these
   #   this cancer[(ICD9>=2730)&(ICD9<2739)]="globinemia" yielded 5080 cases of 9761 and 9762
   
-  cancer[(histo3>=9800)&(histo3<9810)]="OL" # takes back 60 AMLs from ICD9 in 9808 and 9809
   
+  cancer[(histo3>=9800)&(histo3<9810)]="OL" # takes back 60 AMLs from ICD9 in 9808 and 9809
+  cancer[histo3==9948]="OL"  # aggressive NK leukemia lumped in here
   #   cancer[(histo3==9812)|(histo3==9806)]="ALLba" #ALL with BCR-ABL (110 cases) 2010-12 + 12 mixed lineage 2011-12
   cancer[(histo3>=9810)&(histo3<9840)]="ALL" # take some OL back to ALL
   cancer[(histo3==9823)]="CLL" # pull out the CLLs
