@@ -3,14 +3,14 @@
 \title{Get expected numbers of cases  }
 \description{Converts list of matrices produced by post1PYO into a matrix that corresponds to the matrix of observed cases 
 produced by post1PYO. }
-\usage{getE(LPYM,D,ageStart,ageEnd,yearEnd,cancerS,secondS)} 
+\usage{getE(LPYM,D,ageStart,ageEnd,yearEnd,firstS,secondS)} 
 \arguments{
   \item{LPYM}{List of first cancer PY matrices produced by post1PYO.}
   \item{D}{D component of seerSet list produced by mk2D. }
   \item{ageStart}{ageStart component of seerSet. }
   \item{ageEnd}{ageEnd component of seerSet. }
   \item{yearEnd}{The most recent year in the SEER datasets. }
-  \item{cancerS}{Character vector of cancers in canc of seerSet. }
+  \item{firstS}{Character vector of first cancers of interest; added to seerSet by tsd. }
   \item{secondS}{Character vector of second cancers of interest; added to seerSet by mk2D. }
 }
 

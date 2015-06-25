@@ -1,4 +1,4 @@
-post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd ) { 
+post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd ,firstS,secondS) { 
   # to get rid of check notes. Using list inputs and with will shield these
   #   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=seqnum=sex=race=reg=yrdx1=yrdiff=NULL 
 #   surv=yrdx=db=casenum=cancer=trt=agedx=yrdx1=seqnum=yrdiff=NULL 
@@ -7,23 +7,21 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd ) {
   age=NULL 
   yrdx2=yrdiffn=cancer1=cancer2=py=year=ageL=ageR=age1=NULL 
   if(sum(canc$trt==Trt,na.rm=T)==0) stop(paste0("canc must have a trt column containing",Trt))
+  
   binS=levels(cut(brks+0.1,breaks=c(brks,100)))
-  #   canc=canc%>%mutate(surv=round(surv/12,3),yrdx=round(yrdx+modx/12,3))%>%     
-  #     select(db,casenum:yrdx,radiatn,surv,cancer,trt)%>%
-  #     mutate(yrbrth=yrbrth+0.5,agedx=agedx+0.5)
   bin=binS[binIndx]
   #   print(bin)
 #   print("inPost")
   (LL=getBinInfo(bin,binS)["LL"])
-  #       D$cancer=factor(D$cancer) # get rid of opposite sex cancer types
-  D0=canc%>%filter(seqnum==0,surv<200,surv>LL,trt==Trt)
-  D1=canc%>%filter(seqnum==1,trt==Trt)%>%select(casenum,cancer,yrdx,age,trt)  
-#   D1=canc%>%filter(seqnum==1,trt==Trt)%>%select(casenum,cancer,yrdx,agedx,trt)  
+  canc=canc%>%filter()
+  D0=canc%>%filter(seqnum==0,surv<200,surv>LL,trt==Trt,cancer%in%firstS)
+  D0$cancer=factor(D0$cancer,levels=firstS) # get rid of levels not in firstS. 
+# need levels above since apparently pituitary is never irradiated
+  D1=canc%>%filter(seqnum==1,trt==Trt,cancer%in%firstS)%>%select(casenum,cancer,yrdx,age,trt)  
+  D1$cancer=factor(D1$cancer,levels=firstS) # get rid of levels not in firstS
   D2=canc%>%filter(seqnum==2) # D2 holds second primaries
   D1=D1%>%filter(casenum%in%D2$casenum) # reduce firsts to just those with a second in D2 
   names(D1)[2:5]=c("cancer1","yrdx1","age1","trt1") #rename D1 cols so as not to join by them.
-  # D2 colnames  db  casenum	reg	race	sex	agedx	yrbrth	seqnum	modx	yrdx	radiatn	surv	cancer	trt
-  #   D2=D2%>%select(casenum,cancer,yrdx,agedx,sex,race,yrbrth) # reduce D2 to cols we want to slap on 
 #   D2=D2%>%filter(casenum%in%D1$casenum) # no diff in simulation .. filt aft leftjoin took care of it 
   D2=D2%>%select(casenum,cancer,yrdx,age) # reduce D2 to cols we want to slap on 
   names(D2)[2:4]=c("cancer2","yrdx2","age2") # and rename cols not to join by them
@@ -65,7 +63,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd ) {
   
 #   #  print(gc())
   for (i in names(LPYinM)) {
-      PYM=Zs+0   # fake out system to allocate fresh memory for each instance of the matrix, i.e. each first cancer
+      PYMat=Zs+0   # fake out system to allocate fresh memory for each instance of the matrix, i.e. each first cancer
 #       print(i)
 #       print(tail(LPYinM[[i]]))
   #     print(dim(LPYinM[[i]]))
@@ -73,7 +71,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd ) {
   #      print(tail(LPYinM[[i]]))
   #     print(head(PYM))
 #         if(dim(LPYinM[[i]])[1]==0) LPYM[[i]]=as.matrix(data.frame(py=c(.1,.1),ageL=50,year=2000)) # set up dummy matrix
-         LPYM[[i]]=fillPYM(LPYinM[[i]],PYM)
+         LPYM[[i]]=fillPYM(LPYinM[[i]],PYMat)
 #          LPYM[[i]]=mkPYM(LPYinM[[i]],nyears)
 #         LPYM[[i]]=mkPYMR(LPYinM[[i]],yearEnd)
   #     print(head(LPYM[[i]]))

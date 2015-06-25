@@ -3,6 +3,9 @@ CHANGES IN VERSION 2015.2 (Second version working with the SEER release of 2015)
 
 NEW FEATURES
 
+    o The function tsd now takes a firstS argument, a verctor of first cancers of interest. This doesn't speed things 
+      up much but it makes the output of tst easier to read and the output of mkExcel much more focused. 
+
     o The latest National Vital Statistics Report data is now included as a data.frame.  
 
 

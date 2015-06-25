@@ -1,5 +1,5 @@
-getE=function(LPYM,D,ageStart,ageEnd,yearEnd,cancerS,secondS) {
-  EI=split(D,D$cancer) # expected incidences per 100,000 py, broken down by cancers
+getE=function(LPYM,D,ageStart,ageEnd,yearEnd,firstS,secondS) {
+  EI=split(D,D$cancer) # expected incidences per 100,000 py, broken down by second cancers (in secondS)
   EI=lapply(EI,function(x) acast(x, age~year, value.var="Eincid")) # convert 3 cols of df to matrices
 #    EI=lapply(EI,function(x) x[,-1])
   if (ageStart>=1) LPYM=lapply(LPYM,function(x) x[-c(1:ageStart,(ageEnd+1):126),]) else
@@ -12,8 +12,8 @@ getE=function(LPYM,D,ageStart,ageEnd,yearEnd,cancerS,secondS) {
   LPYM[["AMLti"]]=LPYM[["AMLti"]][,-c(1:28)]
 #    secondS=names(EI)
   strt01=c("MDS","MPN","RARS","AMLti")
-  (E=matrix(0,nrow=length(cancerS),ncol=length(secondS),dimnames=list(firstCanc=cancerS,secondCanc=secondS)))
-  for (i in cancerS) {   #i loop on first cancers
+  (E=matrix(0,nrow=length(firstS),ncol=length(secondS),dimnames=list(firstCanc=firstS,secondCanc=secondS)))
+  for (i in firstS) {   #i loop on first cancers
     PY=LPYM[[i]]
     for (j in secondS) # j loop on second cancers
     { 
