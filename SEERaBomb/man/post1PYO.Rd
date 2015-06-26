@@ -4,7 +4,7 @@
 \description{Converts a canc data.frame into a list of objects containing information regarding person years at risk
 for a second cancer after having a first cancer, and the number observed, in a defined time since exposure interval
 and after a defined first cancer therapy.  }
-\usage{post1PYO(canc, brks=c(0,2,5),binIndx=1,Trt="rad",yearEnd,firstS,secondS)} 
+\usage{post1PYO(canc, brks=c(0,2,5),binIndx=1,Trt="rad",PYM=FALSE,yearEnd,firstS,secondS)} 
 \arguments{
   \item{canc}{Input canc data.frame that is already sex, and possibly race, specific, but not cancer specific, as 
               treatment of any first cancer could potentially cause any second cancer.}
@@ -12,6 +12,7 @@ and after a defined first cancer therapy.  }
   \item{binIndx}{The index of the interval for which py are to be computed by calling this function.}
   \item{Trt}{The treatment for the first cancers. Note that the second cancer treatment is irrelevant here, so 
   the input canc must not be reduced to only certain treatment types. }
+  \item{PYM}{PYM of tsd.}
   \item{yearEnd}{This is taken from the seerSet object.}
   \item{firstS}{Vector of first cancers of interest as strings.}
   \item{secondS}{Vector of second cancers of interest as strings.}
