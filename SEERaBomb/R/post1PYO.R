@@ -5,7 +5,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,f
   #   yrdx2=yrdiffn=cancer1=cancer2=py=year=ageL=ageR=agedx1=NULL 
   surv=yrdx=age=casenum=cancer=trt=yrdx1=seqnum=yrdiff=NULL 
   age=NULL 
-  yrdx2=yrdiffn=cancer1=cancer2=py=year=ageL=ageR=age1=ageM=sem=NULL 
+  yrdx2=yrdiffn=cancer1=cancer2=py=year=ageL=ageR=age1=age2=ageM=sem=NULL 
   if(sum(canc$trt==Trt,na.rm=T)==0) stop(paste0("canc must have a trt column containing",Trt))
   
   binS=levels(cut(brks+0.1,breaks=c(brks,100)))
@@ -13,7 +13,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,f
   #   print(bin)
   #   print("inPost")
   (LL=getBinInfo(bin,binS)["LL"])
-  canc=canc%>%filter()
+#   canc=canc%>%filter()
   D0=canc%>%filter(seqnum==0,surv<200,surv>LL,trt==Trt,cancer%in%firstS)
   D0$cancer=factor(D0$cancer,levels=firstS) # get rid of levels not in firstS. 
   # need levels above since apparently pituitary is never irradiated
@@ -23,8 +23,8 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,f
   D1=D1%>%filter(casenum%in%D2$casenum) # reduce firsts to just those with a second in D2 
   names(D1)[2:5]=c("cancer1","yrdx1","age1","trt1") #rename D1 cols so as not to join by them.
   #   D2=D2%>%filter(casenum%in%D1$casenum) # no diff in simulation .. filt aft leftjoin took care of it 
-  D2=D2%>%select(casenum,cancer,yrdx,age) # reduce D2 to cols we want to slap on 
-  names(D2)[2:4]=c("cancer2","yrdx2","age2") # and rename cols not to join by them
+  D2=D2%>%select(casenum,cancer2=cancer,yrdx2=yrdx,age2=age) # reduce D2 to cols we want to slap on 
+#   names(D2)[2:4]=c("cancer2","yrdx2","age2") # and rename cols not to join by them
   #   print("inPost1")
   head(D1)
   head(D2)
@@ -40,15 +40,15 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,f
   PY1=D12py%>%mutate(py=getPY(yrdiffn,bin,binS,brks),ageL=age1+brks[binIndx],year=floor(yrdx1+brks[binIndx])) 
   PYL=rbind(PY0%>%mutate(cancer1=cancer,cancer2="none")%>%select(cancer1,cancer2,py,ageL,year),
            PY1%>%select(cancer1,cancer2,py,ageL,year))
-  n=dim(PYL)[1]
-  binMidPnt=LL+sum(PYL$py)/n/2
+  N=dim(PYL)[1]
+  binMidPnt=LL+sum(PYL$py)/N/2
   PYL=PYL%>%mutate(ageR=ageL+py,ageM=ageL+py/2)
   PYT=PYL%>%summarize(cases=n(),PY=sum(py),mean=mean(py),median=median(py),Q1=quantile(py,0.25),Q3=quantile(py,0.75))
   PY=PYL%>%group_by(cancer1)%>%summarize(cases=n(),PY=sum(py),mean=mean(py),median=median(py),
                                                Q1=quantile(py,0.25),Q3=quantile(py,0.75))
   AgeE=PYL%>%group_by(cancer1)%>%summarize(age=mean(ageM),sem=sd(ageM)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
-  AgeO=PYL%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%
-    summarize(age=mean(ageR),sem=sd(ageR)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
+  AgeO=D12%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%
+    summarize(age=mean(age2),sem=sd(age2)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
 #   AgeE=PY%>%group_by(cancer1,cancer2)%>%
 #     summarize(age=mean(ageL)+binMidPnt,L=t.test$conf.int[1],L=t.test(ageL)$conf.int[2])%>%filter(cancer2%in%secondS)
 #   AgeO=PY%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%
