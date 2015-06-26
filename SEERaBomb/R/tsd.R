@@ -1,4 +1,4 @@
-tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE,firstS="all"){ 
+tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYLong=FALSE,firstS="all"){ 
   #   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=L2D=NULL
   print(binS<-levels(cut(brks+0.1,breaks=c(brks,100)))) #this is just to make a vector of tsd interval/row names 
   ptm <- proc.time()
@@ -20,24 +20,26 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE,firstS="all"){
       Exp=vector(mode="list",length=0)
       AgeO=vector(mode="list",length=0)  # mean age of observed cases
       AgeE=vector(mode="list",length=0)  # mean age of expected cases, i.e. of PY at risk
-      PYQ=vector(mode="list",length=0)
-      if (PYM) PyM=vector(mode="list",length=0)
+      PY=vector(mode="list",length=0)
+      PYT=vector(mode="list",length=0)
+      if (PYLong) PYL=vector(mode="list",length=0)
       for (bin in binS) 
       {
         #       (bin=binS[1])
         #         print(bin)
         binIndx=getBinInfo(bin,binS)["index"]
-        L1=post1PYO(canc,brks,binIndx,Trt=R,PYM=PYM,yearEnd,firstS,secondS=secondS)
+        L1=post1PYO(canc,brks,binIndx,Trt=R,PYLong=PYLong,yearEnd,firstS,secondS=secondS)
         Exp[[bin]]=getE(L1$LPYM,D,ageStart,ageEnd,yearEnd,firstS,secondS)
         #          Obs[[bin]]=L1$O
         Obs[[bin]]=L1$O[firstS,secondS,drop=FALSE]
         AgeE[[bin]]=L1$AgeE
         AgeO[[bin]]=L1$AgeO
-        PYQ[[bin]]=L1$PYQ
+        PY[[bin]]=L1$PY
+        PYT[[bin]]=L1$PYT
         #         rws=rownames(L1$O)
         #         cols=colnames(L1$O)
         #         Obs[[bin]]=L1$O[rws%in%firstS,cols%in%secondS,drop=FALSE]
-        if (PYM) PyM[[bin]]=L1$PY
+        if (PYLong) PYL[[bin]]=L1$PYL
         mids=c(mids,L1$binMidPnt)
       } # loop on tsx bins
       SL[[R]]$mids=mids
@@ -45,8 +47,9 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYM=FALSE,firstS="all"){
       SL[[R]]$Exp=Exp
       SL[[R]]$AgeE=AgeE
       SL[[R]]$AgeO=AgeO
-      SL[[R]]$PYQ=PYQ
-      if (PYM) SL[[R]]$PyM=PyM
+      SL[[R]]$PY=PY
+      SL[[R]]$PYT=PYT
+      if (PYLong) SL[[R]]$PYL=PYL
     } # loop on R
     SL
   })

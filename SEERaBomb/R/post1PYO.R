@@ -1,4 +1,4 @@
-post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYM=FALSE,yearEnd ,firstS,secondS) { 
+post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,firstS,secondS) { 
   # to get rid of check notes. Using list inputs and with will shield these
   #   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=seqnum=sex=race=reg=yrdx1=yrdiff=NULL 
   #   surv=yrdx=db=casenum=cancer=trt=agedx=yrdx1=seqnum=yrdiff=NULL 
@@ -38,22 +38,24 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYM=FALSE,yearEnd ,firs
   D12=D12%>%filter(yrdiff==bin) 
   PY0=D0%>%mutate(py=getPY(surv,bin,binS,brks),ageL=age+brks[binIndx],year=floor(yrdx+brks[binIndx])) 
   PY1=D12py%>%mutate(py=getPY(yrdiffn,bin,binS,brks),ageL=age1+brks[binIndx],year=floor(yrdx1+brks[binIndx])) 
-  PY=rbind(PY0%>%mutate(cancer1=cancer,cancer2="none")%>%select(cancer1,cancer2,py,ageL,year),
+  PYL=rbind(PY0%>%mutate(cancer1=cancer,cancer2="none")%>%select(cancer1,cancer2,py,ageL,year),
            PY1%>%select(cancer1,cancer2,py,ageL,year))
-  n=dim(PY)[1]
-  binMidPnt=LL+sum(PY$py)/n/2
-  PY=PY%>%mutate(ageR=ageL+py,ageM=ageL+py/2)
-  PYQ=PY%>%group_by(cancer1)%>%summarize(Q1=quantile(py,0.25),Q2=quantile(py,0.5),Q3=quantile(py,0.75))
-  AgeE=PY%>%group_by(cancer1)%>%summarize(age=mean(ageM),sem=sd(ageM)/sqrt(n()),ci95=qt(0.975,n()-1)*sem)
-  AgeO=PY%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%
-    summarize(age=mean(ageR),sem=sd(ageR)/sqrt(n()),ci95=qt(0.975,n()-1)*sem)
+  n=dim(PYL)[1]
+  binMidPnt=LL+sum(PYL$py)/n/2
+  PYL=PYL%>%mutate(ageR=ageL+py,ageM=ageL+py/2)
+  PYT=PYL%>%summarize(cases=n(),PY=sum(py),mean=mean(py),median=median(py),Q1=quantile(py,0.25),Q3=quantile(py,0.75))
+  PY=PYL%>%group_by(cancer1)%>%summarize(cases=n(),PY=sum(py),mean=mean(py),median=median(py),
+                                               Q1=quantile(py,0.25),Q3=quantile(py,0.75))
+  AgeE=PYL%>%group_by(cancer1)%>%summarize(age=mean(ageM),sem=sd(ageM)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
+  AgeO=PYL%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%
+    summarize(age=mean(ageR),sem=sd(ageR)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
 #   AgeE=PY%>%group_by(cancer1,cancer2)%>%
 #     summarize(age=mean(ageL)+binMidPnt,L=t.test$conf.int[1],L=t.test(ageL)$conf.int[2])%>%filter(cancer2%in%secondS)
 #   AgeO=PY%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%
 #     summarize(age=mean(ageR),L=t.test(ageR)$conf.int[1],L=t.test$conf.int[2])%>%filter(cancer2%in%secondS)
   
-  PYin=PY%>%select(-cancer1,-cancer2,-ageR)
-  LPYin=split(PYin,PY$cancer1) #splitting done on first cancers, so resulting list names are of first cancers
+  PYin=PYL%>%select(-cancer1,-cancer2,-ageR)
+  LPYin=split(PYin,PYL$cancer1) #splitting done on first cancers, so resulting list names are of first cancers
   LPYinM=lapply(LPYin,as.matrix)
   LPYM=NULL
   # creat a matrix of zeros that is repeatedly the starting point of age-year PY accrual
@@ -98,8 +100,8 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYM=FALSE,yearEnd ,firs
   rownames(O)=names(LD12)
   colnames(O)=levels(D12$cancer2)
   #   print("here")
-  if (PYM) return(list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeE=AgeE,AgeO=AgeO,PYQ=PYQ,PY=PY))  # no speed gain with this
-  else return(list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeE=AgeE,AgeO=AgeO,PYQ=PYQ))
+  if (PYLong) return(list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeE=AgeE,AgeO=AgeO,PY=PY,PYT=PYT,PYL=PYL))  # no speed gain with this
+  else return(list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeE=AgeE,AgeO=AgeO,PY=PY,PYT=PYT))
 }
 
 
