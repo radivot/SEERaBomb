@@ -6,10 +6,10 @@ Author: Tomas Radivoyevitch
 Description: Creates SEER (Surveillance, Epidemiology and End Results) and A-bomb data binaries 
              from ASCII sources and provides tools for estimating SEER second cancer risks.      
 Maintainer: Tomas Radivoyevitch <radivot@ccf.org>
-Depends: dplyr
-Suggests:  bbmle,  ggplot2
+Depends: dplyr,  ggplot2
+Suggests:  bbmle
 License: GPL (>= 2)
-Imports: Rcpp (>= 0.11.3), reshape2, mgcv, LaF, DBI, RSQLite, rgl, XLConnect
+Imports: Rcpp (>= 0.11.3), reshape2, mgcv, LaF, DBI, RSQLite, rgl, XLConnect, scales
 LinkingTo: Rcpp
 LazyData: yes
 URL: http://epbi-radivot.cwru.edu/SEERaBomb/SEERaBomb.html

@@ -1,4 +1,4 @@
-seerSet<-function(canc,popsa,Sex, Race="pool",ageStart=15,ageEnd=85) {
+seerSet<-function(canc,popsa,Sex, Race="pooled",ageStart=15,ageEnd=85) {
   # gimic to get rid of unwanted notes in R CMD check
    agedx=age=age86=yrdx=sex=race=surv=modx=yrbrth=py=year=NULL 
   
@@ -19,7 +19,7 @@ seerSet<-function(canc,popsa,Sex, Race="pool",ageStart=15,ageEnd=85) {
 #   canc=canc%>%filter(age>=(ageStart+0.5),age<(ageEnd+0.5),sex==Sex)
   canc=canc%>%filter(age>=ageStart,age<ageEnd,sex==Sex)
   popsa=popsa%>%filter(age>=ageStart,age<ageEnd,sex==Sex)
-  if (Race!="pool") {
+  if (Race!="pooled") {
     canc=canc%>%filter(race==Race)
     popsa=popsa%>%filter(race==Race) 
   }

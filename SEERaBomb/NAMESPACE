@@ -1,8 +1,12 @@
 useDynLib(SEERaBomb)
 import(dplyr)  ## depends
+import(ggplot2)  ## depends
 import(LaF,RSQLite,rgl,XLConnect) ## needed less critically but for too many functions to list
 importFrom(Rcpp, evalCpp)
 importFrom(DBI, dbDriver)
 importFrom(mgcv, gam,s,ti)
-importFrom(reshape2, melt, acast)
+importFrom(reshape2, melt, acast,dcast)
+importFrom(scales, comma_format)
 exportPattern("^[[:alpha:]]+")
+S3method(summary,seerSet)
+S3method(print,seerSet.summary)
