@@ -49,7 +49,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,f
                                            Q1=quantile(py,0.25),Q3=quantile(py,0.75))%>%mutate(midPnt=mean/2+LL)
   } else { # else skip quantiles 
     PYT=PYL%>%summarize(cases=n(),PY=sum(py),mean=mean(py)) 
-    PY=PYL%>%group_by(cancer1)%>%summarize(cases=n(),PY=sum(py),mean=mean(py))%>%mutate(midPnt=mean/2+LL)
+    PY=PYL%>%group_by(cancer1)%>%summarize(nFirsts=n(),PY=sum(py),mean=mean(py))%>%mutate(midPnt=mean/2+LL)
   }
   
   options(warn=-1) # warnings from CI attempts when n=1 can be ignored
