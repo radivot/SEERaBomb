@@ -1,14 +1,14 @@
 \name{seerStats}
 \alias{seerStats}
-\title{Summarize SEER data prior to its entry into a seerSet object.}
-\description{Compared to sex specific seerSet summaries using summary(), this renders info on both sexes together. }
+\title{Summarize SEER data.}
+\description{Shows numbers of cases per cancer in each SEER database and PY in each registry. Sexes are pooled. }
 \usage{seerStats(canc,popsa)} 
 \arguments{
   \item{canc}{Data frame of cancers that includes agedx and cancer columns. }
   \item{popsa}{Data frame of population PY at 1-year age resolution.  }
 }
    
-\value{A list that includes: a data.frame with sexes pooled, of cases in each database and of cases >99 years old, for each cancer; a PY data.frame with sexes pooled of registries and PY weighted ages. }
+\value{A list of 2 data.frames with sexes pooled, one of cases with cancer types as rows and as columns, databases, totals, cases >=100 years old or not, and numbers of first-, second-, third- and higher cancers. The second data.frame holds population PY, and PY-weighted ages, per registry. }
   
 
 \author{Tom Radivoyevitch (radivot@ccf.org)}
