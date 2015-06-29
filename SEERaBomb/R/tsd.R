@@ -56,6 +56,10 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYLong=FALSE,firstS="all"){
   tsdn=paste0("b",paste(brks,collapse="_"))
   #   seerSet$bfn=paste0(seerSet$bfn,paste0("b",paste(brks,collapse="_")),txt)
   seerSet$L[[tsdn]]=SL
+  seerSet$active=N=length(seerSet$L) 
+  seerSet$series=data.frame(index=1:N,series=names(seerSet$L))
+  cat(paste("Current active series:",seerSet$active,"\n")) 
+  print(seerSet$series) 
   #   fn=paste0(outDir,"/",seerSet$bfn,".RData")
   #   cat("Writing L to ",fn,"\n")
   #   save(L,file=fn)
