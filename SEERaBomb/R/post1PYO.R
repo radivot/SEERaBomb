@@ -1,9 +1,9 @@
-post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,firstS,secondS) { 
+post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd,firstS,secondS) { 
   # to get rid of check notes. Using list inputs and with will shield these
   #   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=seqnum=sex=race=reg=yrdx1=yrdiff=NULL 
   #   surv=yrdx=db=casenum=cancer=trt=agedx=yrdx1=seqnum=yrdiff=NULL 
   #   yrdx2=yrdiffn=cancer1=cancer2=py=year=ageL=ageR=agedx1=NULL 
-  surv=yrdx=age=casenum=cancer=trt=yrdx1=seqnum=yrdiff=NULL 
+  surv=yrdx=age=casenum=cancer=trt=yrdx1=seqnum=yrdiff=mn=NULL 
   age=NULL 
   yrdx2=yrdiffn=cancer1=cancer2=py=year=ageL=ageR=age1=age2=ageM=sem=NULL 
   if(sum(canc$trt==Trt,na.rm=T)==0) stop(paste0("canc must have a trt column containing",Trt))
@@ -37,36 +37,44 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,f
   D12=D12%>%mutate(yrdiff=cut(yrdiffn,breaks=c(-1,brks,100),include.lowest = TRUE)) 
   D12=D12%>%filter(yrdiff==bin) 
   PY0=D0%>%mutate(py=getPY(surv,bin,binS,brks),ageL=age+brks[binIndx],year=floor(yrdx+brks[binIndx])) 
-  PY1=D12py%>%mutate(py=getPY(yrdiffn,bin,binS,brks),ageL=age1+brks[binIndx],year=floor(yrdx1+brks[binIndx])) 
-  PYL=rbind(PY0%>%mutate(cancer1=cancer,cancer2="none")%>%select(cancer1,cancer2,py,ageL,year),
-            PY1%>%select(cancer1,cancer2,py,ageL,year))
+  PY12=D12py%>%mutate(py=getPY(yrdiffn,bin,binS,brks),ageL=age1+brks[binIndx],year=floor(yrdx1+brks[binIndx]))
+  print(dim(PY0))
+  print(head(PY0))
+  PYL=rbind(PY0%>%mutate(cancer2="none")%>%select(cancer1=cancer,cancer2,py,ageL,year),
+            PY12%>%select(cancer1,cancer2,py,ageL,year))
   N=dim(PYL)[1]
   binMidPnt=LL+sum(PYL$py)/N/2
-  PYL=PYL%>%mutate(ageR=ageL+py,ageM=ageL+py/2) 
-  if (length(brks)==1) { # if length is 1, assume value is zero, i.e. all times t>0 are wanted together, so get Qs
-    PYT=PYL%>%summarize(cases=n(),PY=sum(py),mean=mean(py),median=median(py),Q1=quantile(py,0.25),Q3=quantile(py,0.75))
-    PY=PYL%>%group_by(cancer1)%>%summarize(cases=n(),PY=sum(py),mean=mean(py),median=median(py),
-                                           Q1=quantile(py,0.25),Q3=quantile(py,0.75))%>%mutate(midPnt=mean/2+LL)
-  } else { # else skip quantiles 
-    PYT=PYL%>%summarize(cases=n(),PY=sum(py),mean=mean(py)) 
-    PY=PYL%>%group_by(cancer1)%>%summarize(nFirsts=n(),PY=sum(py),mean=mean(py))%>%mutate(midPnt=mean/2+LL)
-  }
+#   PYL=PYL%>%mutate(ageR=ageL+py,ageM=ageL+py/2) 
+#   if (length(brks)==1) { # if length is 1, assume value is zero, i.e. all times t>0 are wanted together, so get Qs
+#     PYT=PYL%>%summarize(cases=n(),pyt=sum(py),mn=mean(py),Q2=median(py),Q1=quantile(py,0.25),Q3=quantile(py,0.75))
+#     PY1=PYL%>%group_by(cancer1)%>%summarize(cases=n(),py1=sum(py),mn=mean(py),Q2=median(py),
+#                                            Q1=quantile(py,0.25),Q3=quantile(py,0.75))%>%mutate(midPnt=mn/2+LL)
+#   } else { # else skip quantiles 
+#     PYT=PYL%>%summarize(cases=n(),pyt=sum(py),mn=mean(py)) 
+#     PY1=PYL%>%group_by(cancer1)%>%summarize(nFirsts=n(),py1=sum(py),mn=mean(py))%>%mutate(midPnt=mn/2+LL)
+#   }
   
-  options(warn=-1) # warnings from CI attempts when n=1 can be ignored
-  #AgeE=PYL%>%group_by(cancer1)%>%summarize(age=mean(ageM),sd=sd(ageM),n=n())# alt way to avoid: leave computing for latter
-  AgeE=PYL%>%group_by(cancer1)%>%summarize(age=mean(ageM),sem=sd(ageM)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
-  AgeO=D12%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%
-    summarize(age=mean(age2),sem=sd(age2)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
-  #     summarize(age=mean(age2),sd=sd(age2),n=n()) #alt way to avoid warnings
-  options(warn=0) # turn warnings back on
+#   options(warn=-1) # warnings from CI attempts when n=1 can be ignored
+#   #AgeE=PYL%>%group_by(cancer1)%>%summarize(age=mean(ageM),sd=sd(ageM),n=n())# alt way to avoid: leave computing for latter
+#   AgeE=PYL%>%group_by(cancer1)%>%summarize(age=mean(ageM),sem=sd(ageM)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
+#   AgeO=D12%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%
+#     summarize(age=mean(age2),sem=sd(age2)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
+# #   fs=merge(data.frame(cancer1=firstS),data.frame(cancer2=secondS))%>%arrange(cancer1)
+# #   AgeE=left_join(data.frame(cancer1=firstS),AgeE)
+# #   AgeO=left_join(fs,AgeO)
+#   #     summarize(age=mean(age2),sd=sd(age2),n=n()) #alt way to avoid warnings
+#   options(warn=0) # turn warnings back on
   #   AgeE=PY%>%group_by(cancer1,cancer2)%>%
   #     summarize(age=mean(ageL)+binMidPnt,L=t.test$conf.int[1],L=t.test(ageL)$conf.int[2])%>%filter(cancer2%in%secondS)
   #   AgeO=PY%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%
   #     summarize(age=mean(ageR),L=t.test(ageR)$conf.int[1],L=t.test$conf.int[2])%>%filter(cancer2%in%secondS)
   
-  PYin=PYL%>%select(-cancer1,-cancer2,-ageR)
+#   PYin=PYL%>%select(-cancer1,-cancer2,-ageR,-ageM)
+  PYin=PYL%>%select(-cancer1,-cancer2)
   LPYin=split(PYin,PYL$cancer1) #splitting done on first cancers, so resulting list names are of first cancers
   LPYinM=lapply(LPYin,as.matrix)
+print(sapply(LPYin,function(x) range(x$ageL)))
+print(sapply(LPYin,function(x) range(x$year)))
   LPYM=NULL
   # creat a matrix of zeros that is repeatedly the starting point of age-year PY accrual
   yrs=1973:yearEnd
@@ -79,6 +87,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,f
   #   print(tail(D12,2))
   #   print(Trt)
   print(bin)
+# print(sapply(LPYinM,head,2))
   #   print(sapply(LPYinM,dim))
   #   print(dim(sapply(LPYinM,dim)))
   
@@ -86,7 +95,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,f
   #   for (i in names(LPYinM)) {
   for (i in firstS) {
     PYMat=Zs+0   # fake out system to allocate fresh memory for each instance of the matrix, i.e. each first cancer
-    #       print(i)
+#           print(i)
     #       print(tail(LPYinM[[i]]))
     #     print(dim(LPYinM[[i]]))
     #       print(head(LPYinM[[i]],2))
@@ -110,7 +119,9 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd ,f
   rownames(O)=names(LD12)
   colnames(O)=levels(D12$cancer2)
   #   print("here")
-  L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeE=AgeE,AgeO=AgeO,PY=PY,PYT=PYT)
+  L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt)
+#   L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,PY1=PY1,PYT=PYT)
+#   L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeE=AgeE,AgeO=AgeO,PY1=PY1,PYT=PYT)
   if (PYLong) return(c(L1,PYL=PYL))  # no speed gain with this
   else return(L1)
 }
