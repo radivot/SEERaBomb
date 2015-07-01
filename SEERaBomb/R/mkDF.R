@@ -1,5 +1,5 @@
 mkDF<-function(seerSet) {
-  age=trt=race=surv=year=py=popsa=cancer=ageE=ageEci=ageO=ageOci=NULL 
+  age=trt=race=surv=year=py=popsa=cancer1=nO=O=E=ageE=ageEci=ageO=ageOci=NULL 
   if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else {
     cat(paste0("Using active time series in L.   Index:",seerSet$active,"\n")) 
     L=seerSet$L[[seerSet$active]]
@@ -65,7 +65,6 @@ mkDF<-function(seerSet) {
   d=cbind(d,py%>%select(py:t))
   d=cbind(d,O=o$O,E=e$E)
   head(d)
-  
   d=d%>%mutate(RR=O/E,
                rrL=qchisq(.025,2*O)/(2*E),
                rrU=qchisq(.975,2*O+2)/(2*E))

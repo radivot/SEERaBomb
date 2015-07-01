@@ -2,7 +2,7 @@ summary.seerSet<-function(object, ...) {
   age=trt=race=surv=year=py=popsa=cancer=NULL 
   cf=function (x) comma_format()(x)
   D=object$canc%>%filter(trt!="unk")%>%group_by(cancer,trt)%>%
-    summarize(n=n(),age=round(median(age),1),surv=round(median(surv),1)) #,
+    summarize(n=n(),age=round(mean(age),1),surv=round(median(surv),1)) #,
 #               seq=mean(ifelse(seqnum==0,1,seqnum)) ) #%>%filter(n>9)
   P=object$popsa%>%group_by(year)%>%summarize(PY=round(sum(py)/1e6,1))
   A=dcast(D,cancer~trt,value.var="age")
@@ -14,7 +14,7 @@ summary.seerSet<-function(object, ...) {
   d=left_join(d,S,by="cancer")
   names(d)=c("Cancer",paste(rep(c("Count","Age","Survival"),each=2),c("rad","noRad"),sep="."))
   seerSetSum=NULL
-  seerSetSum$title=paste0("              Counts and Medians of Ages and Survivals in Years\n               Sex: ",
+  seerSetSum$title=paste0("              Counts, Means of Ages, and Median Survivals in Years\n               Sex: ",
                           object$sex,"    Race: ",object$race,
                           "   Years: ",min(object$popsa$year),"-",max(object$popsa$year) ,"\n")
   Cnts=c(total=dim(object$canc)[1],
