@@ -10,7 +10,9 @@ seerSet<-function(canc,popsa,Sex, Race="pooled",ageStart=15,ageEnd=85) {
   if (!"age"%in%names(canc)) { #assume  first time here
     # let year be yrdx as a whole integer to free it to become a real
     canc=canc%>%mutate(year=yrdx) 
-    canc=canc%>%mutate(surv=round((surv+0.5)/12,3),yrdx=round(yrdx+(modx-0.5)/12,3))%>%    #modx=1=January 
+#when the next 2 mutations were in one call, yrdx would occasionally overwrite surv ... very weird.
+    canc=canc%>%mutate(yrdx=round(yrdx+(modx-0.5)/12,3))    #modx=1=January 
+    canc=canc%>%mutate(surv=round((surv+0.5)/12,3))%>%  
       select(-modx)%>%
       mutate(age=agedx+0.5) #convert ages at diagnosis to best guesses
     canc=canc%>%select(-agedx) 

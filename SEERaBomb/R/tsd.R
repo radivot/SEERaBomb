@@ -18,9 +18,9 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYLong=FALSE,firstS="all"){
       mids=NULL
       Obs=vector(mode="list",length=0)
       Exp=vector(mode="list",length=0)
-#       AgeO=vector(mode="list",length=0)  # mean age of observed cases
-#       AgeE=vector(mode="list",length=0)  # mean age of expected cases, i.e. of PY at risk
-#       PY1=vector(mode="list",length=0)
+      AgeO=vector(mode="list",length=0)  # mean age of observed cases
+      AgeE=vector(mode="list",length=0)  # mean age of expected cases, i.e. of PY at risk
+      PY1=vector(mode="list",length=0)
 #       PYT=vector(mode="list",length=0)
       if (PYLong) PYL=vector(mode="list",length=0)
       for (bin in binS) 
@@ -32,9 +32,9 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYLong=FALSE,firstS="all"){
         Exp[[bin]]=getE(L1$LPYM,D,ageStart,ageEnd,yearEnd,firstS,secondS)
         #          Obs[[bin]]=L1$O
         Obs[[bin]]=L1$O[firstS,secondS,drop=FALSE]
-#         AgeE[[bin]]=L1$AgeE
-#         AgeO[[bin]]=L1$AgeO
-#         PY1[[bin]]=L1$PY1
+        AgeE[[bin]]=L1$AgeE
+        AgeO[[bin]]=L1$AgeO
+        PY1[[bin]]=L1$PY1
 #         PYT[[bin]]=L1$PYT
         #         rws=rownames(L1$O)
         #         cols=colnames(L1$O)
@@ -45,9 +45,9 @@ tsd=function(seerSet,brks=c(0,2,5),trts=NULL,PYLong=FALSE,firstS="all"){
       SL[[R]]$mids=mids
       SL[[R]]$Obs=Obs
       SL[[R]]$Exp=Exp
-#       SL[[R]]$AgeE=AgeE
-#       SL[[R]]$AgeO=AgeO
-#       SL[[R]]$PY1=PY1
+      SL[[R]]$AgeE=AgeE
+      SL[[R]]$AgeO=AgeO
+      SL[[R]]$PY1=PY1
 #       SL[[R]]$PYT=PYT
       if (PYLong) SL[[R]]$PYL=PYL
     } # loop on R

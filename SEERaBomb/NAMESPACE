@@ -5,6 +5,7 @@ import(LaF,RSQLite,rgl,XLConnect) ## needed less critically but for too many fun
 importFrom(Rcpp, evalCpp)
 importFrom(DBI, dbDriver)
 importFrom(mgcv, gam,s,ti)
+importFrom(plyr, ldply)
 importFrom(reshape2, melt, acast,dcast)
 importFrom(scales, comma_format)
 exportPattern("^[[:alpha:]]+")
