@@ -110,7 +110,8 @@ mapCancs<-function(D){
   cancer[(histo3>=9965)&(histo3<=9967)]="MPN" # GFR mutatants 
   cancer[(histo3>=9970)&(histo3<=9971)]="NHL" # ICD9 put it mostly there, so sweep stray 1s into it also. 
   cancer[(histo3==9876)]="MPN" #"aCML"
-  cancer[(histo3==9530)]="meningioma"
+  cancer[(histo3==9530)]="meningioma" #supposedly malignant, but seqnums >59 confuse this.
+#   cancer[(histo3>=9531)&(histo3<=9539)]="meningioma" #benigns, mix in with mal or comment to pool with unknown
   cancer[(histo3==9560)]="schwannoma"
   cancer[(histo3==8272)]="pituitary"
   D$cancer=as.factor(cancer)

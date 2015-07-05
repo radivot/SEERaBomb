@@ -6,8 +6,8 @@
 \arguments{
   \item{seerSet}{seerSet object produced by tsd(). }
   \item{srs}{Series. The time series of interest. NULL (default) implies the currently active series, which is
-     typically the most recent. A number i implies the ith series. And a string identifies the series by name,
-     typically formed as paste0("b",paste(brks,collapse="_")) where brks is a numeric vector of time breakpoints.}
+     the most recent. A number i implies the ith series. A string identifies the series by name (numeric vectors 
+     will be coerced to such a string via paste0("b",paste(brks,collapse="_")) where brks = vector of time breakpoints.}
 }
    
 \value{A data.frame in long format that can be used by ggplot.  }

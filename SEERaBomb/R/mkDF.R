@@ -1,15 +1,26 @@
 mkDF<-function(seerSet,srs=NULL) {
   age=trt=race=surv=year=py=popsa=cancer1=nO=O=E=ageE=ageEci=ageO=int=sig2O=ageOci=NULL 
   if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else {
-    cat(paste("Current active series:",seerSet$active,"\n")) 
+    nms=names(seerSet$L)
+    indx=seerSet$active
+    cat("Current active series:",indx,"\n",sep="") 
     print(seerSet$series) 
     if (is.null(srs)) {indx=seerSet$active #grab most recent
-                       cat(paste0("Using active time series in L.   Index:",indx,"\n")) }
-    if (is.numeric(srs)){ indx=srs #grab ith most recent
-                          print(paste("Using",indx,"th series, i.e.", names(seerSet$L)[indx])) 
-                          if (length(srs)>1) print("Warning, srs length >1. If using a brks vector first collapse to a single string.") }
+                       cat(paste0("Using (active) series ",indx,", i.e. ", nms[indx],".\n")) 
+                       #                        cat(paste0("Using active time series in L.   Index:",indx,"\n"))
+    }
+    if (length(srs)>1) {
+      cat("... collapsing brks vector to a single string.\n") 
+      srs=paste0("b",paste(srs,collapse="_"))
+    }
+    
     if (is.character(srs)){ indx=srs #grab ith most recent
-                            print(paste("Using series:",indx)) }
+                            cat(paste0("Using series ",which(indx==nms),", i.e. ", indx,".\n")) 
+    }
+    if (is.numeric(srs)){ indx=srs #grab ith most recent
+                          cat("Using series ",indx,", i.e. ", nms[indx],".\n",sep="") 
+    }
+    
     L=seerSet$L[[indx]]
   }
   #   library(reshape2);library(plyr);library(SEERaBomb)
@@ -83,6 +94,7 @@ mkDF<-function(seerSet,srs=NULL) {
   #   d=cbind(d,py%>%select(py:t))
   d=cbind(pya%>%select(int:trt),ao%>%select(ageO:sig2O))
   d=cbind(d,O=o$O,E=e$E)
+  d$int=factor(d$int,levels=unique(d$int))
   head(d)
   d=d%>%mutate(RR=O/E,
                rrL=qchisq(.025,2*O)/(2*E),
