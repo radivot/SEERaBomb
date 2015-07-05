@@ -70,12 +70,13 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd,fi
   #                                            Q1=quantile(py,0.25),Q3=quantile(py,0.75))%>%mutate(midPnt=mn/2+LL)
   #   } else { # else skip quantiles 
 #   PYT=PYL%>%summarize(cases=n(),pyt=sum(py),mn=mean(py)) 
-  PY1=PYL%>%group_by(cancer1)%>%summarize(n=n(),py=sum(py))%>%mutate(t=LL + py/n/2)
+#   PY1=PYL%>%group_by(cancer1)%>%summarize(n=n(),py=sum(py))%>%mutate(t=LL + py/n/2)
+  PYA=PYL%>%group_by(cancer1)%>%summarize(n=n(),py=sum(py),age=mean(ageM),sig2=var(ageM))%>%mutate(t=LL + py/n/2)
   #   }
   
   #   options(warn=-1) # warnings from CI attempts when n=1 can be ignored
-  AgeE=PYL%>%group_by(cancer1)%>%summarize(age=mean(ageM),sig2=var(ageM),n=n())# leave computing for latter
-  #   AgeE=PYL%>%group_by(cancer1)%>%summarize(age=mean(ageM),sem=sd(ageM)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
+#   AgeE=PYL%>%group_by(cancer1)%>%summarize(age=mean(ageM),sig2=var(ageM),n=n())# leave computing for latter
+#   #   AgeE=PYL%>%group_by(cancer1)%>%summarize(age=mean(ageM),sem=sd(ageM)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
   AgeO=D12%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%
     summarize(age=mean(age2),sig2=var(age2),n=n()) 
   #     summarize(age=mean(age2),sem=sd(age2)/sqrt(n()),ci95=qt(0.975,n()-1)*sem,n=n())
@@ -133,9 +134,10 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd,fi
   rownames(O)=names(LD12)
   colnames(O)=levels(D12$cancer2)
   #   print("here")
-  L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt)
+#   L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt)
   #   L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,PY1=PY1,PYT=PYT)
-  L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeE=AgeE,AgeO=AgeO,PY1=PY1) #,PYT=PYT)
+#   L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeE=AgeE,AgeO=AgeO,PY1=PY1) #,PYT=PYT)
+  L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeO=AgeO,PYA=PYA) #,PYT=PYT)
   if (PYLong) return(c(L1,PYL=PYL))   else return(L1) # passing the big guy did not slow things down too much
 }
 

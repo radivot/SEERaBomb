@@ -2,9 +2,12 @@
 \alias{mkDF}
 \title{Convert seerSet to data.frame for gg-plotting}
 \description{Creates a data.frame of observed and expected cases for each first and second cancer and treatment. }
-\usage{mkDF(seerSet)} 
+\usage{mkDF(seerSet,srs)} 
 \arguments{
   \item{seerSet}{seerSet object produced by tsd(). }
+  \item{srs}{Series. The time series of interest. NULL (default) implies the currently active series, which is
+     typically the most recent. A number i implies the ith series. And a string identifies the series by name,
+     typically formed as paste0("b",paste(brks,collapse="_")) where brks is a numeric vector of time breakpoints.}
 }
    
 \value{A data.frame in long format that can be used by ggplot.  }
