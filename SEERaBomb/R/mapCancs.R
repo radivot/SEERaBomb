@@ -55,14 +55,14 @@ mapCancs<-function(D){
   cancer[ICD9==1991]="otherMalig"
   
   # this chunk of ICD9 codes is replaced by cleaner ICD-O3 codes below
-#   cancer[(ICD9>=2000)&(ICD9<2010)]="NHL"
-#   cancer[(ICD9>=2010)&(ICD9<2020)]="hodgkin"
-#   cancer[(ICD9>=2020)&(ICD9<2030)]="NHL"
-#   cancer[(ICD9>=2030)&(ICD9<2040)]="MM"
-#   cancer[(ICD9>=2040)&(ICD9<2050)]="ALL"
-#   cancer[(ICD9>=2050)&(ICD9<2080)]="AML"  # same here
-#   cancer[(ICD9>=2080)&(ICD9<2090)]="OL" #M0 like stuff
-#   cancer[(ICD9==2387)]="OL"
+  #   cancer[(ICD9>=2000)&(ICD9<2010)]="NHL"
+  #   cancer[(ICD9>=2010)&(ICD9<2020)]="hodgkin"
+  #   cancer[(ICD9>=2020)&(ICD9<2030)]="NHL"
+  #   cancer[(ICD9>=2030)&(ICD9<2040)]="MM"
+  #   cancer[(ICD9>=2040)&(ICD9<2050)]="ALL"
+  #   cancer[(ICD9>=2050)&(ICD9<2080)]="AML"  # same here
+  #   cancer[(ICD9>=2080)&(ICD9<2090)]="OL" #M0 like stuff
+  #   cancer[(ICD9==2387)]="OL"
   
   # clean things with histO3 codes that trump the heme ICD9 codes above
   cancer[(histo3>=9590)&(histo3<9600)]="NHL" 
@@ -90,13 +90,13 @@ mapCancs<-function(D){
   cancer[histo3%in%c(9863,9875)]="CML"  # take back CMLs
   cancer[(histo3==9866)]="APL" # andmake APL exclusive
   cancer[histo3%in%c(9865,9869,9871,9896,9897,9911)]="AMLti"  # AML by tranlocation or inversion
-            #  t(6,9),inv(3),inv(16),t(8,21),t(9,11),t(1,22)
+  #  t(6,9),inv(3),inv(16),t(8,21),t(9,11),t(1,22)
   cancer[(histo3>9979)&(histo3<9990)]="MDS" ##!!!!! tMDS=9987 got mapped in with tAML=9920 starting in 2010
-#   cancer[(histo3==9987)]="tMDS" ##!!! so we have to pull both out and correct for this
-#   cancer[(histo3==9920)]="tAML" 
-#   cancer[(histo3==9982)]="RARS" # take out to look for correlations with CLL via SF3B1 
-#   cancer[(histo3==9986)]="MDSdel5q" # take out to look for extra radiation induction (skip: confounded by tMDS)
-#9980=RA; 9981=nothing, 9983=RAEB, 9984=RAEB-T transformation (also stopped in 2010),9985=RCMD, 9989=NOS
+  #   cancer[(histo3==9987)]="tMDS" ##!!! so we have to pull both out and correct for this
+  #   cancer[(histo3==9920)]="tAML" 
+  #   cancer[(histo3==9982)]="RARS" # take out to look for correlations with CLL via SF3B1 
+  #   cancer[(histo3==9986)]="MDSdel5q" # take out to look for extra radiation induction (skip: confounded by tMDS)
+  #9980=RA; 9981=nothing, 9983=RAEB, 9984=RAEB-T transformation (also stopped in 2010),9985=RCMD, 9989=NOS
   cancer[(histo3==9940)]="HCL"  #hairy cell leukemia was getting into NHL (note: HCL in 20's goes to 9591=NHL)
   cancer[(histo3==9945)]="CMML" 
   cancer[(histo3==9960)]="MDS" #"CMPD" #this got remapped to mdsMPN = 9975 in 2010
@@ -110,15 +110,16 @@ mapCancs<-function(D){
   cancer[(histo3>=9965)&(histo3<=9967)]="MPN" # GFR mutatants 
   cancer[(histo3>=9970)&(histo3<=9971)]="NHL" # ICD9 put it mostly there, so sweep stray 1s into it also. 
   cancer[(histo3==9876)]="MPN" #"aCML"
-
-  cancer[D$seqnum>=60]="benign" # most of below fall into here, and most started in 2004.
-##  Bottomline: Bucket to remove since my codes don't handle such seqnums.
-##  Complications of handling them include: if I map 60 to 0 and 61 to 1, trouble may come in one caseID havinf 2 seqnum=0 or 1
-##  rows. I'll leave figuring out how to handle this to someone with real interests in brain tumors. 
-#   cancer[(histo3==9530)]="meningioma" #supposedly malignant, but seqnums >59 confuse this.
-# #   cancer[(histo3>=9531)&(histo3<=9539)]="meningioma" #benigns, mix in with mal or comment to pool with unknown
-#   cancer[(histo3==9560)]="schwannoma"
-#   cancer[(histo3==8272)]="pituitary"
+  
+  cancer[(D$seqnum>=60)&(D$seqnum<=88)]="benign" # 88 is benign but unknown sequence
+  ## most of below fall into benign, and most started in 2004.
+  ##  Bottomline: Bucket to remove since my codes don't handle such seqnums.
+  ##  Complications of handling them include: if I map 60 to 0 and 61 to 1, trouble may come in one caseID havinf 2 seqnum=0 or 1
+  ##  rows. I'll leave figuring out how to handle this to someone with real interests in brain tumors. 
+  #   cancer[(histo3==9530)]="meningioma" #supposedly malignant, but seqnums >59 confuse this.
+  # #   cancer[(histo3>=9531)&(histo3<=9539)]="meningioma" #benigns, mix in with mal or comment to pool with unknown
+  #   cancer[(histo3==9560)]="schwannoma"
+  #   cancer[(histo3==8272)]="pituitary"
   D$cancer=as.factor(cancer)
   D
 }  
