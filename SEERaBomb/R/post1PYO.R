@@ -138,7 +138,8 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd,fi
   #   L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,PY1=PY1,PYT=PYT)
 #   L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeE=AgeE,AgeO=AgeO,PY1=PY1) #,PYT=PYT)
   L1=list(LPYM=LPYM,O=O,binMidPnt=binMidPnt,AgeO=AgeO,PYA=PYA) #,PYT=PYT)
-  if (PYLong) return(c(L1,PYL=PYL))   else return(L1) # passing the big guy did not slow things down too much
+  if (PYLong) L1$PYL=PYL # passing the big guy did not slow things down too much
+  L1
 }
 
 
