@@ -110,10 +110,15 @@ mapCancs<-function(D){
   cancer[(histo3>=9965)&(histo3<=9967)]="MPN" # GFR mutatants 
   cancer[(histo3>=9970)&(histo3<=9971)]="NHL" # ICD9 put it mostly there, so sweep stray 1s into it also. 
   cancer[(histo3==9876)]="MPN" #"aCML"
-  cancer[(histo3==9530)]="meningioma" #supposedly malignant, but seqnums >59 confuse this.
-#   cancer[(histo3>=9531)&(histo3<=9539)]="meningioma" #benigns, mix in with mal or comment to pool with unknown
-  cancer[(histo3==9560)]="schwannoma"
-  cancer[(histo3==8272)]="pituitary"
+
+  cancer[D$seqnum>=60]="benign" # most of below fall into here, and most started in 2004.
+##  Bottomline: Bucket to remove since my codes don't handle such seqnums.
+##  Complications of handling them include: if I map 60 to 0 and 61 to 1, trouble may come in one caseID havinf 2 seqnum=0 or 1
+##  rows. I'll leave figuring out how to handle this to someone with real interests in brain tumors. 
+#   cancer[(histo3==9530)]="meningioma" #supposedly malignant, but seqnums >59 confuse this.
+# #   cancer[(histo3>=9531)&(histo3<=9539)]="meningioma" #benigns, mix in with mal or comment to pool with unknown
+#   cancer[(histo3==9560)]="schwannoma"
+#   cancer[(histo3==8272)]="pituitary"
   D$cancer=as.factor(cancer)
   D
 }  
