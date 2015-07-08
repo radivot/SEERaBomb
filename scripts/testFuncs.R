@@ -48,3 +48,18 @@ O/E
 
 
 
+# chunk to show that pickFields now catches field name typos and wrong orderings 
+library(SEERaBomb)
+sas=getFields()
+picksDef=c("casenum","reg","race","sex","agedx","yrbrth",
+           "seqnum","modx","yrdx","histo3","radiatn","recno",
+           "agerec","ICD9","numprims","COD","surv")
+pickMin=c("race","sex","agedx","histo3","radiatn","agerec","ICD9")
+pickMin=c("sex","agedx","histo3","radiatn","agerec","ICD9")
+pickFields(sas, pickMin) # missing reg
+pickTypo=c("reg","race","sex","agedx","histo3","radiatn","agerec","ICD9","CD","srv")
+pickFields(sas, pickTypo) # last two not on list
+pickBadOrd=c("reg","race","sex","agedx","ICD9","histo3","radiatn","agerec")
+pickBadOrd=c("reg","race","radiatn","sex","agedx","ICD9","histo3","agerec")
+pickFields(sas, pickBadOrd)
+
