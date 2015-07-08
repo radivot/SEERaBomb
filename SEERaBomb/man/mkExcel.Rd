@@ -6,7 +6,8 @@ of 1st cancer treatment types. RR CI and observed numbers are included in each d
 \usage{mkExcel(seerSet,tsdn,outDir="~/Results",outName=NULL,flip=FALSE)} 
 \arguments{
   \item{seerSet}{A seerSet list after it has been processed by tsd().  }
-  \item{tsdn}{Name of set of times since diagnosis. This is based on the brks argument to tsd().}
+  \item{tsdn}{Name of set of times since diagnosis. This is based on the brks argument to tsd().
+              If length >1 a brks vector is assumed and coerced/collapsed to a tsdn string.}
   \item{outDir}{Folder of the Excel file that will be generated.}
   \item{outName}{if null (default), Excel file name = seerSet base file name (bfn) + tsdn,
                 else it is outName. Eitherway, "Flipped" is appended to the name if flip is TRUE.  }

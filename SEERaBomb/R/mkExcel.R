@@ -1,4 +1,8 @@
 mkExcel=function(seerSet,tsdn,outDir="~/Results",outName=NULL,flip=FALSE) {
+  if (length(tsdn)>1) {
+    cat("collapsing brks vector to a tsdn string\n") 
+    tsdn=paste0("b",paste(tsdn,collapse="_"))
+  }
   if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else 
     L=seerSet$L[[tsdn]]
   if (!dir.exists(outDir)) dir.create(outDir,recursive=T)
@@ -49,5 +53,6 @@ mkExcel=function(seerSet,tsdn,outDir="~/Results",outName=NULL,flip=FALSE) {
     #     for (j in 1:(dim(M)[2]+1)) setColumnWidth(wb,sheet = icanc, column = j, width = 5600)
   } #icanc
   saveWorkbook(wb)
+  cat("Workbook was written to",f,"\n")
   invisible(OL)
 }
