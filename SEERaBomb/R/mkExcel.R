@@ -51,6 +51,7 @@ mkExcel=function(seerSet,tsdn,outDir="~/Results",outName=NULL,flip=FALSE) {
     setColumnWidth(wb,sheet = icanc, column = 1, width = 2500)
     for (j in 2:(dim(M)[2]+1)) setColumnWidth(wb,sheet = icanc, column = j, width = 4700)
     #     for (j in 1:(dim(M)[2]+1)) setColumnWidth(wb,sheet = icanc, column = j, width = 5600)
+    createFreezePane(wb,sheet = icanc,2,2) 
   } #icanc
   saveWorkbook(wb)
   cat("Workbook was written to",f,"\n")
