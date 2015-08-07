@@ -66,7 +66,8 @@ mapCancs<-function(D){
   
   # clean things with histO3 codes that trump the heme ICD9 codes above
   cancer[(histo3>=9590)&(histo3<9600)]="NHL" 
-  cancer[(histo3>=9650)&(histo3<9670)]="hodgkin" 
+  # cancer[(histo3>=9650)&(histo3<9670)]="hodgkin" 
+  cancer[(histo3>=9650)&(histo3<9670)]="HL" 
   cancer[(histo3>=9670)&(histo3<9730)]="NHL" 
   cancer[(histo3>=9730)&(histo3<9735)]="MM" 
   cancer[(histo3>=9735)&(histo3<9740)]="NHL" 
