@@ -3,10 +3,10 @@ plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots") {
     #     if(!file.exists(fD)) stop(paste0(fD,"does not exist!")) 
     #     load(fD) # brings in dataframe D
     if(nchar(bfn)==0) {bfn="tmp"
-                       warning("no base file name, so files will go to subfolder tmp")}
+    warning("no base file name, so files will go to subfolder tmp")}
     outDir=file.path(outDir,bfn)
     if(!file.exists(outDir))  {   print(paste("Creating directory",outDir))
-                                  dir.create(outDir,recursive=TRUE)    }
+      dir.create(outDir,recursive=TRUE)    }
     #     require(rgl)
     #     require(dplyr)
     secondS=levels(D$cancer)
@@ -26,10 +26,13 @@ plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots") {
       cat(i,"  ...  hit return at command prompt to move on:\n")
       readline() # way to pause until input
       if (write) {
-      rgl.snapshot(filename=(f<-paste0(outDir,"/",i,".png")),fmt="png", top=TRUE)
-      cat("writing file:",f,"\n")
+        rgl.snapshot(filename=(f<-paste0(outDir,"/",i,".png")),fmt="png", top=TRUE)
+        cat("writing file:",f,"\n")
+        # title3d(paste0(i,sex,"s", col='black', line=3))
+        rgl.postscript(filename=(f<-paste0(outDir,"/",i,".eps")),fmt="eps") #these are big
+        cat("writing file:",f,"\n")
       }
     } #i loop over cancers
   }) # end with 
-    
+  
 }  # plot2D function
