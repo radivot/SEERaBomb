@@ -31,6 +31,9 @@ plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots") {
         # title3d(paste0(i,sex,"s", col='black', line=3))
         rgl.postscript(filename=(f<-paste0(outDir,"/",i,".eps")),fmt="eps") #these are big
         cat("writing file:",f,"\n")
+#         savePlot(filename=(f<-paste0(outDir,"/",i,".tiff")),type="tiff") #never worked
+#         cat("writing file:",f,"\n")
+        
       }
     } #i loop over cancers
   }) # end with 
