@@ -20,7 +20,11 @@ plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots",col="red") {
       (length(ages<-unique(pd$age))*nyrs)
       pd$incid[pd$incid==0]=0.002 # raise a notch from 0.001 to avoid plotting -3 if all above 0.002
       with(pd,plot3d(age,year,log10(incid),xlab="",ylab="",zlab="")) #,sub=paste0(j," ",i,"s")))
-      with(pd,surface3d(x=ages,y=yrs,z=matrix(log10(Eincid),ncol=nyrs),alpha=0.8,col=col))
+      with(pd,surface3d(x=ages,y=yrs,z=matrix(log10(Eincid),ncol=nyrs),alpha=0.8,col=col)) 
+      # with(pd,surface3d(x=ages,y=yrs,z=matrix(log10(Eincid),ncol=nyrs),alpha=0.8,col=col,lit=FALSE)) #=>slightly smaller
+      # with(pd,persp3d(x=ages,y=yrs,z=matrix(log10(Eincid),ncol=nyrs),alpha=0.8,col=col,lit=FALSE)) #also too big
+      # with(pd,surface3d(x=ages,y=yrs,z=matrix(log10(Eincid),ncol=nyrs),
+                        # back="cull",front="cull",alpha=0.8,col=col)) # nothing seems to help=>use full size pngs
       clear3d(type="lights")
       light3d(theta = -90, phi = 75) 
       cat(i,"  ...  hit return at command prompt to move on:\n")
@@ -29,8 +33,8 @@ plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots",col="red") {
         rgl.snapshot(filename=(f<-paste0(outDir,"/",i,".png")),fmt="png", top=TRUE)
         cat("writing file:",f,"\n")
         # title3d(paste0(i,sex,"s", col='black', line=3))
-        rgl.postscript(filename=(f<-paste0(outDir,"/",i,".eps")),fmt="eps") #these are big
-        cat("writing file:",f,"\n")
+#         rgl.postscript(filename=(f<-paste0(outDir,"/",i,".eps")),fmt="eps") #these are big
+#         cat("writing file:",f,"\n")
 #         savePlot(filename=(f<-paste0(outDir,"/",i,".tiff")),type="tiff") #never worked
 #         cat("writing file:",f,"\n")
         
