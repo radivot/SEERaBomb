@@ -1,4 +1,4 @@
-plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots") {
+plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots",col="red") {
   with(seerSet, {
     #     if(!file.exists(fD)) stop(paste0(fD,"does not exist!")) 
     #     load(fD) # brings in dataframe D
@@ -20,7 +20,7 @@ plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots") {
       (length(ages<-unique(pd$age))*nyrs)
       pd$incid[pd$incid==0]=0.002 # raise a notch from 0.001 to avoid plotting -3 if all above 0.002
       with(pd,plot3d(age,year,log10(incid),xlab="",ylab="",zlab="")) #,sub=paste0(j," ",i,"s")))
-      with(pd,surface3d(x=ages,y=yrs,z=matrix(log10(Eincid),ncol=nyrs),alpha=0.8,col="red"))
+      with(pd,surface3d(x=ages,y=yrs,z=matrix(log10(Eincid),ncol=nyrs),alpha=0.8,col=col))
       clear3d(type="lights")
       light3d(theta = -90, phi = 75) 
       cat(i,"  ...  hit return at command prompt to move on:\n")
