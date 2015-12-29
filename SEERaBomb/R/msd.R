@@ -1,6 +1,6 @@
 msd=function(canc,mrt,brks=c(0,2,5)){ #mortality since diagnosis (msd)
   surv=sex=O=E=NULL
-  canc=canc%>%mutate(surv=round((surv+0.5)/12,3))#%>%  #convert surv to years
+  # canc=canc%>%mutate(surv=round((surv+0.5)/12,3))#%>%  #convert surv to years
   yearEnd=max(canc$yrdx)
   canc=canc%>%filter(surv<200) # restrict to known survival times
   dm=canc%>%filter(sex=="male")%>%select(-sex)
