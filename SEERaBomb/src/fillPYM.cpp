@@ -10,6 +10,7 @@ NumericMatrix fillPYM(SEXP PYin, SEXP PYM) {
   for (int i = 0; i < nrows ; i++) {
     age=PY1(i,1);
     pre=ceil(age)-age;
+    if (pre==0) pre=1;
     pystrip=PY1(i,0);
     if (pystrip>pre) {
       pystrip=pystrip-pre; 

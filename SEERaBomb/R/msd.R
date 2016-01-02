@@ -1,7 +1,6 @@
 msd=function(canc,mrt,brks=c(0,2,5)){ #mortality since diagnosis (msd)
   surv=sex=O=E=NULL
-  # canc=canc%>%mutate(surv=round((surv+0.5)/12,3))#%>%  #convert surv to years
-  yearEnd=max(canc$yrdx)
+  yearEnd=ceiling(max(canc$yrdx+canc$surv))
   canc=canc%>%filter(surv<200) # restrict to known survival times
   dm=canc%>%filter(sex=="male")%>%select(-sex)
   df=canc%>%filter(sex=="female")%>%select(-sex)
@@ -16,7 +15,6 @@ msd=function(canc,mrt,brks=c(0,2,5)){ #mortality since diagnosis (msd)
   mrtM=mrtM[,as.character(1973:yearEnd)]
   mrtF=mrtF[,as.character(1973:yearEnd)]
   mrt=list(male=mrtM,female=mrtF)
-  
   pts=c(male=dim(dm)[1],female=dim(df)[1],total=dim(dm)[1]+dim(df)[1])
   events=c(male=sum(dm$status),female=sum(df$status),total=sum(dm$status)+sum(df$status))
   Sexes=c("male","female")[pts[1:2]>0]

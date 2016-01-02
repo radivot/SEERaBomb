@@ -63,3 +63,48 @@ pickBadOrd=c("reg","race","sex","agedx","ICD9","histo3","radiatn","agerec")
 pickBadOrd=c("reg","race","radiatn","sex","agedx","ICD9","histo3","agerec")
 pickFields(sas, pickBadOrd)
 
+
+# chunk to test msd()
+rm(list=ls())
+# library(demography)
+# d=hmd.mx("USA", "username", "password") #make an account and put your info in here
+# mrt=d$rate
+# save(mrt,file="~/data/usMort/mrt.RData")
+load("~/data/usMort/mrt.RData")
+library(dplyr)
+m=mrt$male
+year=2000 # study starts 1/1/00
+age=40 
+(p=m[as.character(floor(age)),as.character(year)])
+d=data.frame(yrdx=year,agedx=age,sex="male",
+             status=sample(c(0,1),size=2e5,replace=T,prob=c(1-p,p)))
+# p=.05
+# r=rexp(1e7,p)
+# R=r[r<1]
+# mean(R)  #  formula for aveT below checks out fine
+(aveT=((1-exp(-p))/p-exp(-p))/(1-exp(-p))) #0.49
+# D=d%>%filter(status==1)%>%mutate(surv=0.5) # if dead that year, on average dead half-way through 
+D=d%>%filter(status==1)%>%mutate(surv=aveT) # if dead that year, on average dead half-way through 
+head(D)
+d=d%>%filter(status==0)%>%mutate(surv=1) # else lived the whole year
+for (i in 1:9) {
+  age=age+1
+  year=year+1
+  # cat(i,age,year," ")
+  p=m[as.character(floor(age)),as.character(year)]
+  n=dim(d)[1]
+  d$status=sample(c(0,1),size=n,replace=T,prob=c(1-p,p))
+  (aveT=((1-exp(-p))/p-exp(-p))/(1-exp(-p)))
+  print(aveT)
+  D=rbind(D,d%>%filter(status==1)%>%mutate(surv=surv+aveT))
+  # D=rbind(D,d%>%filter(status==1)%>%mutate(surv=surv+0.5))
+  d=d%>%filter(status==0)%>%mutate(surv=surv+1)
+}
+
+dd=rbind(D,d)
+# debug(msd)
+# debug(post1PYOm)
+brks=c(0,5)
+library(SEERaBomb)
+(D=msd(dd,mrt,brks))
+D%>%summarize(O=sum(O),E=sum(E))%>%mutate(RR=O/E,rrL=qchisq(.025,2*O)/(2*E),rrU=qchisq(.975,2*O+2)/(2*E))
