@@ -74,37 +74,44 @@ load("~/data/usMort/mrt.RData")
 library(dplyr)
 m=mrt$male
 year=2000 # study starts 1/1/00
-age=40 
-(p=m[as.character(floor(age)),as.character(year)])
+age=80 
+lam=5*m[as.character(floor(age)),as.character(floor(year))]
+p0=exp(-lam)
 d=data.frame(yrdx=year,agedx=age,sex="male",
-             status=sample(c(0,1),size=2e5,replace=T,prob=c(1-p,p)))
-# p=.05
-# r=rexp(1e7,p)
+             status=sample(c(0,1),size=2e5,replace=T,prob=c(p0,1-p0)))
+# D=d%>%filter(status==1)%>%mutate(surv=0.5) # if dead that year, on average dead half-way through. 
+# Or be more precise assuming exponentially distributed times to failure in 0 to 1
+(aveT=((1-exp(-lam))/lam-exp(-lam))/(1-exp(-lam))) #~0.49  (use integration by parts to get this)
+D=d%>%filter(status==1)%>%mutate(surv=aveT) 
+# r=rexp(n=5e7,rate=lam) # (test formula for aveT)        
 # R=r[r<1]
-# mean(R)  #  formula for aveT below checks out fine
-(aveT=((1-exp(-p))/p-exp(-p))/(1-exp(-p))) #0.49
-# D=d%>%filter(status==1)%>%mutate(surv=0.5) # if dead that year, on average dead half-way through 
-D=d%>%filter(status==1)%>%mutate(surv=aveT) # if dead that year, on average dead half-way through 
-head(D)
+# mean(R)  # => formula for aveT is OK
 d=d%>%filter(status==0)%>%mutate(surv=1) # else lived the whole year
 for (i in 1:9) {
   age=age+1
   year=year+1
-  # cat(i,age,year," ")
-  p=m[as.character(floor(age)),as.character(year)]
+  lam=5*m[as.character(floor(age)),as.character(floor(year))]
+  p0=exp(-lam)
+  # if (i>=0) p0=exp(-5*lam)
   n=dim(d)[1]
-  d$status=sample(c(0,1),size=n,replace=T,prob=c(1-p,p))
-  (aveT=((1-exp(-p))/p-exp(-p))/(1-exp(-p)))
+  d$status=sample(c(0,1),size=n,replace=T,prob=c(p0,1-p0))
+  (aveT=((1-exp(-lam))/lam-exp(-lam))/(1-exp(-lam)))
   print(aveT)
   D=rbind(D,d%>%filter(status==1)%>%mutate(surv=surv+aveT))
-  # D=rbind(D,d%>%filter(status==1)%>%mutate(surv=surv+0.5))
   d=d%>%filter(status==0)%>%mutate(surv=surv+1)
 }
 
 dd=rbind(D,d)
 # debug(msd)
 # debug(post1PYOm)
-brks=c(0,5)
+brks=0:9 #c(0,5)
 library(SEERaBomb)
 (D=msd(dd,mrt,brks))
+
 D%>%summarize(O=sum(O),E=sum(E))%>%mutate(RR=O/E,rrL=qchisq(.025,2*O)/(2*E),rrU=qchisq(.975,2*O+2)/(2*E))
+head(dd)
+dd$S=Surv(dd$surv,dd$status==1)
+library(survMisc)
+quartz(width=6,height=5)
+theme_update(legend.position = c(.78, .82))
+autoplot(survfit(S~sex, data =dd ),xLab="Years",title="One Sample",survLineSize = 1,censSize = 2,axisLabSize = 12)
