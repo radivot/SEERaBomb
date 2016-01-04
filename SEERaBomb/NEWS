@@ -1,3 +1,19 @@
+CHANGES IN VERSION 2015.3 (Third version working with the SEER release of 2015)
+------------------------
+
+NEW FEATURES
+
+    o The function msd (mortality since diagnosis) computes mortality RR since diagnosis of cancer.  
+
+    o The function csd (cancer since diagnosis), now replaces tsd in computing 2nd cancer RR after a 1st cancer. 
+      An added feature of csd is that it handles different intervals of years and ages at diagnosis. This changed
+      the internal list of lists structure of the output, which getDF (instead of mkDF) converts to a data.frame (DF) 
+      that ggplot2 can use.  
+
+Notes
+    o tsd and mkDF are now internal functions (in terms of help pages), i.e. they can still be used by old scripts
+
+
 CHANGES IN VERSION 2015.2 (Second version working with the SEER release of 2015)
 ------------------------
 
