@@ -1,5 +1,5 @@
 getDF<-function(seerSet,srs=NULL) {
-  age=trt=race=surv=year=py=popsa=cancer1=nO=O=E=ageE=ageEci=ageO=int=sig2O=ageOci=NULL 
+  age=trt=race=surv=year=py=popsa=cancer1=nO=O=E=ageE=ageEci=ageO=int=sig2O=ageOci=ageG=NULL 
   if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else {
     nms=names(seerSet$L)
     indx=seerSet$active
@@ -82,6 +82,7 @@ getDF<-function(seerSet,srs=NULL) {
   d$aoU=d$ageO+ci95
   i=sapply(d,is.numeric)
   d[i]=round(d[i],2)
+  d=tbl_df(d)
   # print(glimpse(d))
   d
 } 

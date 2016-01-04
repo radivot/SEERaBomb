@@ -1,12 +1,11 @@
-\name{mkDF}
-\alias{mkDF}
+\name{getDF}
+\alias{getDF}
 \title{Converts seerSet$L series to a data.frame}
 \description{Creates a data.frame of observed and expected cases for each first and second cancer and treatment. 
-Use of this function is deprecated. Use getDF() instead, if needed: csd now calls getDF internally for the 
-most recent time series, so even it may not need to be called directly.}
-\usage{mkDF(seerSet,srs)} 
+csd() calls this internally for the most recent time series, so it may not need to be called directly.}
+\usage{getDF(seerSet,srs=NULL)} 
 \arguments{
-  \item{seerSet}{seerSet object produced by tsd(). }
+  \item{seerSet}{seerSet object produced by csd(). }
   \item{srs}{Series. The time series of interest. NULL (default) implies the currently active series, which is
      the most recent. A number i implies the ith series. A string identifies the series by name (numeric vectors 
      will be coerced to such a string via paste0("b",paste(brks,collapse="_")) where brks = vector of time breakpoints.}
@@ -16,7 +15,7 @@ most recent time series, so even it may not need to be called directly.}
   
 
 \author{Tom Radivoyevitch (radivot@ccf.org)}
-\seealso{\code{\link{SEERaBomb-package}, \link{mk2D}, \link{tsd}} }
+\seealso{\code{\link{SEERaBomb-package}, \link{csd}} }
 \examples{
 \dontrun{ 
 library(SEERaBomb)
@@ -27,11 +26,11 @@ canc=canc\%>\%select(-reg,-recno,-agerec,-numprims,-COD,
 popsa=popsae\%>\%group_by(db,race,sex,age,year)\%>\%summarize(py=sum(py)) # sum on regs
 pm=seerSet(canc,popsa,Sex="male",ageStart=0,ageEnd=100) #pooled (races) male seerSet
 pm=mk2D(pm,secondS=c("AML","MDS"))
-brks=c(0,1,5)
 firstS=c("NHL","MM")
-pm=tsd(pm,brks=brks,trts=c("rad","noRad"),firstS=firstS)
-mkDF(pm)
+pm=csd(pm,brkst=c(0,1,5),trts=c("rad","noRad"),firstS=firstS)
+pm$DF 
+getDF(pm)
 }
 }
 
-\keyword{internal}
+\keyword{IO}

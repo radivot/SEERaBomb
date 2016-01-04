@@ -53,6 +53,7 @@ csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,
   seerSet$series=data.frame(index=1:N,series=names(seerSet$L))
   cat(paste("Current active series:",seerSet$active,"\n")) 
   print(seerSet$series) 
+  seerSet$DF=getDF(seerSet)
   print(proc.time() - ptm)
   seerSet
 }

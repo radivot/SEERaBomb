@@ -2,7 +2,8 @@
 \alias{tsd}
 \title{Compute RR vs tsd}
 \description{Computes relative risks (RR) over specified times since diagnoses (tsd) of a 1st cancer. 2D spline fits are used to produce expected cases E controlling for background risk dedepence on 
-age and calendar year.  RR is then O/E where O is the number of observed cases. }
+age and calendar year.  RR is then O/E where O is the number of observed cases.
+WARNING: Use of this function is deprecated, please use csd() instead.}
 \usage{tsd(seerSet,brks,trts=NULL,PYLong=FALSE,firstS="all") } % ,outDir="~/Results", txt=NULL)} 
 \arguments{
   \item{seerSet}{A seerSet object produced by mk2D().  }
@@ -14,7 +15,7 @@ age and calendar year.  RR is then O/E where O is the number of observed cases. 
                 in the seerSet field cancerS, which is created when the object is first created by seerSet().}
 }
 
-\value{The input with an L component added to it or extends it if it already existed. Each component of
+\value{The input with an L component added to it or extended it if it already existed. Each component of
 L is a nested list of lists that can yield
 second cancer relative risks as a function of time since diagnosis and different first cancers and if they 
 were irradiated or not. 
@@ -43,4 +44,4 @@ table(LM$PyM$`(5,10]`$cancer2)
 }
 }
 
-\keyword{IO}
+\keyword{internal}

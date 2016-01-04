@@ -2,7 +2,7 @@ post1PYOc=function(canc,brkst=c(0),binIndxt=1,brksy=c(1973),binIndxy=1,brksa=c(0
                    Trt="rad",PYLong=FALSE,yearEnd,firstS,secondS) { 
   # to get rid of check notes. Using list inputs and with will shield these
   surv=yrdx=age=casenum=cancer=trt=yrdx1=seqnum=yrdiff=mn=NULL 
-  yrdx2=yrdiffn=cancer1=cancer2=py=year=ageL=ageR=age1=age2=ageM=sem=NULL 
+  yrdx2=yrdiffn=cancer1=cancer2=py=year=ageL=ageR=age1=age2=ageM=sem=yrC=ageC=NULL 
   # brkst=c(0);brksy=c(1973,2000);brksa=c(0,50);canc=pf$canc;binIndxt=1;binIndxy=1;binIndxa=1
   if(sum(canc$trt==Trt,na.rm=T)==0) stop(paste0("canc must have a trt column containing",Trt))
   binSt<-levels(cut(brkst+0.1,breaks=c(brkst,100))) #this is just to make a vector of tsd interval/row names 
