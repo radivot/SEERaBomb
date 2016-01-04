@@ -26,8 +26,7 @@ which has a print method. }
 library(SEERaBomb)
 load("~/data/SEER/mrgd/cancDef.RData") #load in canc
 load("~/data/SEER/mrgd/popsae.RData") # load in popsae
-canc=canc\%>\%select(-reg,-recno,-agerec,-numprims,-COD,
-          -age19,-age86,-radiatn,-ICD9,-db,-histo3) 
+canc=canc\%>\%select(casenum,race:yrdx,surv,cancer,trt,id) 
 popsa=popsae\%>\%group_by(db,race,sex,age,year)\%>\%summarize(py=sum(py)) # sum on regs
 pm=seerSet(canc,popsa,Sex="male",ageStart=0,ageEnd=100) #pooled (races) male seerSet
 pm # no print method for seerSet object, so we see the list

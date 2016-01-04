@@ -1,14 +1,14 @@
 \name{msd}
 \alias{msd}
-\title{Compute mortality RR vs time since diagnosis}
-\description{Computes relative risks (RR) of death over specified time-since-diagnosis (tsd) intervals. 
+\title{Mortality vs years Since Diagnosis}
+\description{Computes relative risks (RR) of death over specified years-since-diagnosis intervals. 
 US mortality rates obtained via the R package demography are used to compute background death dedepence on 
 age and calendar year.  RR is then O/E where O and E are the number of observed and expected cases. }
-\usage{msd(canc, mrt,brks) } 
+\usage{msd(canc,mrt,brks) } 
 \arguments{
   \item{canc}{Input data.frame with columns: yrdx, agedx, sex, surv (in years), and status (1=dead).}
   \item{mrt}{List with male and female fields, each matrices with mortality rates vs year and age. }
-  \item{brks}{Vector of breaks in years used to form tsd intervals/bins. }
+  \item{brks}{Vector of breaks in years used to form years-since-diagnosis intervals/bins. }
 }
 \value{data.frame with observed and expected cases, RR, and RR CI for each tsd interval. }
 \note{ This function was developed with support from the Cleveland Clinic Foundation.}

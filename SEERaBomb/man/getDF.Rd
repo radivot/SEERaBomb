@@ -1,6 +1,6 @@
 \name{getDF}
 \alias{getDF}
-\title{Converts seerSet$L series to a data.frame}
+\title{Converts a seerSet$L series to a data.frame}
 \description{Creates a data.frame of observed and expected cases for each first and second cancer and treatment. 
 csd() calls this internally for the most recent time series, so it may not need to be called directly.}
 \usage{getDF(seerSet,srs=NULL)} 
@@ -12,6 +12,10 @@ csd() calls this internally for the most recent time series, so it may not need 
 }
    
 \value{A data.frame in long format that can be used by ggplot.  }
+
+\note{I envision getting away from saving multiseries seerSet objects and instead just saving several DF outputs of getDF. 
+Besides smaller objects, a reason for this is that two L objects out of csd can now be confounded if they have
+the same time since diagnosis series but a different series for age and/or year of diagnosis. }
   
 
 \author{Tom Radivoyevitch (radivot@ccf.org)}

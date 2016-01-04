@@ -4,7 +4,7 @@
 \description{Produces two dimensional (2D) spline 
 fits of cancer incidence versus age and calendar year, with interactions. In conjunction with person years 
 (PY) at risk, this 
-is used in tsd() to produce expected numbers of cases under a null hypothesis 
+is used in csd() to produce expected numbers of cases under a null hypothesis 
 that prior cancers do not impact subsequent cancer risks.}
 \usage{mk2D(seerSet, knots=5, write=FALSE, outDir="~/Results",txt=NULL,secondS=NULL)} 
 \arguments{

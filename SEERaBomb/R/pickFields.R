@@ -1,6 +1,7 @@
 pickFields<-function(sas,picks=c("casenum","reg","race","sex","agedx","yrbrth",
-                                 "seqnum","modx","yrdx","histo3","radiatn","recno",
-                                 "agerec","ICD9","numprims","COD","surv") ){
+                                 "seqnum","modx","yrdx","histo3","radiatn", #"recno",
+                                 "agerec","ICD9",#"numprims",
+                                 "COD","surv") ){
   #sas = df 
   notRows=setdiff(picks,sas$names)
   if (length(notRows)>0) stop(paste0("The following picks are not allowed: ",paste(notRows,collapse=", ")))

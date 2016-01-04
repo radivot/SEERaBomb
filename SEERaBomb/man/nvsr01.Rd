@@ -3,7 +3,7 @@
 \docType{data}
 \title{National Vital Statistic Report (nvsr01) Data}
 \description{
-  US mortality rates (probability of death that year) in 2001 (Report 52_14)   
+  US mortality rates (probability of death that year) in 2001 (Report 52_14).   
 }
 \usage{
 nvsr01

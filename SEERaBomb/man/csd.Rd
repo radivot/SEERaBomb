@@ -1,15 +1,16 @@
 \name{csd}
 \alias{csd}
-\title{Cancer risk vs time since diagnosis (of 1st cancer)}
+\title{Cancer risk vs years Since Diagnosis of other cancer}
 \description{Computes relative risks (RR) of 2nd cancers over specified intervals of 
-times since diagnoses (tsd) of a 1st cancer. 2D spline fits are used to produce 
+times since diagnoses of a 1st cancer. 2D spline fits are used to produce 
 expected cases E controlling for background risk dedepence on 
 age and calendar year.  RR is then O/E where O is the number of observed cases. }
 \usage{csd(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,firstS="all") } % ,outDir="~/Results", txt=NULL)} 
 \arguments{
   \item{seerSet}{A seerSet object produced by mk2D().  }
-  \item{brkst}{Vector of breaks in years used to form tsd intervals/bins. An upper limit of 100, well beyond 40 years
-              of SEER follow up currently available, is assumed/added to brkst internally, and should thus not be in brkst. }
+  \item{brkst}{Vector of breaks in years used to form Time intervals/bins since diagnosis. 
+  An upper limit of 100, well beyond 40 years of SEER follow up currently available, 
+              is assumed/added to brkst internally, and should thus not be in brkst. }
   \item{brksy}{Vector of breaks used to form groups of calendar year at diagnosis intervals/bins.
                An upper limit of yearEnd (last year in SEER; a seerSet field) is assumed/added to brksy internally.}
   \item{brksa}{Vector of breaks used to form groups of age at diagnosis intervals/bins. An upper limit of 126 is assumed. }
