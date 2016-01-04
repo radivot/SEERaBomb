@@ -1,4 +1,4 @@
-getD<-function(seerSet,srs=NULL) {
+getDF<-function(seerSet,srs=NULL) {
   age=trt=race=surv=year=py=popsa=cancer1=nO=O=E=ageE=ageEci=ageO=int=sig2O=ageOci=NULL 
   if (is.null(seerSet$L)) stop("seerSet L field is empty. Please run tsd on your seerSet object!") else {
     nms=names(seerSet$L)
@@ -23,24 +23,13 @@ getD<-function(seerSet,srs=NULL) {
     
     L=seerSet$L[[indx]]
   }
-  #   library(reshape2);library(plyr);library(SEERaBomb)
-  #   load("~/Results/amlMDS/aveAgeFull.RData")
-  #   seerSet=pm
-  #   L=seerSet$L[[seerSet$active]]
-  
+
   secondS=seerSet$secondS
   firstS=L$firstS
   #   options(stringsAsFactors=FALSE)
   f=data.frame(cancer1=firstS)
-  #   f$cancer1
   fs=merge(f,data.frame(cancer2=secondS))%>%arrange(cancer1)
-  #   fs$cancer1
-  funf=function(x){
-    y=left_join(f,x,by=c("cancer1"))
-    y[is.na(y)]=0
-    y
-  }
-  
+
   funfs=function(x,by){
     y=left_join(fs,x,by=by)
     y[is.na(y[,"n"]),"n"]=0
@@ -53,7 +42,6 @@ getD<-function(seerSet,srs=NULL) {
     left_join(fs,x,by=by)
   }
   
-  
   trts=L$trtS
   ao=NULL
   pya=NULL
@@ -65,24 +53,19 @@ getD<-function(seerSet,srs=NULL) {
     for (j in yrGrp) {
       ageGrp=names(L[[i]][[j]])
       for (k in ageGrp) {
-        pya=rbind(pya,cbind(ldply(lapply(L[[i]][[j]][[k]]$PYA,funfs,by=c("cancer1"))),trt=i,yg=j,ag=k)) 
-        ao=rbind(ao,cbind(ldply(lapply(L[[i]][[j]][[k]]$AgeO,funfs,by=c("cancer1","cancer2"))),trt=i,yg=j,ag=k)) 
-        o=rbind(o,cbind(ldply(lapply(L[[i]][[j]][[k]]$O,funOE,by=c("cancer1","cancer2"),out="O")),trt=i,yg=j,ag=k)) 
-        e=rbind(e,cbind(ldply(lapply(L[[i]][[j]][[k]]$E,funOE,by=c("cancer1","cancer2"),out="E")),trt=i,yg=j,ag=k)) 
+        pya=rbind(pya,cbind(ldply(lapply(L[[i]][[j]][[k]]$PYA,funfs,by=c("cancer1"))),trt=i,yearG=j,ageG=k)) 
+        ao=rbind(ao,cbind(ldply(lapply(L[[i]][[j]][[k]]$AgeO,funfs,by=c("cancer1","cancer2"))),trt=i)) 
+        o=rbind(o,cbind(ldply(lapply(L[[i]][[j]][[k]]$O,funOE,by=c("cancer1","cancer2"),out="O")),trt=i)) 
+        e=rbind(e,cbind(ldply(lapply(L[[i]][[j]][[k]]$E,funOE,by=c("cancer1","cancer2"),out="E")),trt=i)) 
       }
     }
   }
   options(warn=0)
-  head(pya,2)                       
-  head(ao,2)
-  head(o,2)
-  head(e,2)
   names(ao)[4:5]=c("ageO","sig2O")
   names(pya)[1]=c("int")
-  d=cbind(pya%>%select(int:trt),ao%>%select(ageO:sig2O))
+  d=cbind(pya%>%select(int:ageG),ao%>%select(ageO:sig2O))
   d=cbind(d,O=o$O,E=e$E)
   d$int=factor(d$int,levels=unique(d$int))
-  head(d)
   d=d%>%mutate(RR=O/E,
                rrL=qchisq(.025,2*O)/(2*E),
                rrU=qchisq(.975,2*O+2)/(2*E))
@@ -99,7 +82,7 @@ getD<-function(seerSet,srs=NULL) {
   d$aoU=d$ageO+ci95
   i=sapply(d,is.numeric)
   d[i]=round(d[i],2)
-  print(glimpse(d))
+  # print(glimpse(d))
   d
 } 
 
