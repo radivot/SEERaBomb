@@ -12,6 +12,8 @@ NEW FEATURES
 
 Notes
     o tsd and mkDF are now internal functions (in terms of help pages), i.e. they can still be used by old scripts
+    o mkSEER no longer makes age19 in canc and it no longer makes popsga. If you still want these use mkSEERold.
+    
 
 
 CHANGES IN VERSION 2015.2 (Second version working with the SEER release of 2015)
