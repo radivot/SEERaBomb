@@ -1,5 +1,5 @@
-post1PYOm=function(D,brks=c(0,2,5),binIndx=1) { survC=surv=agedx=py=year=ageL=NULL 
-  yearEnd=ceiling(max(D$yrdx+D$surv))
+post1PYOm=function(D,brks=c(0,2,5),binIndx=1,yearEnd) { survC=surv=agedx=py=year=ageL=NULL 
+  # yearEnd=ceiling(max(D$yrdx+D$surv))
   # yearStart=floor(min(D$yrdx)) #no, stuck with 1973 as earliest year, else redesign fillPYM
   binS=levels(cut(brks+0.1,breaks=c(brks,100)))
   bin=binS[binIndx]

@@ -1,6 +1,7 @@
 msd=function(canc,mrt,brks=c(0,2,5)){ #mortality since diagnosis (msd)
   surv=sex=O=E=NULL
-  yearEnd=ceiling(max(canc$yrdx+canc$surv))
+  # yearEnd=ceiling(max(canc$yrdx+canc$surv))
+  yearEnd=max(as.numeric(colnames(mrt$female)))
   canc=canc%>%filter(surv<200) # restrict to known survival times
   dm=canc%>%filter(sex=="male")%>%select(-sex)
   df=canc%>%filter(sex=="female")%>%select(-sex)
@@ -30,7 +31,7 @@ msd=function(canc,mrt,brks=c(0,2,5)){ #mortality since diagnosis (msd)
     for (bin in binS) 
     {
       binIndx=getBinInfo(bin,binS)["index"]
-      L1=post1PYOm(d[[S]],brks,binIndx)
+      L1=post1PYOm(d[[S]],brks,binIndx,yearEnd)
       Exp[bin]=sum(L1$PYM*mrt[[S]]) 
       Obs[bin]=L1$O
       mids[bin]=L1$binMidPnt
