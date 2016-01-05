@@ -8,7 +8,8 @@ Depicted below, \code{mkSEER}
 merges cancers and populations of all three of the SEER databases into single cancer and 
 population data frames.  
 
-\if{html}{\figure{mkSEERfig.png}{options: width=420, height=420}}
+%\if{html}{\figure{mkSEERfig2.png}{options: width=420, height=340}}
+\if{html}{\figure{mkSEERfig.png}{options: width=420}}
 \if{latex}{\figure{mkSEERfig.png}{options: width=5in}}
 
 SEER data field positions and names change over the years and the original purpose of  

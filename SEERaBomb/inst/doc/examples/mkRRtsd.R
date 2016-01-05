@@ -6,7 +6,8 @@ load("~/data/SEER/mrgd/popsa.RData")
 
 # 1) trim down columns to bare neccesities of columns for second cancer risk. 
 head(canc)
-canc=canc%>%select(-reg,-recno,-agerec,-numprims,-COD,-db,-age19)
+# canc=canc%>%select(-reg,-recno,-agerec,-numprims,-COD,-db,-age19)
+canc=canc%>%select(-reg,-COD,-db)
 head(canc)
 head(popsa)
 popsa=popsa%>%select(-db,-reg)

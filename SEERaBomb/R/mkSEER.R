@@ -63,45 +63,46 @@ mkPopsae=function(popsa) { # this replaces the version above it
     
     colTypes=c("integer","string",rep("integer",5),"double")    # double, integer, categorical and string
     colWidths=c(4,7,2,1,1,1,2, 10) 
-    colNames1 = c('year','X0','reg','race','origin','sex', 'age19','py')
+    # colNames1 = c('year','X0','reg','race','origin','sex', 'age19','py')
     colNames2 = c('year','X0','reg','race','origin','sex', 'age86','py')
     
     ptm <- proc.time()
-    popgaL=vector(mode="list",3)
+    # popgaL=vector(mode="list",3)
     popsaL=vector(mode="list",3)
     ii=1
     for (i in dirs) {
-      f=file.path(i,"19agegroups.txt") 
-      laf<-laf_open_fwf(f,column_types=colTypes,column_widths=colWidths,column_names = colNames1)
-      popgaL[[ii]]=tbl_df(laf[,colNames1[-c(2,5)]] )
+#       f=file.path(i,"19agegroups.txt") 
+#       laf<-laf_open_fwf(f,column_types=colTypes,column_widths=colWidths,column_names = colNames1)
+#       popgaL[[ii]]=tbl_df(laf[,colNames1[-c(2,5)]] )
       
       f=file.path(i,"singleages.txt") 
       laf<-laf_open_fwf(f,column_types=colTypes,column_widths=colWidths,column_names = colNames2)
       popsaL[[ii]]=tbl_df(laf[,colNames2[-c(2,5)]] )
       
       if (grepl("plus",i)) {#5/21/14 fixed systematic lower 73 incidence due to 73 PY being also in 92
-        popgaL[[ii]]=popgaL[[ii]]%>%filter(reg%in%c(29,31,35,37)) 
+        # popgaL[[ii]]=popgaL[[ii]]%>%filter(reg%in%c(29,31,35,37)) 
         popsaL[[ii]]=popsaL[[ii]]%>%filter(reg%in%c(29,31,35,37)) 
         cat("Removing SEER 9 person years from:\n",i,"\nbefore pooling into one file.\n")
       }
       ii=ii+1
     }
-    popga=rbind_all(popgaL)
-    popsa=rbind_all(popsaL)
-    popga$reg=as.integer(popga$reg+1500)
+    # popga=rbind_all(popgaL)
+    # popsa=rbind_all(popsaL)
+    popsa=bind_rows(popsaL)
+    # popga$reg=as.integer(popga$reg+1500)
     popsa$reg=as.integer(popsa$reg+1500)
     
-    popga=popga%>%
-      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
-      mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
-      mutate(reg=mapRegs(reg)) %>%
-      mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[age19+1]) %>%
-      mutate(sex=factor(sex,labels=c("male","female"))) %>%
-      group_by(db,reg,race,sex,age19,year) %>%
-      #       summarise(py=sum(py))%>%   #summing here  over counties and hispanic origin or not, which are in popga as rows but not as columns
-      #       group_by(add=F) # clear grouping
-      summarise(py=sum(py))
-    popga=as.data.frame(popga) # clears everything, down to the data.frame
+#     popga=popga%>%
+#       mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
+#       mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
+#       mutate(reg=mapRegs(reg)) %>%
+#       mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[age19+1]) %>%
+#       mutate(sex=factor(sex,labels=c("male","female"))) %>%
+#       group_by(db,reg,race,sex,age19,year) %>%
+#       #       summarise(py=sum(py))%>%   #summing here  over counties and hispanic origin or not, which are in popga as rows but not as columns
+#       #       group_by(add=F) # clear grouping
+#       summarise(py=sum(py))
+#     popga=as.data.frame(popga) # clears everything, down to the data.frame
     
     #     class(popga)
     
@@ -145,8 +146,9 @@ mkPopsae=function(popsa) { # this replaces the version above it
         DFL[[ii]]=tbl_df(laf[,which(df$names!=" ")])
         ii=ii+1
       }
-    print("rbind_all()-ing to make DF canc")
-    canc=rbind_all(DFL)
+    print("using bind_rows() to make DF canc")
+    # canc=rbind_all(DFL)
+    canc=bind_rows(DFL)
     colnames(canc)<-y
     
     canc=canc%>%
@@ -154,7 +156,7 @@ mkPopsae=function(popsa) { # this replaces the version above it
       mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
       mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
       mutate(reg=mapRegs(reg)) %>%
-      mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[agerec+1]) %>%
+      # mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[agerec+1]) %>%
       mutate(age86=as.numeric(as.character(cut(agedx,c(0:85,150),right=F,labels=c(0.5:85,90)))))%>%
       #       select(-agerec)%>%
       mutate(sex=factor(sex,labels=c("male","female")))
@@ -174,7 +176,7 @@ mkPopsae=function(popsa) { # this replaces the version above it
     my_db <- src_sqlite(outDB, create = T)
     #     copy_to(my_db,DF, name="canc",temporary = FALSE, indexes = indices,overwrite=TRUE) 
     copy_to(my_db,canc, temporary = FALSE, indexes = indices,overwrite=TRUE) 
-    copy_to(my_db,popga, temporary = FALSE,overwrite=TRUE)
+    # copy_to(my_db,popga, temporary = FALSE,overwrite=TRUE)
     copy_to(my_db,popsa, temporary = FALSE,overwrite=TRUE)
     copy_to(my_db,popsae, temporary = FALSE,overwrite=TRUE)
     #     dbWriteTable(con, "canc", DF,overwrite=TRUE)
@@ -195,10 +197,10 @@ mkPopsae=function(popsa) { # this replaces the version above it
   }
   
   if (writePops) {
-    popga=tbl_df(popga)
+    # popga=tbl_df(popga)
     popsa=tbl_df(popsa)
     popsae=tbl_df(popsae)
-    save(popga,file=file.path(outD,"popga.RData"))  
+    # save(popga,file=file.path(outD,"popga.RData"))  
     save(popsa,file=file.path(outD,"popsa.RData"))  
     save(popsae,file=file.path(outD,"popsae.RData"))  
   } #only if writePops

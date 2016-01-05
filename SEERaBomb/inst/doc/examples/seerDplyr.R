@@ -4,7 +4,7 @@ library(dplyr)
 db <- src_sqlite("~/data/SEER/mrgd/cancDef.db")
 src_tbls(db)    #see what tables are in it
 tbl(db, sql("SELECT * from canc")) # see field names of canc
-tbl(db, sql("SELECT * from popga")) # and popga
+tbl(db, sql("SELECT * from popsa")) # and popga
 
 # If you want all the rows and columns, it's faster to just load() the data.frame binary
 # system.time(d<-collect(tbl(db, sql("SELECT * from canc")))) #17 secs
@@ -28,7 +28,7 @@ canc  # is slow to print (because it is so big)
 mds2=canc%>%
 #   mutate(age=age19)%>%
   filter(yrdx>2000,histo3>9979,histo3<9990)%>%
-  select(db,reg:agedx,yrdx,COD,surv,age19)
+  select(db,reg:agedx,yrdx,COD,surv,age86)
 mds2
 # and it has the advantage of using my original factor level orderings
 table(mds2$race)
@@ -39,18 +39,17 @@ table(mds1$race)
 
 # a) make a table of interest
 
-# first group cases into 5-year age buckets
+# first group cases into 86, mostly 1-year, age buckets
 mds=mds2%>%
   mutate(year=yrdx)%>%  #let year=yrdx to match population column below
-  group_by(reg,db,race,sex,age19,year) %>%                                     
+  group_by(reg,db,race,sex,age86,year) %>%                                     
   summarise(cases=n())
 mds
 sum(mds$cases)
 
 # now get person years
-load("~/data/SEER/mrgd/popga.RData") 
-(p=popga%>%filter(year>2000))
-11*18*3*2*19 # =22572 > 21730 rows in p because some conditions have no person years
+load("~/data/SEER/mrgd/popsa.RData") 
+(p=popsa%>%filter(year>2000))
 (d=left_join(p,mds)) 
 d[is.na(d$cases),"cases"]=0 #join left missings where zero's should be, so fix this
 sum(d$cases) # 40k mds cases, check.
@@ -75,17 +74,24 @@ mapRegs()
 sort(table(canc$reg),decr=T)
 
 # look at incidence vs. age for sexes and races
-(d1=d%>%group_by(sex,race,age19)%>%summarise(Incid=sum(cases)/sum(py) ))
-theme_set(theme_gray(base_size = 16)) 
-qplot(age19,Incid,col=sex,shape=race,data=d1,log="y",ylab="MDS Incidence (Cases/Person-Year)",xlab="Age (years)")+geom_line()
+(d1=d%>%group_by(sex,race,age86)%>%summarise(Incid=sum(cases)/sum(py) ))
+theme_set(theme_gray(base_size = 22)) 
+qplot(age86,Incid,col=sex,shape=race,data=d1,log="y",ylab="MDS Incidence (Cases/Person-Year)",xlab="Age (years)")+geom_line()
+# too much confusion
+# trying fewer bins below doesn't help
+(d1=d%>%mutate(agec=cut(age86,c(0,50,70,80,100)))%>%group_by(sex,race,agec)%>%summarise(Incid=sum(cases)/sum(py) ))
+d1$agem=c(25,60,75,85)[d1$agec]
+theme_set(theme_gray(base_size = 22)) 
+qplot(agem,Incid,col=sex,shape=race,data=d1,log="y",ylab="MDS Incidence (Cases/Person-Year)",xlab="Age (years)")+geom_line()
+
 with(canc,table(sex,race))
 
 # look at survival vs. sex, age and race
 library(survival)
 (mds=mds2%>%filter(surv<1000)) # 1000=83 yrs. This is to get rid of some entries of 9999=survival unknown
-mds=mds%>%filter(yrdx>=2006)
+mds=mds%>%filter(yrdx>=2006)%>%mutate(agec=cut(age86,c(0,50,70,80,100)))
 coxph(Surv(surv,COD>0)~sex,data = mds) 
-coxph(Surv(surv,COD>0)~sex+age19,data = mds) 
-coxph(Surv(surv,COD>0)~sex+age19+race,data = mds) 
-(cm=coxph(Surv(surv,COD>0)~sex+age19+race+reg,data = mds))  #best off being treated in the bay area
+coxph(Surv(surv,COD>0)~sex+agec,data = mds) 
+coxph(Surv(surv,COD>0)~sex+agec+race,data = mds) 
+(cm=coxph(Surv(surv,COD>0)~sex+agec+race+reg,data = mds))  #best off being treated in the bay area
 
