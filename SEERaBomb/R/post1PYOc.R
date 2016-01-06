@@ -12,9 +12,9 @@ post1PYOc=function(canc,brkst=c(0),binIndxt=1,brksy=c(1973),binIndxy=1,brksa=c(0
   biny=binSy[binIndxy]
   bina=binSa[binIndxa]
   LL=getBinInfo(bint,binSt)["LL"]
-  print(bint)
-  print(biny)
-  print(bina)
+  cat("tsd    Int:",bint,"\n")
+  cat("yearDx Int:",biny,"\n")
+  cat("ageDx  Int:",bina,"\n\n")
   D2=canc%>%filter(seqnum==2) # D2 holds second primaries
   canc$yrC=cut(canc$yrdx,breaks=c(brksy,yearEnd+1),right=FALSE,dig.lab=4)
   canc$ageC=cut(canc$age,breaks=c(brksa,126))

@@ -15,7 +15,7 @@ csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,
     SL$trtS=trts
     print(trts)
     for (R in trts) { 
-      print(R)
+      cat("treatment:",R,"\n")
       for (biny in binSy) {
         binIndxy=getBinInfo(biny,binSy)["index"]
         for (bina in binSa) {

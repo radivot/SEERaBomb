@@ -8,11 +8,11 @@ NEW FEATURES
     o The function csd (cancer since diagnosis), now replaces tsd in computing 2nd cancer RR after a 1st cancer. 
       An added feature of csd is that it handles different intervals of years and ages at diagnosis. This changed
       the internal list of lists structure of the output, which getDF (instead of mkDF) converts to a data.frame (DF) 
-      that ggplot2 can use.  
+      that ggplot2 can use, and which mkExcel2 (instead of mkExcel) uses to make an Excel file. 
 
 Notes
-    o tsd and mkDF are now internal functions (in terms of help pages), i.e. they can still be used by old scripts
-    o mkSEER no longer makes age19 in canc and it no longer makes popsga. If you still want these use mkSEERold.
+    o tsd, mkExcel, and mkDF are now internal functions (in terms of help pages), i.e. they can still be used by old scripts
+    o mkSEER no longer makes age19 in canc and it no longer makes popsga. If you still want 19-age groups use mkSEERold.
     
 
 
