@@ -3,7 +3,8 @@
 \title{Make RR Excel file}
 \description{Provides relative risks (RR) organized by 1st and 2nd cancers, times since 1st cancer diagnoses, and 1st cancer treatment. RR = O/E where O = observed cases and E = cases expected under a null hypothesis that prior cancers do not impact subsequent risks. If flip = FALSE (default), sheets = 1st cancers and rows = 2nd cancers, else sheets = 2nd cancers and rows = 1st cancers; columns are always intervals of years since diagnosis, in 
 1st cancer treatment blocks. RR CI and observed numbers are included in each data cell.}
-\usage{mkExcel(seerSet,tsdn,biny="[1973,2013)",bina="(0,126]",outDir="~/Results",outName=NULL,flip=FALSE)} 
+\usage{mkExcel2(seerSet,tsdn,biny="[1973,2013)",bina="(0,126]",
+                        outDir="~/Results",outName=NULL,flip=FALSE)} 
 \arguments{
   \item{seerSet}{A seerSet list after it has been processed by csd().  }
   \item{tsdn}{Name of set of times since diagnosis. This is based on the brkst argument to csd().
