@@ -22,7 +22,7 @@ head(d)
 
 ############# First Fig 2, then Fig S5, since calcs for Fig 2 are also used for Fig S5
 quartz(width=7,height=4)
-theme_set(theme_bw())
+# theme_set(theme_bw())
 theme_update(legend.position = c(.92, .825),
              axis.text=element_text(size=rel(1.2)),
              axis.title=element_text(size=rel(1.3)),
@@ -39,7 +39,7 @@ for (NR in c(TRUE,FALSE)) {
   g=qplot(x=t,y=RR,data=D,col=cancer2,geom=c("line","point"),#ylim=c(.45,2.9),
           xlab=ifelse(NR,xlabNR,xlabR),ylab="Relative Risk")
   g=g+facet_grid(Sex~.,scales="free")+geom_abline(intercept=1, slope=0)
-  g = g + scale_color_grey(start = 0, end = 0.6)
+  # g = g + scale_color_grey(start = 0, end = 0.6)
   g1 <- guide_legend("Second\nCancer")
   g=g + guides(color=g1) 
   g=g+  geom_errorbar(aes(ymin=rrL,ymax=rrU,width=.15))+scale_y_continuous(breaks=1:6)
@@ -75,4 +75,5 @@ g=qplot(x=t,y=RR,data=D,col=Sex,geom=c("line","point"),xlim=c(-.1,3),ylim=c(0,5)
         xlab=xlabR,ylab="MDS Relative Risk")
 g=g+facet_grid(.~DB)+geom_abline(intercept=1, slope=0)
 g+  geom_errorbar(aes(ymin=rrL,ymax=rrU,width=.15))
+ggsave("~/Results/amlMDS/mds9vs18.eps")  
 ggsave("~/Results/amlMDS/mds9vs18.png")  

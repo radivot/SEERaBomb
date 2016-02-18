@@ -100,8 +100,10 @@ mapCancs<-function(D){
   #9980=RA; 9981=nothing, 9983=RAEB, 9984=RAEB-T transformation (also stopped in 2010),9985=RCMD, 9989=NOS
   cancer[(histo3==9940)]="HCL"  #hairy cell leukemia was getting into NHL (note: HCL in 20's goes to 9591=NHL)
   cancer[(histo3==9945)]="CMML" 
-  cancer[(histo3==9960)]="MDS" #"CMPD" #this got remapped to mdsMPN = 9975 in 2010
-  cancer[(histo3==9975)]="MDS"  #"mdsMPN": guessing this is CMML-like, and more MDS-like than MPN-like
+#   cancer[(histo3==9960)]="MDS" #"CMPD" #this got remapped to mdsMPN = 9975 in 2010
+#   cancer[(histo3==9975)]="MDS"  #"mdsMPN": guessing this is CMML-like, and more MDS-like than MPN-like
+  cancer[(histo3==9960)]="MPN" #switch to MPN to keep MDS clean 
+  cancer[(histo3==9975)]="MPN" #same here, better keep MDS clean
   cancer[(histo3==9946)]="MPN" #"jCMML" these come out of 205.1/CML
   cancer[(histo3==9950)]="MPN" #"PV"
   cancer[(histo3==9961)]="MPN" #"PMF"

@@ -49,8 +49,8 @@ d$sex=gsub("^m","M",d$sex)
 d$sex=gsub("^f","F",d$sex)
 d$sex=factor(d$sex)
 library(ggplot2)
-# theme_set(theme_gray(base_size = 10))
-theme_set(theme_bw(base_size = 10))
+theme_set(theme_gray(base_size = 10))
+# theme_set(theme_bw(base_size = 10))
 
 theme_update(legend.position = c(.18, .75),
              axis.text=element_text(size=rel(2)),
@@ -63,7 +63,7 @@ quartz(height=5,width=7)
 g <- ggplot(d,aes(x=age,y=incid,shape=sex,col=cancer))+geom_point(size=3.3)+ 
   labs(x="Age (years)",y=expression(paste("Cases per ",10^5," Person-Years")))+    
   scale_y_log10(limits=c(.02,100)) 
-g = g + scale_color_grey(start = 0.8, end = 0)
+# g = g + scale_color_grey(start = 0.8, end = 0)
 g
 ggsave("~/Results/amlMDS/APLage.png")  
 ggsave("~/Results/amlMDS/APLage.eps")  
@@ -102,7 +102,7 @@ for (NR in c(FALSE,TRUE)) {
 #   g1 <- guide_legend("Second Cancer")
 #   g=g + guides(color=g1) 
 #   g=g + scale_colour_manual(values=cbPalette)
-  g = g + scale_color_grey(start = 0.8, end = 0)
+  # g = g + scale_color_grey(start = 0.8, end = 0)
   g=g+  geom_errorbar(aes(ymin=rrL,ymax=rrU,width=.15))+ theme(legend.key.height=unit(.45, "cm"))
   print(g)
   if (NR) ggsave("~/Results/amlMDS/APLnr.eps")  else
