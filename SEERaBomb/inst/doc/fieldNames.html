@@ -10,17 +10,15 @@
 <tr>
 <td bgcolor="#ffdc98">start</td><td bgcolor="#ffdc98">width</td><td bgcolor="#ffdc98">SAS</td><td bgcolor="#ffdc98">SEERaBomb</td><td bgcolor="#ffdc98">desc</td></tr>
 <tr>
-<td>  1</td><td> 8</td><td>CASENUM</td><td>casenum</td><td>Patient ID number</td></tr>
+<td>  1</td><td> 8</td><td>PUBCSNUM</td><td>casenum</td><td>Patient ID</td></tr>
 <tr>
-<td>  9</td><td>10</td><td>REG</td><td>reg</td><td>Registry ID</td></tr>
+<td>  9</td><td>10</td><td>REG</td><td>reg</td><td>SEER registry</td></tr>
 <tr>
-<td> 19</td><td> 1</td><td>MAR_STAT</td><td>marstat</td><td>Marital Status at DX</td></tr>
+<td> 19</td><td> 1</td><td>MAR_STAT</td><td>marstat</td><td>Marital status at diagnosis</td></tr>
 <tr>
-<td> 20</td><td> 2</td><td>RACE</td><td>race</td><td>Race/Ethnicity</td></tr>
+<td> 20</td><td> 2</td><td>RACE1V</td><td>race</td><td>Race/ethnicity</td></tr>
 <tr>
-<td> 22</td><td> 1</td><td>ORIGIN</td><td>origin</td><td>Spanish/Hispanic Origin</td></tr>
-<tr>
-<td> 23</td><td> 1</td><td>NHIA</td><td>nhia</td><td>NHIA Derived Hispanic Origin</td></tr>
+<td> 23</td><td> 1</td><td>NHIADE</td><td>nhiade</td><td>NHIA Derived Hisp Origin</td></tr>
 <tr>
 <td> 24</td><td> 1</td><td>SEX</td><td>sex</td><td>Sex</td></tr>
 <tr>
@@ -28,161 +26,125 @@
 <tr>
 <td> 28</td><td> 4</td><td>YR_BRTH</td><td>yrbrth</td><td>Year of birth</td></tr>
 <tr>
-<td> 32</td><td> 3</td><td>PLC_BRTH</td><td>plcbrth</td><td>Birth Place</td></tr>
+<td> 35</td><td> 2</td><td>SEQ_NUM</td><td>seqnum</td><td>Sequence number</td></tr>
 <tr>
-<td> 35</td><td> 2</td><td>SEQ_NUM</td><td>seqnum</td><td>Sequence Number--Central</td></tr>
+<td> 37</td><td> 2</td><td>MDXRECMP</td><td>modx</td><td>Month of diagnosis</td></tr>
 <tr>
-<td> 37</td><td> 2</td><td>DATE_mo</td><td>modx</td><td>Month of diagnosis</td></tr>
+<td> 39</td><td> 4</td><td>YEAR_DX</td><td>yrdx</td><td>Year of diagnosis</td></tr>
 <tr>
-<td> 39</td><td> 4</td><td>DATE_yr</td><td>yrdx</td><td>Year of diagnosis</td></tr>
-<tr>
-<td> 43</td><td> 4</td><td>SITEO2V</td><td>siteo2</td><td>Primary site</td></tr>
+<td> 43</td><td> 4</td><td>PRIMSITE</td><td>primsite</td><td>Primary site ICD-O-2 (1973+)</td></tr>
 <tr>
 <td> 47</td><td> 1</td><td>LATERAL</td><td>lateral</td><td>Laterality</td></tr>
 <tr>
-<td> 48</td><td> 4</td><td>HISTO2V</td><td>histo2</td><td>Histology (92-00) ICD-O-2</td></tr>
+<td> 48</td><td> 4</td><td>HISTO2V</td><td>histo2</td><td>Histologic Type ICD-O-2</td></tr>
 <tr>
-<td> 52</td><td> 1</td><td>BEHO2V</td><td>beho2</td><td>Behavior (92-00) ICD-O-2</td></tr>
+<td> 52</td><td> 1</td><td>BEHO2V</td><td>beho2</td><td>Behavior Code ICD-O-2</td></tr>
 <tr>
 <td> 53</td><td> 4</td><td>HISTO3V</td><td>histo3</td><td>Histologic Type ICD-O-3</td></tr>
 <tr>
-<td> 57</td><td> 1</td><td>BEHO3V</td><td>beho3</td><td>Behavior Code ICD-O-3</td></tr>
+<td> 57</td><td> 1</td><td>BEHO3V</td><td>beho3</td><td>Behavior code ICD-O-3</td></tr>
 <tr>
 <td> 58</td><td> 1</td><td>GRADE</td><td>grade</td><td>Grade</td></tr>
 <tr>
-<td> 59</td><td> 1</td><td>DX_CONF</td><td>dxconf</td><td>Diagnostic Confirmation</td></tr>
+<td> 59</td><td> 1</td><td>DX_CONF</td><td>dxconf</td><td>Diagnostic confirmation</td></tr>
 <tr>
-<td> 60</td><td> 1</td><td>REPT_SRC</td><td>reptsrc</td><td>Type of Reporting Source</td></tr>
+<td> 60</td><td> 1</td><td>REPT_SRC</td><td>reptsrc</td><td>Type of reporting source</td></tr>
 <tr>
-<td> 61</td><td> 3</td><td>EOD10_SZ</td><td>eod10sz</td><td>EOD 10--Tumor size</td></tr>
+<td> 61</td><td> 3</td><td>EOD10_SZ</td><td>eod10sz</td><td>EOD 10 - size (1988+)</td></tr>
 <tr>
-<td> 64</td><td> 2</td><td>EOD10_EX</td><td>eod10ex</td><td>EOD 10--Extension</td></tr>
+<td> 64</td><td> 2</td><td>EOD10_EX</td><td>eod10ex</td><td>EOD 10 - extension</td></tr>
 <tr>
-<td> 66</td><td> 2</td><td>EOD10_PE</td><td>eod10pe</td><td>EOD 10--Extension Prost Path</td></tr>
+<td> 66</td><td> 2</td><td>EOD10_PE</td><td>eod10pe</td><td>EOD 10 - path extension</td></tr>
 <tr>
-<td> 68</td><td> 1</td><td>EOD10_ND</td><td>eod10nd</td><td>EOD 10--Lymph Node Involv</td></tr>
+<td> 68</td><td> 1</td><td>EOD10_ND</td><td>eod10nd</td><td>EOD 10 - lymph node</td></tr>
 <tr>
-<td> 69</td><td> 2</td><td>EOD10_PN</td><td>eod10pn</td><td>Regional Nodes Positive</td></tr>
+<td> 69</td><td> 2</td><td>EOD10_PN</td><td>eod10pn</td><td>EOD 10 - positive lymph nodes examined</td></tr>
 <tr>
-<td> 71</td><td> 2</td><td>EOD10_NE</td><td>eod10ne</td><td>Regional Nodes Examined</td></tr>
+<td> 71</td><td> 2</td><td>EOD10_NE</td><td>eod10ne</td><td>EOD 10 - number of lymph nodes examined</td></tr>
 <tr>
-<td> 73</td><td>13</td><td>EOD13</td><td>eod13</td><td>EOD--Old 13 digit</td></tr>
+<td> 73</td><td>13</td><td>EOD13</td><td>eod13</td><td>EOD--old 13 digit</td></tr>
 <tr>
-<td> 86</td><td> 2</td><td>EOD2</td><td>eod2</td><td>EOD--Old 2 digit</td></tr>
+<td> 86</td><td> 2</td><td>EOD2</td><td>eod2</td><td>EOD--old 2 digit</td></tr>
 <tr>
-<td> 88</td><td> 4</td><td>EOD4</td><td>eod4</td><td>EOD--Old 4 digit</td></tr>
+<td> 88</td><td> 4</td><td>EOD4</td><td>eod4</td><td>EOD--old 4 digit</td></tr>
 <tr>
-<td> 92</td><td> 1</td><td>EODCODE</td><td>eodcode</td><td>Coding System for EOD</td></tr>
+<td> 92</td><td> 1</td><td>EOD_CODE</td><td>eodcode</td><td>Coding system for EOD</td></tr>
 <tr>
-<td> 93</td><td> 1</td><td>TUMOR_1V</td><td>tumor1</td><td>Tumor Marker 1</td></tr>
+<td> 93</td><td> 1</td><td>TUMOR_1V</td><td>tumor1</td><td>Tumor marker 1</td></tr>
 <tr>
-<td> 94</td><td> 1</td><td>TUMOR_2V</td><td>tumor2</td><td>Tumor Marker 2</td></tr>
+<td> 94</td><td> 1</td><td>TUMOR_2V</td><td>tumor2</td><td>Tumor marker 2</td></tr>
 <tr>
-<td> 95</td><td> 1</td><td>TUMOR_3V</td><td>tumor3</td><td>Tumor Marker 3</td></tr>
+<td> 95</td><td> 1</td><td>TUMOR_3V</td><td>tumor3</td><td>Tumor marker 3</td></tr>
 <tr>
-<td> 96</td><td> 3</td><td>CS_SIZE</td><td>cssize</td><td>Collaborative Stage (CS) Tumor Size</td></tr>
+<td> 96</td><td> 3</td><td>CSTUMSIZ</td><td>cstumsiz</td><td>CS Tumor size</td></tr>
 <tr>
-<td> 99</td><td> 3</td><td>CS_EXT</td><td>csext</td><td>CS Extension</td></tr>
+<td> 99</td><td> 3</td><td>CSEXTEN</td><td>csexten</td><td>CS Extension</td></tr>
 <tr>
-<td>102</td><td> 3</td><td>CS_NODE</td><td>csnode</td><td>CS Lymph Nodes</td></tr>
+<td>102</td><td> 3</td><td>CSLYMPHN</td><td>cslymphn</td><td>CS Lymph Nodes</td></tr>
 <tr>
-<td>105</td><td> 2</td><td>CS_METS</td><td>csmets</td><td>CS Mets at DX</td></tr>
+<td>105</td><td> 2</td><td>CSMETSDX</td><td>csmetsdx</td><td>CS Mets at DX</td></tr>
 <tr>
-<td>107</td><td> 3</td><td>CS_SSF1</td><td>csssf1</td><td>CS Site-Specific Factor 1</td></tr>
+<td>107</td><td> 3</td><td>CS1SITE</td><td>cs1site</td><td>CS Site-Specific Factor 1</td></tr>
 <tr>
-<td>110</td><td> 3</td><td>CS_SSF2</td><td>csssf2</td><td>CS Site-Specific Factor 2</td></tr>
+<td>110</td><td> 3</td><td>CS2SITE</td><td>cs2site</td><td>CS Site-Specific Factor 2</td></tr>
 <tr>
-<td>113</td><td> 3</td><td>CS_SSF3</td><td>csssf3</td><td>CS Site-Specific Factor 3</td></tr>
+<td>113</td><td> 3</td><td>CS3SITE</td><td>cs3site</td><td>CS Site-Specific Factor 3</td></tr>
 <tr>
-<td>116</td><td> 3</td><td>CS_SSF4</td><td>csssf4</td><td>CS Site-Specific Factor 4</td></tr>
+<td>116</td><td> 3</td><td>CS4SITE</td><td>cs4site</td><td>CS Site-Specific Factor 4</td></tr>
 <tr>
-<td>119</td><td> 3</td><td>CS_SSF5</td><td>csssf5</td><td>CS Site-Specific Factor 5</td></tr>
+<td>119</td><td> 3</td><td>CS5SITE</td><td>cs5site</td><td>CS Site-Specific Factor 5</td></tr>
 <tr>
-<td>122</td><td> 3</td><td>CS_SSF6</td><td>csssf6</td><td>CS Site-Specific Factor 6</td></tr>
+<td>122</td><td> 3</td><td>CS6SITE</td><td>cs6site</td><td>CS Site-Specific Factor 6</td></tr>
 <tr>
-<td>125</td><td> 3</td><td>CS_SSF25</td><td>csssf25</td><td>CS Site-Specific Factor 25</td></tr>
+<td>125</td><td> 3</td><td>CS25SITE</td><td>cs25site</td><td>CS Site-Specific Factor 25</td></tr>
 <tr>
-<td>128</td><td> 2</td><td>D_AJCC_T</td><td>dajcct</td><td>Derived AJCC T</td></tr>
+<td>128</td><td> 2</td><td>DAJCCT</td><td>dajcct</td><td>Derived AJCC T</td></tr>
 <tr>
-<td>130</td><td> 2</td><td>D_AJCC_N</td><td>dajccn</td><td>Derived AJCC N</td></tr>
+<td>130</td><td> 2</td><td>DAJCCN</td><td>dajccn</td><td>Derived AJCC N</td></tr>
 <tr>
-<td>132</td><td> 2</td><td>D_AJCC_M</td><td>dajccm</td><td>Derived AJCC M</td></tr>
+<td>132</td><td> 2</td><td>DAJCCM</td><td>dajccm</td><td>Derived AJCC M</td></tr>
 <tr>
-<td>134</td><td> 2</td><td>D_AJCC_S</td><td>dajccs</td><td>Derived AJCC Stage Group</td></tr>
+<td>134</td><td> 2</td><td>DAJCCSTG</td><td>dajccstg</td><td>Derived AJCC Stage Group</td></tr>
 <tr>
-<td>136</td><td> 1</td><td>D_SSG77</td><td>dssg77</td><td>Derived SS1977</td></tr>
+<td>136</td><td> 1</td><td>DSS1977S</td><td>dss1977s</td><td>Derived SS1977</td></tr>
 <tr>
-<td>137</td><td> 1</td><td>D_SSG00</td><td>dssg00</td><td>Derived SS2000</td></tr>
+<td>137</td><td> 1</td><td>DSS2000S</td><td>dss2000s</td><td>Derived SS2000</td></tr>
 <tr>
-<td>138</td><td> 1</td><td>D_AJCC_F</td><td>dajccf</td><td>Derived AJCC - flag</td></tr>
+<td>138</td><td> 1</td><td>DAJCCFL</td><td>dajccfl</td><td>Derived AJCC - flag</td></tr>
 <tr>
-<td>139</td><td> 1</td><td>D_SSG77F</td><td>dssg77f</td><td>Derived SS1977 - flag</td></tr>
+<td>141</td><td> 6</td><td>CSVFIRST</td><td>csvfirst</td><td>CS Version Input Original</td></tr>
 <tr>
-<td>140</td><td> 1</td><td>D_SSG00F</td><td>dssg00f</td><td>Derived SS2000 - flag</td></tr>
+<td>147</td><td> 6</td><td>CSVLATES</td><td>csvlates</td><td>CS Version Derived</td></tr>
 <tr>
-<td>141</td><td> 6</td><td>CSV_ORG</td><td>csvorg</td><td>CS Version Input Original</td></tr>
+<td>153</td><td> 6</td><td>CSVCURRENT</td><td>csvcurrent</td><td>CS Version Input Current</td></tr>
 <tr>
-<td>147</td><td> 6</td><td>CSV_DER</td><td>csvder</td><td>CS Version Derived</td></tr>
+<td>159</td><td> 2</td><td>SURGPRIF</td><td>surgprif</td><td>RX Summ--surg prim site</td></tr>
 <tr>
-<td>153</td><td> 6</td><td>CSV_CUR</td><td>csvcur</td><td>CS Version Input Current</td></tr>
+<td>161</td><td> 1</td><td>SURGSCOF</td><td>surgscof</td><td>RX Summ--scope reg LN sur 2003+</td></tr>
 <tr>
-<td>159</td><td> 2</td><td>SURGPRIM</td><td>surgprim</td><td>RX Summ--Surg Prim Site</td></tr>
+<td>162</td><td> 1</td><td>SURGSITF</td><td>surgsitf</td><td>RX Summ--surg oth reg/dis</td></tr>
 <tr>
-<td>161</td><td> 1</td><td>SCOPE</td><td>scope</td><td>RX Summ--Scope Reg LN Sur</td></tr>
+<td>163</td><td> 2</td><td>NUMNODES</td><td>numnodes</td><td>Number of lymph nodes</td></tr>
 <tr>
-<td>162</td><td> 1</td><td>SURGOTH</td><td>surgoth</td><td>RX Summ--Surg Oth Reg/Dis</td></tr>
+<td>166</td><td> 1</td><td>NO_SURG</td><td>nosurg</td><td>Reason no cancer-directed surgery</td></tr>
 <tr>
-<td>163</td><td> 2</td><td>SURGNODE</td><td>surgnode</td><td>RX Summ--Reg LN Examined</td></tr>
+<td>167</td><td> 1</td><td>RADIATN</td><td>radiatn</td><td>Radiation</td></tr>
 <tr>
-<td>165</td><td> 1</td><td>RECONST</td><td>reconst</td><td>RX Summ--Reconstruct 1st</td></tr>
+<td>168</td><td> 1</td><td>RAD_BRN</td><td>radbrn</td><td>Radiation to Brain and/or CNS</td></tr>
 <tr>
-<td>166</td><td> 1</td><td>NO_SURG</td><td>nosurg</td><td>Reason for no surgery</td></tr>
+<td>169</td><td> 1</td><td>RAD_SURG</td><td>radsurg</td><td>Radiation sequence with surgery</td></tr>
 <tr>
-<td>167</td><td> 1</td><td>RADIATN</td><td>radiatn</td><td>RX Summ--Radiation</td></tr>
+<td>170</td><td> 2</td><td>SS_SURG</td><td>sssurg</td><td>Site specific surgery (1983-1997)</td></tr>
 <tr>
-<td>168</td><td> 1</td><td>RAD_BRN</td><td>radbrn</td><td>RX Summ--Rad to CNS</td></tr>
+<td>174</td><td> 1</td><td>SURGSCOP</td><td>surgscop</td><td>Scope of lymph node surgery 98-02</td></tr>
 <tr>
-<td>169</td><td> 1</td><td>RAD_SURG</td><td>radsurg</td><td>RX Summ--Surg/Rad Seq</td></tr>
+<td>175</td><td> 1</td><td>SURGSITE</td><td>surgsite</td><td>Surgery to other sites</td></tr>
 <tr>
-<td>170</td><td> 2</td><td>SS_SURG</td><td>sssurg</td><td>RX Summ--Surgery Type</td></tr>
+<td>176</td><td> 2</td><td>REC_NO</td><td>recno</td><td>Record number</td></tr>
 <tr>
-<td>172</td><td> 2</td><td>SRPRIM02</td><td>srprim02</td><td>RX Summ--Surg Site 98-02</td></tr>
+<td>191</td><td> 1</td><td>TYPE_FU</td><td>typefu</td><td>Type of followup expected</td></tr>
 <tr>
-<td>174</td><td> 1</td><td>SCOPE02</td><td>scope02</td><td>RX Summ--Scope Reg 98-02</td></tr>
-<tr>
-<td>175</td><td> 1</td><td>SRGOTH02</td><td>srgoth02</td><td>RX Summ--Surg Oth 98-02</td></tr>
-<tr>
-<td>176</td><td> 2</td><td>REC_NO</td><td>recno</td><td>SEER Record number</td></tr>
-<tr>
-<td>178</td><td> 1</td><td>O_SITAGE</td><td>ositage</td><td>Over-ride age/site/morph</td></tr>
-<tr>
-<td>179</td><td> 1</td><td>O_SEQCON</td><td>oseqcon</td><td>Over-ride seqno/dxconf</td></tr>
-<tr>
-<td>180</td><td> 1</td><td>O_SEQLAT</td><td>oseqlat</td><td>Over-ride site/lat/seqno</td></tr>
-<tr>
-<td>181</td><td> 1</td><td>O_SURCON</td><td>osurcon</td><td>Over-ride surg/dxconf</td></tr>
-<tr>
-<td>182</td><td> 1</td><td>O_SITTYP</td><td>osittyp</td><td>Over-ride site/type</td></tr>
-<tr>
-<td>183</td><td> 1</td><td>H_BENIGN</td><td>hbenign</td><td>Over-ride histology</td></tr>
-<tr>
-<td>184</td><td> 1</td><td>O_RPTSRC</td><td>orptsrc</td><td>Over-ride report source</td></tr>
-<tr>
-<td>185</td><td> 1</td><td>O_DFSITE</td><td>odfsite</td><td>Over-ride ill-define site</td></tr>
-<tr>
-<td>186</td><td> 1</td><td>O_LEUKDX</td><td>oleukdx</td><td>Over-ride Leuk, Lymph</td></tr>
-<tr>
-<td>187</td><td> 1</td><td>O_SITBEH</td><td>ositbeh</td><td>Over-ride site/behavior</td></tr>
-<tr>
-<td>188</td><td> 1</td><td>O_EODDT</td><td>oeoddt</td><td>Over-ride site/cod/dx dt</td></tr>
-<tr>
-<td>189</td><td> 1</td><td>O_SITEOD</td><td>ositeod</td><td>Over-ride site/lat/eod</td></tr>
-<tr>
-<td>190</td><td> 1</td><td>O_SITMOR</td><td>ositmor</td><td>Over-ride site/lat/morph</td></tr>
-<tr>
-<td>191</td><td> 1</td><td>TYPEFUP</td><td>typefup</td><td>SEER Type of followup</td></tr>
-<tr>
-<td>192</td><td> 2</td><td>AGE_REC</td><td>agerec</td><td>Age Recode <1 Year olds</td></tr>
+<td>192</td><td> 2</td><td>AGE_1REC</td><td>agerec</td><td>Age recode <1 year olds</td></tr>
 <tr>
 <td>199</td><td> 5</td><td>SITERWHO</td><td>siterwho</td><td>Site recode ICD-O-3/WHO 2008</td></tr>
 <tr>
@@ -192,91 +154,85 @@
 <tr>
 <td>218</td><td> 3</td><td>ICCC3WHO</td><td>iccc3who</td><td>ICCC site recode ICD-O-3/WHO 2008</td></tr>
 <tr>
-<td>221</td><td> 3</td><td>ICCC3XWHO</td><td>iccc3xwho</td><td>ICCC site rec extended ICD-O-3/WHO 2008</td></tr>
+<td>221</td><td> 3</td><td>ICCC3XWHO</td><td>iccc3xwho</td><td>ICCC site rec extended ICD-O-3/ WHO 2008</td></tr>
 <tr>
-<td>224</td><td> 1</td><td>BEHANAL</td><td>behanal</td><td>Behavior Recode for Analysis</td></tr>
+<td>224</td><td> 1</td><td>BEHTREND</td><td>behtrend</td><td>Behavior recode for analysis</td></tr>
 <tr>
-<td>226</td><td> 2</td><td>HISTREC</td><td>histrec</td><td>Histology Recode--Broad Groupings</td></tr>
+<td>226</td><td> 2</td><td>HISTREC</td><td>histrec</td><td>Broad Histology recode</td></tr>
 <tr>
-<td>228</td><td> 2</td><td>BRAINREC</td><td>brainrec</td><td>Histology Recode--Brain Groupings</td></tr>
+<td>228</td><td> 2</td><td>HISTRECB</td><td>histrecb</td><td>Brain recode</td></tr>
 <tr>
-<td>230</td><td> 3</td><td>CS0204SCHEMA</td><td>cs0204schema</td><td>CS Schema v0204</td></tr>
+<td>230</td><td> 3</td><td>cs0204schema</td><td>cs0204schema</td><td>CS Schema v0204</td></tr>
 <tr>
-<td>233</td><td> 1</td><td>RAC_RECA</td><td>racreca</td><td>Race recode (White, Black, Other)</td></tr>
+<td>233</td><td> 1</td><td>RAC_RECA</td><td>racreca</td><td>Race recode A</td></tr>
 <tr>
-<td>234</td><td> 1</td><td>RAC_RECY</td><td>racrecy</td><td>Race recode (W, B, AI, API</td></tr>
+<td>234</td><td> 1</td><td>RAC_RECY</td><td>racrecy</td><td>Race recode Y</td></tr>
 <tr>
-<td>235</td><td> 1</td><td>NHIAREC</td><td>nhiarec</td><td>Origin Recode NHIA(Hispanic,Non-Hisp)</td></tr>
+<td>235</td><td> 1</td><td>ORIGRECB</td><td>origrecb</td><td>Origin Recode NHIA</td></tr>
 <tr>
 <td>236</td><td> 1</td><td>HST_STGA</td><td>hststga</td><td>SEER historic stage A</td></tr>
 <tr>
-<td>237</td><td> 2</td><td>AJCC_STG</td><td>ajccstg</td><td>AJCC stage 3rd edition (1988-2003)</td></tr>
+<td>237</td><td> 2</td><td>AJCC_STG</td><td>ajccstg</td><td>AJCC stage 3rd edition (1988+)</td></tr>
 <tr>
-<td>239</td><td> 2</td><td>AJ_3SEER</td><td>aj3seer</td><td>SEER modified AJCC stage 3rd ed (1988-2003)</td></tr>
+<td>239</td><td> 2</td><td>AJ_3SEER</td><td>aj3seer</td><td>SEER modified AJCC stage 3rd ed (1988+)</td></tr>
 <tr>
-<td>241</td><td> 1</td><td>SSG77</td><td>ssg77</td><td>SEER Summary Stage 1977 (1995-2000)</td></tr>
+<td>241</td><td> 1</td><td>SSS77VZ</td><td>sss77vz</td><td>SEER Summary Stage 1977 (1995-2000)</td></tr>
 <tr>
-<td>242</td><td> 1</td><td>SSG2000</td><td>ssg2000</td><td>SEER Summary Stage 2000 2000 (2001-2003)</td></tr>
-<tr>
-<td>243</td><td> 2</td><td>NUMPRIMS</td><td>numprims</td><td>Number of primaries</td></tr>
+<td>242</td><td> 1</td><td>SSSM2KPZ</td><td>sssm2kpz</td><td>SEER Summary Stage 2000 2000 (2001-2003)</td></tr>
 <tr>
 <td>245</td><td> 1</td><td>FIRSTPRM</td><td>firstprm</td><td>First malignant primary indicator</td></tr>
 <tr>
-<td>246</td><td> 5</td><td>STCOUNTY</td><td>stcounty</td><td>State-county recode</td></tr>
+<td>246</td><td> 5</td><td>ST_CNTY</td><td>stcnty</td><td>State-county recode</td></tr>
 <tr>
-<td>255</td><td> 5</td><td>ICD_5DIG</td><td>COD</td><td>Cause of death to SEER site recode</td></tr>
+<td>255</td><td> 5</td><td>CODPUB</td><td>COD</td><td>Cause of death to SEER site recode</td></tr>
 <tr>
-<td>260</td><td> 5</td><td>CODKM</td><td>codkm</td><td>COD to site rec KM</td></tr>
+<td>260</td><td> 5</td><td>CODPUBKM</td><td>codpubkm</td><td>COD to site rec KM</td></tr>
 <tr>
 <td>265</td><td> 1</td><td>STAT_REC</td><td>statrec</td><td>Vital status recode (study cutoff used)</td></tr>
 <tr>
-<td>266</td><td> 1</td><td>IHS</td><td>ihs</td><td>IHS link</td></tr>
+<td>266</td><td> 1</td><td>IHSLINK</td><td>ihslink</td><td>IHS link</td></tr>
 <tr>
-<td>267</td><td> 1</td><td>HIST_SSG_2000</td><td>histssg2000</td><td>Summary stage 2000 (1998+)</td></tr>
+<td>267</td><td> 1</td><td>SUMM2K</td><td>summ2k</td><td>Historic SSG 2000 Stage</td></tr>
 <tr>
-<td>268</td><td> 2</td><td>AYA_RECODE</td><td>ayarecode</td><td>AYA site recode/WHO 2008</td></tr>
+<td>268</td><td> 2</td><td>AYASITERWHO</td><td>ayasiterwho</td><td>AYA site recode/WHO 2008</td></tr>
 <tr>
-<td>270</td><td> 2</td><td>LYMPHOMA_RECODE</td><td>lymphomarecode</td><td>Lymphoma subtype recode/WHO 2008</td></tr>
+<td>270</td><td> 2</td><td>LYMSUBRWHO</td><td>lymsubrwho</td><td>Lymphoma subtype recode/WHO 2008</td></tr>
 <tr>
-<td>272</td><td> 1</td><td>DTH_CLASS</td><td>dthclass</td><td>SEER Cause-Specific Death Classification</td></tr>
+<td>272</td><td> 1</td><td>VSRTSADX</td><td>vsrtsadx</td><td>SEER cause of death classification</td></tr>
 <tr>
-<td>273</td><td> 1</td><td>O_DTH_CLASS</td><td>odthclass</td><td>SEER Other Cause of Death Classification</td></tr>
+<td>273</td><td> 1</td><td>ODTHCLASS</td><td>odthclass</td><td>SEER other cause of death classification</td></tr>
 <tr>
-<td>274</td><td> 1</td><td>EXTEVAL</td><td>exteval</td><td>CS Tumor Size/Ext Eval</td></tr>
+<td>274</td><td> 1</td><td>CSTSEVAL</td><td>cstseval</td><td>CS EXT/Size Eval</td></tr>
 <tr>
-<td>275</td><td> 1</td><td>NODEEVAL</td><td>nodeeval</td><td>CS Lymph Nodes Eval</td></tr>
+<td>275</td><td> 1</td><td>CSRGEVAL</td><td>csrgeval</td><td>CS Nodes Eval</td></tr>
 <tr>
-<td>276</td><td> 1</td><td>METSEVAL</td><td>metseval</td><td>CS Mets Eval</td></tr>
+<td>276</td><td> 1</td><td>CSMTEVAL</td><td>csmteval</td><td>CS Mets Eval</td></tr>
 <tr>
-<td>277</td><td> 1</td><td>INTPRIM</td><td>intprim</td><td>Primary by international rules</td></tr>
+<td>277</td><td> 1</td><td>intprim</td><td>intprim</td><td>Primary by International Rules</td></tr>
 <tr>
-<td>278</td><td> 1</td><td>ERSTATUS</td><td>erstatus</td><td>ER Status Recode Breast Cancer (1990+)</td></tr>
+<td>278</td><td> 1</td><td>erstatus</td><td>erstatus</td><td>ER Status Recode Breast Cancer (1990+)</td></tr>
 <tr>
-<td>279</td><td> 1</td><td>PRSTATUS</td><td>prstatus</td><td>PR Status Recode Breast Cancer (1990+)</td></tr>
+<td>279</td><td> 1</td><td>prstatus</td><td>prstatus</td><td>PR Status Recode Breast Cancer (1990+)</td></tr>
 <tr>
-<td>280</td><td> 2</td><td>CSSCHEMA</td><td>csschema</td><td>CS Schema - AJCC 6th ed(previously called v1)</td></tr>
+<td>280</td><td> 2</td><td>csschema</td><td>csschema</td><td>CS Schema - AJCC 6th Edition</td></tr>
 <tr>
-<td>282</td><td> 3</td><td>CS_SSF8</td><td>csssf8</td><td>CS Site-Specific Factor 8</td></tr>
+<td>282</td><td> 3</td><td>CS8SITE</td><td>cs8site</td><td>Cs Site-specific Factor 8</td></tr>
 <tr>
-<td>285</td><td> 3</td><td>CS_SSF10</td><td>csssf10</td><td>CS Site-Specific Factor 10</td></tr>
+<td>285</td><td> 3</td><td>CS10SITE</td><td>cs10site</td><td>CS Site-Specific Factor 10</td></tr>
 <tr>
-<td>288</td><td> 3</td><td>CS_SSF11</td><td>csssf11</td><td>CS Site-Specific Factor 11</td></tr>
+<td>288</td><td> 3</td><td>CS11SITE</td><td>cs11site</td><td>CS Site-Specific Factor 11</td></tr>
 <tr>
-<td>291</td><td> 3</td><td>CS_SSF13</td><td>csssf13</td><td>CS Site-Specific Factor 13</td></tr>
+<td>291</td><td> 3</td><td>CS13SITE</td><td>cs13site</td><td>CS Site-Specific Factor 13</td></tr>
 <tr>
-<td>294</td><td> 3</td><td>CS_SSF15</td><td>csssf15</td><td>CS Site-Specific Factor 15</td></tr>
+<td>294</td><td> 3</td><td>CS15SITE</td><td>cs15site</td><td>CS Site-Specific Factor 15</td></tr>
 <tr>
-<td>297</td><td> 3</td><td>CS_SSF16</td><td>csssf16</td><td>CS Site-Specific Factor 16</td></tr>
+<td>297</td><td> 3</td><td>CS16SITE</td><td>cs16site</td><td>CS Site-Specific Factor 16</td></tr>
 <tr>
 <td>300</td><td> 1</td><td>VASINV</td><td>vasin</td><td>Lymph-vascular Invasion (2004+)</td></tr>
 <tr>
-<td>301</td><td> 4</td><td>SRV_TIME_MON</td><td>surv</td><td>Survival months</td></tr>
+<td>301</td><td> 4</td><td>srv_time_mon</td><td>surv</td><td>Survival months</td></tr>
 <tr>
-<td>305</td><td> 1</td><td>SRV_TIME_MON_FLAG</td><td>srvtimemonflag</td><td>Survival months flag</td></tr>
-<tr>
-<td>306</td><td> 4</td><td>SRV_TIME_MON_PA</td><td>srvtimemonpa</td><td>Survival months - presumed alive</td></tr>
-<tr>
-<td>310</td><td> 1</td><td>SRV_TIME_MON_FLAG_PA</td><td>srvtimemonflagpa</td><td>Survival months flag - presumed alive</td></tr>
+<td>305</td><td> 1</td><td>srv_time_mon_flag</td><td>srvtimemonflag</td><td>Survival months flag</td></tr>
 <tr>
 <td>311</td><td> 1</td><td>INSREC_PUB</td><td>insrecpub</td><td>Insurance Recode (2007+)</td></tr>
 <tr>
@@ -288,13 +244,40 @@
 <tr>
 <td>321</td><td> 3</td><td>DAJCC7STG</td><td>dajcc7stg</td><td>Derived AJCC 7 Stage Group</td></tr>
 <tr>
-<td>324</td><td> 2</td><td>ADJTM_6VALUE</td><td>adjtm6value</td><td>Adjusted AJCC 6th T with mets (1988+)</td></tr>
+<td>324</td><td> 2</td><td>ADJTM_6VALUE</td><td>adjtm6value</td><td>Adjusted AJCC 6th T (1988+)</td></tr>
 <tr>
-<td>326</td><td> 2</td><td>ADJNM_6VALUE</td><td>adjnm6value</td><td>Adjusted AJCC 6th N with mets (1988+)</td></tr>
+<td>326</td><td> 2</td><td>ADJNM_6VALUE</td><td>adjnm6value</td><td>Adjusted AJCC 6th N (1988+)</td></tr>
 <tr>
-<td>328</td><td> 2</td><td>ADJM_6VALUE</td><td>adjm6value</td><td>Adjusted AJCC 6th M</td></tr>
+<td>328</td><td> 2</td><td>ADJM_6VALUE</td><td>adjm6value</td><td>Adjusted AJCC 6th M (1988+)</td></tr>
 <tr>
-<td>330</td><td> 2</td><td>ADJAJCCSTG</td><td>adjajccstg</td><td>Adjusted AJCC 6th Stage (1988+) ;</td></tr>
+<td>330</td><td> 2</td><td>ADJAJCCSTG</td><td>adjajccstg</td><td>Adjusted AJCC 6th Stage (1988+)</td></tr>
+<tr>
+<td>332</td><td> 3</td><td>CS7SITE</td><td>cs7site</td><td>CS Site-Specific Factor 7</td></tr>
+<tr>
+<td>335</td><td> 3</td><td>CS9SITE</td><td>cs9site</td><td>CS Site-specific Factor 9</td></tr>
+<tr>
+<td>338</td><td> 3</td><td>CS12SITE</td><td>cs12site</td><td>CS Site-Specific Factor 12</td></tr>
+<tr>
+<td>341</td><td> 1</td><td>her2</td><td>her2</td><td>Derived HER2 Recode (2010+)</td></tr>
+<tr>
+<td>342</td><td> 1</td><td>brst_sub</td><td>brstsub</td><td>Breast Subtype (2010+)</td></tr>
+<tr>
+<td>348</td><td> 1</td><td>ANNARBOR</td><td>annarbor</td><td>Lymphoma - Ann Arbor Stage (1983+)</td></tr>
+<tr>
+<td>349</td><td> 1</td><td>CSMETSDXB_PUB</td><td>csmetsdxbpub</td><td>CS mets at DX-bone (2010+)</td></tr>
+<tr>
+<td>350</td><td> 1</td><td>CSMETSDXBR_PUB</td><td>csmetsdxbrpub</td><td>CS mets at DX-brain (2010+)</td></tr>
+<tr>
+<td>351</td><td> 1</td><td>CSMETSDXLIV_PUB</td><td>csmetsdxlivpub</td><td>CS mets at DX-liver (2010+)</td></tr>
+<tr>
+<td>352</td><td> 1</td><td>CSMETSDXLUNG_PUB</td><td>csmetsdxlungpub</td><td>CS mets at DX-lung (2010+)</td></tr>
+<tr>
+<td>353</td><td> 2</td><td>T_VALUE</td><td>tvalue</td><td>T value - based on AJCC 3rd (1988-2003)</td></tr>
+<tr>
+<td>355</td><td> 2</td><td>N_VALUE</td><td>nvalue</td><td>N value - based on AJCC 3rd (1988-2003)</td></tr>
+<tr>
+<td>357</td><td> 2</td><td>M_VALUE</td><td>mvalue</td><td>M value - based on AJCC 3rd (1988-2003)</td></tr>
 </table>
 
+<br/><br/><font size="-2">(Page generated on Thu Apr 21 04:15:20 2016 by <a href="http://www.embl.de/~gpau/hwriter/index.html">hwriter</a> 1.3.2)</font><br/>
 </body></html>

@@ -4,6 +4,7 @@
 \begin{document}
 %\SweaveOpts{concordance=TRUE}
 %\SweaveOpts{concordance=TRUE}
+%\SweaveOpts{concordance=TRUE}
 \title{SEERaBomb Overview}
 \author{Tom Radivoyevitch}
 
@@ -30,9 +31,8 @@ must be thorougly examined to determine
 which fields will be useful. Once this is determined, the output 
 and list of field choices, the default of which is 
 \begin{verbatim} 
-picks=c("casenum","reg","race","sex","agedx","yrbrth",
-  "seqnum","yrdx","histo2","histo3","radiatn","agerec",
-   "ICD9","histrec","numprims","COD","surv"),
+picks=c("casenum","reg","race","sex","agedx","yrbrth","seqnum",
+        "modx","yrdx","histo3","radiatn","ICD9","COD","surv"),
 \end{verbatim}
 must then be inputted into \verb@pickFields()@. 
 

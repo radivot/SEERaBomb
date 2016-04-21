@@ -10,7 +10,7 @@ mkSEER(rdf,seerHome="/Users/radivot/data/SEER") #(new way) makes merged (all can
 # these are the default picks for pickFields (see its help page)
 defPicks=c("casenum","reg","race","sex","agedx",
         "yrbrth","seqnum","modx","yrdx","histo3","radiatn","recno",
-        "agerec","ICD9","numprims","COD","surv")
+        "agerec","ICD9","COD","surv")
 # the required core of this default list is
 c("reg","race","sex","agedx","histo3","radiatn","agerec","ICD9")
 
@@ -27,9 +27,9 @@ picks=c("casenum","reg","race","sex","agedx",
 
 ## STAGES: if you want to explore different stage fields, you may want something like this
 picks=c("casenum","reg","race","sex","agedx","yrbrth",
-        "seqnum","yrdx","histo2","histo3","eod10sz","eod10nd","cssize","dajcct","dajccn","dajccm","dajccs", "radiatn","agerec",
-        "siterwho","ICD9","ICD10","histrec","hststga","ajccstg","aj3seer","ssg77","ssg2000",
-        "numprims","COD","histssg2000","dthclass","odthclass","surv",
+        "seqnum","yrdx","histo2","histo3","eod10sz","eod10nd","cstumsiz","dajcct","dajccn","dajccm", "radiatn","agerec",
+        "siterwho","ICD9","ICD10","histrec","hststga","ajccstg","aj3seer",
+        "COD","histssg2000","dthclass","odthclass","surv",
         "dajcc7t","dajcc7n","dajcc7m","dajcc7stg")
 (rdf=pickFields(df,picks))
 mkSEER(rdf,outFile="cancStgs",writePops=F) #80 secs + 120 secs

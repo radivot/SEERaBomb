@@ -1,3 +1,17 @@
+CHANGES IN VERSION 2016.1 (First version working with the SEER release of 2015)
+------------------------
+
+NEW FEATURES
+
+    o None  
+
+
+Notes
+    o The 2016 SEER SAS file changed a lot. Fields were deleted and renamed. Field names used in my scipts were
+      reverted to  names they had before, to keep my codes from breaking. Numprims is no longer documented, so 
+      codes that used it need to use seqnum instead. Also, some new fields were added to the SEER data.
+
+
 CHANGES IN VERSION 2015.3 (Third version working with the SEER release of 2015)
 ------------------------
 

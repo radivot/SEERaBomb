@@ -1,5 +1,11 @@
 library(devtools); install_github("radivot/SEERaBomb",subdir="SEERaBomb")
 library(SEERaBomb)
+getwd()
+# to make a new fieldNames.html file, uncomment the last 3 lines of getFields.R 
+# and run these two lines of code
+setwd("/Users/radivot/githubs/SEERaBomb/SEERaBomb")
+getFields()
+
 rm(list=ls()) 
 library(dplyr)
 library(reshape2) 
