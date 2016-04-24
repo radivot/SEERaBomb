@@ -1,15 +1,15 @@
-CHANGES IN VERSION 2016.1 (First version working with the SEER release of 2015)
+CHANGES IN VERSION 2016.1 (First version working with the new SEER data release of 2016)
 ------------------------
 
 NEW FEATURES
 
-    o None  
+    o AML/MDS (leukemia 2016), CLL (leukemia research 2016), and CML (AAPSJ 2016) scripts were added to doc/papers      
 
 
 Notes
-    o The 2016 SEER SAS file changed a lot. Fields were deleted and renamed. Field names used in my scipts were
-      reverted to  names they had before, to keep my codes from breaking. Numprims is no longer documented, so 
-      codes that used it need to use seqnum instead. Also, some new fields were added to the SEER data.
+    o Many fields were deleted or renamed in the SAS file of the 2016 SEER data release. Names used in my scipts 
+      that changed were reverted to originals in getFields() to avoid downstream problems. Numprims is no longer  
+      there, so use seqnum instead. A few fields were also added to the new SEER data release.
 
 
 CHANGES IN VERSION 2015.3 (Third version working with the SEER release of 2015)
