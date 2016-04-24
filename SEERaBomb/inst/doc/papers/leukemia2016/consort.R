@@ -5,7 +5,7 @@ cf=function (x) comma_format()(x)
 library(SEERaBomb) 
 library(dplyr)  
 load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
-canc=canc%>%select(-reg,-recno,-agerec,-numprims,-COD,-age19,-radiatn,-histo3,-ICD9)
+canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
 table(canc$seqnum)
 canc=canc%>%filter(cancer!="benign")
 table(canc$seqnum) #60-88 has been removed

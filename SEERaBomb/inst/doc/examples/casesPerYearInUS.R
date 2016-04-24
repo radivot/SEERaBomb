@@ -4,6 +4,7 @@ rm(list=ls()) # note: dot variables defined above persist through such cleanings
 getUS=function(d,pop) {
   (pyM=pop$py[1])
   (pyF=pop$py[2])
+  d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
   (d<-ddply(d, .(sex), summarise,cases=length(agerec))) 
   (M=d$cases[1])
   (F=d$cases[2])
@@ -13,6 +14,14 @@ getUS=function(d,pop) {
   (femalesPerYear=178*crudeIm)
   (malesPerYear+femalesPerYear)*1e6
 } 
+
+# NOTICE: you must
+if (0) {  # switch this to 1 (i.e. run this chunk) if you never ran it before
+  library(SEERaBomb)
+  (df=getFields())
+  (df=pickFields(df))
+  mkSEERold(df,dataset="00")  
+}
 
 library(RSQLite)
 m=dbDriver("SQLite")

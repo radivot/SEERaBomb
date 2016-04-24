@@ -25,6 +25,7 @@ pickFields<-function(sas,picks=c("casenum","reg","race","sex","agedx","yrbrth",
   if("ICD10" %in% sas$names) sas["ICD10","type"]="string"
   if("eod13" %in% sas$names) sas["eod13","type"]="string"
   if("eod2" %in% sas$names) sas["eod2","type"]="string"
+  if("primsite" %in% sas$names) sas["primsite","type"]="string"
   if("plcbrthcntry" %in% sas$names) sas["plcbrthcntry","type"]="string"
   if("plcbrthstate" %in% sas$names) sas["plcbrthstate","type"]="string"
   if (picks[1]=="casenum") outdf=sas[1,,drop=F] else  

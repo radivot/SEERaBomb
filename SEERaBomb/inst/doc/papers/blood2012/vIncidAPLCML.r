@@ -21,8 +21,8 @@ par(mfrow=c(2,2),mar=c(4.7,0,2.3,0),oma=c(4.4,6,0.4,0.4),lwd=3,cex.lab=1.8,cex.a
 for (fitEXP in c(TRUE,FALSE))
 # 	for (i in names(morphCodes)) {
 	for (i in c("CML","APL")) {
-		d=DF[(DF$cancer==i)&(DF$numprims==1)&(DF$yrdx<2009),]
-# 		d=DF[(DF$histo3==morphCodes[i])&(DF$numprims==1)&(DF$yrdx<2009),]
+		d=DF[(DF$cancer==i)&(DF$seqnum<2)&(DF$yrdx<2009),]
+		d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
 		m=hist(d$agerec[d$sex==1],breaks=c(seq(-.5,17.5,1),100),plot=FALSE)$counts
 		f=hist(d$agerec[d$sex==2],breaks=c(seq(-.5,17.5,1),100),plot=FALSE)$counts
 		age=c(0.5,3,seq(7.5,87.5,5))

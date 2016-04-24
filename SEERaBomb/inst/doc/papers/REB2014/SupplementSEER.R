@@ -36,8 +36,12 @@ head(pop,20)
 
 d=dbGetQuery(con, 
 #      "SELECT * from lymyleuk where histo2=9863 and seqnum<2 and agerec>5 and agerec<19")
-    "SELECT * from lymyleuk where cancer='CML' and seqnum<2 and agerec>5 and agerec<19")
+    "SELECT * from lymyleuk where cancer='CML' and seqnum<2")
 head(d)
+d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d=d[d$agerec>5&d$agerec<19,]
+d=d[!is.na(d$agerec),]
+
 (d<-ddply(d, .(agerec,sex,yrdx), summarise,cases=length(agerec))) 
 d$decade= cut(d$yrdx,breaks=c(1972,1984,1996,2013),labels=c("73to84","85to96","97to11"))
 head(d)
@@ -47,7 +51,10 @@ d=cbind(d,py=pop[,"py"]) # only take the non-redundant py column
 head(d)
 
 d9=dbGetQuery(con, 
-        "SELECT * from lymyleuk where ICD9=2051 and seqnum<2 and agerec>5 and agerec<19")
+        "SELECT * from lymyleuk where ICD9=2051 and seqnum<2")
+d9$agerec=as.numeric(cut(d9$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d9=d9[d9$agerec>5&d9$agerec<19,]
+d9=d9[!is.na(d9$agerec),]
 d9<-ddply(d9, .(sex,agerec,yrdx), summarise,cases=length(agerec))
 d9$decade= cut(d9$yrdx,breaks=c(1972,1984,1996,2013),labels=c("73to84","85to96","97to11"))
 d9<-ddply(d9, .(agerec,sex,decade), summarise,cases=sum(cases))
@@ -67,10 +74,10 @@ names(d)[3]="Decade" # make legend start with capital
  + scale_y_log10(limits=c(3,200)) )
 (p=p + facet_grid(code ~ sex))
 mythem=theme( 
-  plot.title = element_text(size = rel(3)),
-  axis.title = element_text(size = rel(2.4)),
-  axis.text = element_text(size = rel(2)),
-  strip.text = element_text(size = rel(2.4))  )
+  plot.title = element_text(size = rel(1.5)),
+  axis.title = element_text(size = rel(1.4)),
+  axis.text = element_text(size = rel(1.2)),
+  strip.text = element_text(size = rel(1.2))  )
 p=p+mythem
 (p=p+theme(legend.position = c(.60, .86),  #           legend.direction = 'vertical',
          legend.title = element_text(size = rel(1.4)) ,
@@ -84,7 +91,12 @@ p=p+mythem
 #######################################################################
 con=dbConnect(m,dbname=file.path(.seerHome,"00/all.db"))
 d=dbGetQuery(con, 
-  "SELECT * from lymyleuk where histo3==9945 and seqnum<2 and agerec>7 and agerec<19")
+  "SELECT * from lymyleuk where histo3==9945 and seqnum<2")
+  # "SELECT * from lymyleuk where histo3==9945 and seqnum<2 and agerec>7 and agerec<19")
+d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d=d[d$agerec>7&d$agerec<19,]
+d=d[!is.na(d$agerec),]
+
 (d<-ddply(d, .(sex,agerec), summarise,cases=length(agerec))) 
 pops=dbGetQuery(con, "SELECT * from pops where popyear>2000 and popage>7 and popage<19")
 (pop<-ddply(pops, .(popage,popsex), summarise,py=sum(population)))
@@ -140,8 +152,12 @@ d=dbGetQuery(con,
 # ICDO3 CML codes 9875 = bcr-abl+ and 9876 =bcr-abl neg CML are not in full use yet, i.e.
 # many ICD-O3 CML codes are still 9863 carried over from ICD-O2
 # "SELECT * from lymyleuk where histo3=9876 and seqnum<2 and race<98 and agerec>5 and agerec<19")
-"SELECT * from lymyleuk where cancer='CML' and seqnum<2 and race<98 and agerec>5 and agerec<19")
+"SELECT * from lymyleuk where cancer='CML' and seqnum<2 and race<98")
 # "SELECT * from lymyleuk where histo3=9863 and seqnum<2 and race<98 and agerec>5 and agerec<19")
+d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d=d[d$agerec>5&d$agerec<19,]
+d=d[!is.na(d$agerec),]
+
 d$race[d$race>2]=3
 head(d)
 (ddply(d, .(agerec,sex,race), summarise,cases=length(agerec))) #only 5 of the 16s 
@@ -344,18 +360,22 @@ dbListFields(con,"lymyleuk")
 pop=dbGetQuery(con,"SELECT * from pops where popage>5 and popage<19 and poprace=1")
 head(pop)
 (pop<-ddply(pop, .(popage,popsex,popyear), summarise,py=sum(population)))
-yearS=c("73to77","78to82","83to87","88to92","93to99","00to04","05to11")
-pop$Years=cut(pop$popyear,breaks=c(1972,1977,1982,1987,1992,1999,2004,2012),labels=yearS)
+yearS=c("73to77","78to82","83to87","88to92","93to99","00to04","05to13")
+pop$Years=cut(pop$popyear,breaks=c(1972,1977,1982,1987,1992,1999,2004,2014),labels=yearS)
 (pop<-ddply(pop,.(popage,popsex,Years),summarise,py=sum(py)))
 head(pop,20)
 
 d=dbGetQuery(con, 
-"SELECT * from lymyleuk where race=1 and cancer='CML' and seqnum<2 and agerec>5 and agerec<19")
+"SELECT * from lymyleuk where race=1 and cancer='CML' and seqnum<2")
+d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d=d[d$agerec>5&d$agerec<19,]
+d=d[!is.na(d$agerec),]
+
 # "SELECT * from lymyleuk where race=1 and histo3=9863 and seqnum<2 and agerec>5 and agerec<19")
 # "SELECT * from lymyleuk where race=1 and ICD9=2051 and seqnum<2 and agerec>5 and agerec<19")
 head(d)
 d<-ddply(d, .(agerec,sex,yrdx), summarise,cases=length(agerec))
-d$Years=cut(d$yrdx,breaks=c(1972,1977,1982,1987,1992,1999,2004,2013),labels=yearS)
+d$Years=cut(d$yrdx,breaks=c(1972,1977,1982,1987,1992,1999,2004,2014),labels=yearS)
 head(d)
 d<-ddply(d, .(agerec,sex,Years), summarise,cases=sum(cases))
 head(cbind(d,pop)) # just to see that they match up
@@ -394,17 +414,21 @@ pop=dbGetQuery(con,
 "SELECT * from pops where poprace=1 and popyear>1999 and popage>5 and popage<19")
 pop<-ddply(pop, .(popage,popsex,popyear), summarise,py=sum(population))
 head(pop,20)
-yearS=c("00to01","02to03","04to05","06to07","08to11")
-pop$Years=cut(pop$popyear,breaks=c(1999,2001,2003,2005,2007,2013),labels=yearS)
+yearS=c("00to01","02to03","04to05","06to07","08to13")
+pop$Years=cut(pop$popyear,breaks=c(1999,2001,2003,2005,2007,2014),labels=yearS)
 pop<-ddply(pop,.(popage,popsex,Years),summarise,py=sum(py))
 head(pop,20)
 
 d=dbGetQuery(con, 
-"SELECT * from lymyleuk where race=1 and cancer='CML' and seqnum<2 and agerec>5 and agerec<19")
+"SELECT * from lymyleuk where race=1 and cancer='CML' and seqnum<2")
+d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d=d[d$agerec>5&d$agerec<19,]
+d=d[!is.na(d$agerec),]
+
 # "SELECT * from lymyleuk where race=1 and histo3=9863 and seqnum<2 and agerec>5 and agerec<19")
 # "SELECT * from lymyleuk where race=1 and ICD9=2051 and seqnum<2 and agerec>5 and agerec<19")
 d<-ddply(d, .(agerec,sex,yrdx), summarise,cases=length(agerec))
-d$Years=cut(d$yrdx,breaks=c(1999,2001,2003,2005,2007,2013),labels=yearS)
+d$Years=cut(d$yrdx,breaks=c(1999,2001,2003,2005,2007,2014),labels=yearS)
 d<-ddply(d, .(agerec,sex,Years), summarise,cases=sum(cases))
 head(cbind(d,pop)) # just to see that they match up
 d=cbind(d,py=pop[,"py"])
@@ -441,7 +465,7 @@ library(ggplot2)
 pd <- position_dodge(1) 
 (p=ggplot(dfk, aes(x=years, y=k,shape=Registries)) + 
    geom_point(size=6,position=pd))
-(p=p+labs(title="SEER9 1973-2011 and SEER18 2000-2011",x="Year", y="k") )     
+(p=p+labs(title="SEER9 1973-2011 and SEER18 2000-2013",x="Year", y="k") )     
 (p=p+geom_errorbar(aes(ymin=kL, ymax=kU),width=.01,position=pd))
 (p=p+theme(plot.title = element_text(size = rel(2)),
            axis.title = element_text(size = rel(2)),
@@ -461,7 +485,11 @@ pd <- position_dodge(1)
 #######################################################################
 con=dbConnect(m,dbname=file.path(.seerHome,"00/all.db"))
 d=dbGetQuery(con, 
-       "SELECT * from lymyleuk where icd9==2050 and seqnum<2 and agerec>3 and agerec<19")
+       "SELECT * from lymyleuk where icd9==2050 and seqnum<2")
+d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d=d[d$agerec>3&d$agerec<19,]
+d=d[!is.na(d$agerec),]
+
 (d<-ddply(d, .(sex,agerec), summarise,cases=length(agerec))) 
 pops=dbGetQuery(con, "SELECT * from pops where popyear>2000 and popage>3 and popage<19")
 (pop<-ddply(pops, .(popage,popsex), summarise,py=sum(population)))
@@ -496,7 +524,11 @@ library(ggplot2)
 ##############################
 con=dbConnect(m,dbname=file.path(.seerHome,"00/all.db"))
 d=dbGetQuery(con, 
-"SELECT * from lymyleuk where cancer='CML' and seqnum<2 and agerec>5 and agerec<19")
+"SELECT * from lymyleuk where cancer='CML' and seqnum<2")
+d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d=d[d$agerec>5&d$agerec<19,]
+d=d[!is.na(d$agerec),]
+
 # "SELECT * from lymyleuk where histo3=9863 and seqnum<2 and agerec>5 and agerec<19")
 (d<-ddply(d, .(agerec,sex), summarise,cases=length(agerec))) 
 pops=dbGetQuery(con, "SELECT * from pops where popyear>2000 and popage>5 and popage<19")
@@ -540,7 +572,7 @@ mkCIA=function(v) {v=exp(-v); sprintf("M/F = %4.2f (%4.2f, %4.2f)",v[1],v[3],v[2
 mkCIT=function(v) sprintf("Tf = %3.1f (%3.1f, %3.1f)",v[1],v[2],v[3])
 
 (p <- ggplot(d,aes(x=age,y=incid,shape=sex))+geom_point(size=5)
- + labs(title="CML Incidence: SEER 2000-2011",x="Age (years)",
+ + labs(title="CML Incidence: SEER 2000-2013",x="Age (years)",
         y=expression(frac(Cases,paste(10^6," Person-Years")))) 
  + scale_y_log10(limits=c(3,100)) )
 (p=p+theme(title = element_text(size = rel(2)),axis.text = element_text(size = rel(2)))  )
@@ -559,15 +591,17 @@ pop=dbGetQuery(con,
      "SELECT * from pops where poprace=1 and popyear>1999 and popage>9 and popage<19")
 pop<-ddply(pop, .(popage,popsex,popyear), summarise,py=sum(population),.drop=F)
 head(pop,20)
-yearS=c("01to03","04to05","06to07","08to11")
-pop$Years=cut(pop$popyear,breaks=c(1999,2003,2005,2007,2013),labels=yearS)
+yearS=c("01to03","04to05","06to07","08to13")
+pop$Years=cut(pop$popyear,breaks=c(1999,2003,2005,2007,2014),labels=yearS)
 pop<-ddply(pop,.(popage,popsex,Years),summarise,py=sum(py),.drop=F)
 head(pop,20)
 dim(pop)
 
-d=dbGetQuery(con, 
-"SELECT * from lymyleuk where race=1 and ICD9=2051 and
-             seqnum<2 and agerec>9 and agerec<19")
+d=dbGetQuery(con,"SELECT * from lymyleuk where race=1 and ICD9=2051 and seqnum<2")
+d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d=d[d$agerec>9&d$agerec<19,]
+d=d[!is.na(d$agerec),]
+
 # "SELECT * from lymyleuk where race=1 and histo2=9863 and
 #               seqnum<2 and agerec>9 and agerec<19")
 # "SELECT * from lymyleuk where race=1 and 
@@ -584,7 +618,7 @@ head(d)
 d<-ddply(d, .(agerec,sex,yrdx), summarise,cases=length(agerec),.drop=F)
 sum(d$cases)  #2970 icdo2 9863 cases is same as icdO3 9863+9875+9876
 # of the latter, 2425 are 9863, 507 are 9875 and only 38 are 9876  
-d$Years=cut(d$yrdx,breaks=c(1999,2003,2005,2007,2013),labels=yearS)
+d$Years=cut(d$yrdx,breaks=c(1999,2003,2005,2007,2014),labels=yearS)
 d<-ddply(d, .(agerec,sex,Years), summarise,cases=sum(cases),.drop=F)
 head(cbind(d,pop)) # just to see that they match up
 d=cbind(d,py=pop[,"py"])

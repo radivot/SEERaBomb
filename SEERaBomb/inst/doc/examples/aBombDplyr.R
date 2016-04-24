@@ -32,7 +32,7 @@ H %>% filter(agex<1,D>4)%>%select(agex:D) #infants hit with more than 4Gy
 
 (d<-collect(H %>% select(age,D,un4gy,py,AMLtot,CML,ALL,ATL,NHL,MM) %>% filter(un4gy==1)))
 d=d %>%   # need to have it in R to do cut()
-  mutate(dose=cut(D,c(0,.02,.4,10),labels=c("low","med","high"),include.lowest=TRUE)) %>%
+  mutate(dose=cut(D,c(-2,.02,.4,10),labels=c("low","med","high"),include.lowest=TRUE)) %>%
   mutate(age=cut(age,c(seq(0,80,20),110),labels=seq(10,90,20))) 
 d=d%>%
   group_by(dose,age) 
@@ -50,8 +50,9 @@ qplot(data=md,y=Incidence,x=age,col=dose,log="y")+facet_wrap(~variable)+geom_lin
 ##### A-bomb solids
 ts=tbl(db, sql("SELECT * from solid"))  # ts = table of solids
 (d<-collect(ts %>% select(age,marD,un4gy,py,lung,breast,prost,thyroid) %>% filter(un4gy==1)))
+d$marD
 d=d %>%   
-  mutate(dose=cut(marD,c(0,.02,.4,10),include.lowest=TRUE,labels=c("low","med","high"))) %>%
+  mutate(dose=cut(marD,c(-200,.02,.4,10),include.lowest=TRUE,labels=c("low","med","high"))) %>%
   mutate(age=cut(age,c(seq(0,80,20),110),labels=c(seq(10,70,20),90))) %>%
   group_by(dose,age) %>%
   summarise(py=sum(py),lung=sum(lung)/py,thyroid=sum(thyroid)/py,prost=sum(prost)/py,breast=sum(breast)/py)

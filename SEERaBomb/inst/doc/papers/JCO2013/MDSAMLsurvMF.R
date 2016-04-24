@@ -16,7 +16,7 @@ con=dbConnect(m,dbname=file.path(.seerHome,"00/all.db"))
 dbListTables(con)
 dbListFields(con,"other")
 d=dbGetQuery(con, 
-             "SELECT * from other where histo3>9979 and histo3<9990 and agerec>7 and agerec<19")#MDS
+             "SELECT * from other where histo3>9979 and histo3<9990")#MDS
 head(d)
 summary(d)
 summary(as.factor(d$COD))
@@ -51,7 +51,7 @@ legend("bottomleft",expression(paste("P < ",10^-15)),bty="n")
 legend("topright",c("Cases",paste("Males =",MFcnts[1]),paste("Females =",MFcnts[2])),text.col=bbr,bty="n")
 # legend("topleft",c("MDS"),bty="n")
 
-d=dbGetQuery(con, "SELECT * from lymyleuk where ICD9=2050 and agerec>7 and agerec<19")#AML
+d=dbGetQuery(con, "SELECT * from lymyleuk where ICD9=2050")#AML
 # nd=transform(d,dwd=((COD>=20010)&(COD<=37000)) ) # dead with disease
 MFcnts=summary(as.factor(d$sex))
 nd=transform(d,dwd=(COD>0) ) # not alive; 0=alive

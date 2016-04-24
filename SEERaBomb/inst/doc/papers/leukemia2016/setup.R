@@ -6,7 +6,7 @@ library(SEERaBomb)
 mkSEER(rdf,seerHome="/Users/radivot/data/SEER") 
 # the rest fixes tAML and rewrites the fix into cancDef.RData
 load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
-yearEnd=2012
+yearEnd=2013
 sc=canc%>%filter(histo3==9920|histo3==9987) #tAML and tMDS  subset of cancs (sc)
 table(sc$yrdx,sc$histo3)  # see that they start in 2001
 table(sc$ICD9,sc$histo3)  # only 2 9920 are ICD9 9999, so cant reverse it using ICD9

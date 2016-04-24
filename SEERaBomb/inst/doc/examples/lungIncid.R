@@ -16,28 +16,31 @@ dbListFields(con,"pops")
 dbListFields(con,"respir")
 # pop=dbGetQuery(con,"SELECT * from pops where popage>6 and popage<19 and poprace=1")
 #Note: whites only looked the same
-pop=dbGetQuery(con,"SELECT * from pops where popage>6 and popage<19") 
+pop=dbGetQuery(con,"SELECT * from pops where popage>6") 
 head(pop)
 (pop<-ddply(pop, .(popage,popsex), summarise,py=sum(population)))
 head(pop,20)
-
+pop$popage
 d=dbGetQuery(con,"SELECT * from respir where ICD9>=1620 and ICD9<=1629 
-and histO3=8140 and seqnum<2 and agerec>6 and agerec<19") # adenos
-# and race=1 and histO3=8140 and seqnum<2 and agerec>6 and agerec<19")
-
-# seems table column names are not case sensitive: o vs O in histO3
-
-
+and histO3=8140 and seqnum<2") # adenos
 head(d)
+d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d=d[d$agerec>6&d$agerec<19,]
+d=d[!is.na(d$agerec),]
+
 (d<-ddply(d, .(agerec,sex), summarise,cases=length(agerec))) 
 head(cbind(d,pop)) # just to see that they match up
 d=cbind(d,py=pop[,"py"]) # only take the non-redundant py column
 head(d)
 
 d9=dbGetQuery(con,"SELECT * from respir where ICD9>=1620 and ICD9<=1629 
-and histO3>=8070 and histO3<=8079 and seqnum<2 and agerec>6 and agerec<19") # squames
+and histO3>=8070 and histO3<=8079 and seqnum<2") # squames
 # and race=1 and  histO3>=8070 and histO3<=8079 and seqnum<2 and agerec>6 and agerec<19")
 head(d9)
+d9$agerec=as.numeric(cut(d9$agedx,breaks=c(0,1,seq(5,85,5),130)))
+d9=d9[d9$agerec>6&d9$agerec<19,]
+d9=d9[!is.na(d9$agerec),]
+
 
 d9<-ddply(d9, .(agerec,sex), summarise,cases=length(agerec))
 d9=cbind(d9,py=pop[,"py"])

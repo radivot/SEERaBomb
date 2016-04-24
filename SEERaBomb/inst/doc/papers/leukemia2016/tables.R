@@ -147,7 +147,7 @@ if (1) {
   yrTot=apply(yrca,1,sum)
   Total=apply(yrca,2,sum)
   gtot=sum(Total)
-  D=data.frame(year=c(1973:2012,NA),as.data.frame(rbind(yrca,Total)),total=c(yrTot,gtot),PY=cf(c(PY,sum(PY))))
+  D=data.frame(year=c(1973:2013,NA),as.data.frame(rbind(yrca,Total)),total=c(yrTot,gtot),PY=cf(c(PY,sum(PY))))
   writeWorksheet(wb,D, sheet = "yearXcancer")
   setColumnWidth(wb,sheet = "yearXcancer", column = dim(D)[2], width = 3700)
   createFreezePane(wb,"yearXcancer",2,2) #sheet colSplit rowSplit
@@ -162,7 +162,7 @@ if (1) {
   createSheet(wb, name = "yearXhisto3") 
   total=table(canc$histo3)
   yrh3=table(canc$yrdx,canc$histo3)
-  D=as.data.frame(cbind(year=c(1973:2012,NA),rbind(yrh3,total)))
+  D=as.data.frame(cbind(year=c(1973:2013,NA),rbind(yrh3,total)))
   writeWorksheet(wb,D, sheet = "yearXhisto3")
   createFreezePane(wb, "yearXhisto3",2,2) 
   

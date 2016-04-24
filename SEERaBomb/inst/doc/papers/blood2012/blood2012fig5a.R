@@ -14,7 +14,9 @@ table(DF$ICD9)["2051"] # 100 extra not accounted for
 table(DF$histo3)["9863"]+table(DF$histo3)["9875"]+table(DF$histo3)["9876"]+table(DF$histo3)["9945"]
 table(DF$histo3)["9863"]+table(DF$histo3)["9875"]+table(DF$histo3)["9876"]
 # d=DF[(DF$histo2==9863)&(DF$numprims==1)&(DF$yrdx<2009),] # paper used SEER 1973-2008
-d=DF[(DF$cancer=="CML")&(DF$numprims==1)&(DF$yrdx<2009),] # paper used SEER 1973-2008
+d=DF[(DF$cancer=="CML")&(DF$seqnum<2)&(DF$yrdx<2009),] # paper used SEER 1973-2008
+d$agerec=as.numeric(cut(d$agedx,breaks=c(0,1,seq(5,85,5),130)))
+
 m=hist(d$agerec[d$sex==1],breaks=c(seq(-.5,17.5,1),100),plot=FALSE)$counts
 f=hist(d$agerec[d$sex==2],breaks=c(seq(-.5,17.5,1),100),plot=FALSE)$counts
 age=c(0.5,3,seq(7.5,87.5,5))

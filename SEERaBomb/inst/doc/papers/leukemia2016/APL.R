@@ -8,7 +8,7 @@ library(grid)
 load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
 load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
 # trim down columns to bare neccesities before burdening seerSet with more than it needs 
-canc=canc%>%select(-reg,-recno,-agerec,-numprims,-COD,-age19,-radiatn,-histo3,-ICD9)
+canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
 popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs
 
 secs=c("AML","MDS","APL","AMLti") # second cancers of interest

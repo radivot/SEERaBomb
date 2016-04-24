@@ -21,7 +21,7 @@ pickFields(df,picks=c(defPicks,"ICD10","siterwho")) # e.g. this won't fly due to
 # instead, the user has to just bite the bullet and do this
 picks=c("casenum","reg","race","sex","agedx",
         "yrbrth","seqnum","modx","yrdx","histo3","radiatn","recno",
-        "agerec","siterwho","ICD9","ICD10","numprims","COD","surv") # add ICD10 and who2008 to list, in correct positions
+        "agerec","siterwho","ICD9","ICD10","COD","surv") # add ICD10 and who2008 to list, in correct positions
 (rdf=pickFields(df,picks))
 
 
@@ -29,7 +29,7 @@ picks=c("casenum","reg","race","sex","agedx",
 picks=c("casenum","reg","race","sex","agedx","yrbrth",
         "seqnum","yrdx","histo2","histo3","eod10sz","eod10nd","cstumsiz","dajcct","dajccn","dajccm", "radiatn","agerec",
         "siterwho","ICD9","ICD10","histrec","hststga","ajccstg","aj3seer",
-        "COD","histssg2000","dthclass","odthclass","surv",
+        "COD","odthclass","surv",
         "dajcc7t","dajcc7n","dajcc7m","dajcc7stg")
 (rdf=pickFields(df,picks))
 mkSEER(rdf,outFile="cancStgs",writePops=F) #80 secs + 120 secs
@@ -45,8 +45,8 @@ mkSEER(rdf,outFile="cancAll",writePops=F) #210 secs, i.e. 3.5 minutes. 3-fold mo
 # making the SQL db was an additional 248 secs, i.e. ~4 minutes. 
 
 # If you want to check to see what fields you have in a binary right now, you can do this
-system.time(load("~/data/SEER/mrgd/cancDef.RData")) # 2 secs to load 8M cases is fast relative to having all fields
+system.time(load("~/data/SEER/mrgd/cancDef.RData")) # 2 secs to load 9M cases is fast relative to having all fields
 head(canc,2)
-# system.time(load("~/data/SEER/mrgd/cancALL.RData")) # which almost takes 30 secs 
-# head(canc,2)
+system.time(load("~/data/SEER/mrgd/cancALL.RData")) # which almost takes 30 secs
+head(canc,2)
 

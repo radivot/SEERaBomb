@@ -6,7 +6,7 @@ library(SEERaBomb)
 if (0) {  # 1 to run, 0 to comment (this way it can be folded while looking more useful than commented code)
   load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
   load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
-  canc=canc%>%select(-reg,-recno,-agerec,-numprims,-COD,-age19,-radiatn,-histo3,-ICD9)
+  canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
   popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs
   # canc$cancer=as.character(canc$cancer) # need this if merging types into a new name, like lymphoma=NHL+HL
   canc$cancer[canc$cancer=="APL"] ="AML" # overwrite back to AML

@@ -16,7 +16,6 @@ system.time(load("~/data/SEER/mrgd/cancDef.RData")) #3 secs Here Def stands for 
 # The latter also has the advantage of keeping factor level orders. The DBs store them as strings. 
 
 # for smaller tables and subsets of large tables, the times are negligible
-collect(tbl(db, sql("SELECT * from popga")))
 collect(tbl(db, sql("SELECT * from popsa")))
 # (2011-1973)*18*3*2*19 # =77976 > 54009 rows ... conditions have no person years. py=0 => no row
 (mds1<-collect(tbl(db, sql("SELECT db,reg,race,sex,agedx,yrdx,COD,surv from canc where yrdx>2000 and histo3>9979 and histo3<9990"))))

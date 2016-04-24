@@ -1,6 +1,6 @@
 mkSEERold<-function(df,seerHome="~/data/SEER",dataset=c("00","73","92"), SQL = TRUE, mkDFs=FALSE){
   #	if (!require(LaF)) print("R Package LaF must be installed")
-  print("mkSEERold is deprecated. It only works with the current release, i.e. of April 2015")
+  print("mkSEERold is deprecated. It only works with the current release, i.e. of April 2016")
   colTypes=c("integer","string",rep("integer",5),"double")    # double, integer, categorical and string
   colWidths=c(4,7,2,1,1,1,2, 10) 
   colNames = c('popyear','X0','popseer','poprace','origin','popsex', 'popage','population')
@@ -11,9 +11,9 @@ mkSEERold<-function(df,seerHome="~/data/SEER",dataset=c("00","73","92"), SQL = T
   ptm <- proc.time()
   for (i in c("19agegroups","singleages")) {
     f=switch(dataset,
-             "00" = file.path(seerHome,paste0("populations/expanded.race.by.hispanic/yr2000_2012.ca_ky_lo_nj_ga/",i,".txt")),
-             "73" = file.path(seerHome,paste0("populations/white_black_other/yr1973_2012.seer9/",i,".txt")),
-             "92" = file.path(seerHome,paste0("populations/expanded.race.by.hispanic/yr1992_2012.seer9.plus.sj_la_rg_ak/",i,".txt")))
+             "00" = file.path(seerHome,paste0("populations/expanded.race.by.hispanic/yr2000_2013.ca_ky_lo_nj_ga/",i,".txt")),
+             "73" = file.path(seerHome,paste0("populations/white_black_other/yr1973_2013.seer9/",i,".txt")),
+             "92" = file.path(seerHome,paste0("populations/expanded.race.by.hispanic/yr1992_2013.seer9.plus.sj_la_rg_ak/",i,".txt")))
     laf<-laf_open_fwf(f,column_types=colTypes,column_widths=colWidths,column_names = colNames)
     if (i=="19agegroups") {
       pops=laf[,colNames[-c(2,5)]] 
@@ -52,9 +52,9 @@ mkSEERold<-function(df,seerHome="~/data/SEER",dataset=c("00","73","92"), SQL = T
   ptm <- proc.time()
   cancers=c('breast','digothr','malegen','femgen','other','respir','colrect','lymyleuk','urinary','test') 
   p=switch(dataset,
-           "00" = file.path(seerHome,"incidence/yr2000_2012.ca_ky_lo_nj_ga/"),
-           "73" = file.path(seerHome,"incidence/yr1973_2012.seer9/"),
-           "92" = file.path(seerHome,"incidence/yr1992_2012.sj_la_rg_ak/"))
+           "00" = file.path(seerHome,"incidence/yr2000_2013.ca_ky_lo_nj_ga/"),
+           "73" = file.path(seerHome,"incidence/yr1973_2013.seer9/"),
+           "92" = file.path(seerHome,"incidence/yr1992_2013.sj_la_rg_ak/"))
   y=df[which(df$names!=" "),"names"]; cat("Cancer Data:\nThe following fields will be written:\n");	print(y)
   for (k in 1:9)	{
     laf<-laf_open_fwf(file.path(p,paste0(toupper(cancers[k]),'.TXT')), 

@@ -7,7 +7,8 @@ load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
 canc=canc%>%filter(cancer!="benign")
 load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
 # trim down columns to bare neccesities needed for this paper. 
-canc=canc%>%select(-reg,-recno,-agerec,-numprims,-COD,-age19,-radiatn,-histo3,-ICD9)
+canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
+# canc=canc%>%select(-reg,-recno,-agerec,-numprims,-COD,-age19,-radiatn,-histo3,-ICD9)
 popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs
 head(canc,1)
 head(popsa,1)

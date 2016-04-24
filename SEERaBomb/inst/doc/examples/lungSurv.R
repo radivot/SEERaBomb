@@ -4,17 +4,18 @@ library(RSQLite) # install.packages("RSQLite")
 m=dbDriver("SQLite")
 con=dbConnect(m,dbname=file.path(.seerHome,"00/all.db"))
 da=dbGetQuery(con,"SELECT * from respir where ICD9>=1620 and ICD9<=1629 
-and histo3=8140 and seqnum<2 and agerec>6 and agerec<19") # adenos
+and histo3=8140 and seqnum<2") # adenos
 # da=transform(da,dwd=(COD>0),hist= "adenocarcinoma" ) # not alive; 0=alive
 da=transform(da,dwd=((COD>=20010)&(COD<=37000)),hist= "adenocarcinoma" ) # dead with cancer, 0=alive
 MFcnta=summary(as.factor(da$sex))
 head(da)
 ds=dbGetQuery(con,"SELECT * from respir where ICD9>=1620 and ICD9<=1629 
-and histo3>=8070 and histo3<=8079 and seqnum<2 and agerec>6 and agerec<19") # squames
+and histo3>=8070 and histo3<=8079 and seqnum<2") # squames
 MFcnts=summary(as.factor(ds$sex))
 # ds=transform(ds,dwd=(COD>0),hist= "squamous cell") # not alive; 0=alive
 ds=transform(ds,dwd=((COD>=20010)&(COD<=37000)),hist= "squamous cell" ) # dead with cancer, 0=alive
 d=rbind(da,ds)
+
 sapply(d,class)
 head(d)
 library(survival)
