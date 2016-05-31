@@ -82,9 +82,8 @@ d$cancer2=as.character(d$cancer2)
 d$cancer2=factor(d$cancer2,levels=c("AML","MDS","APL","AMLti")) 
 
 graphics.off()
-quartz(width=6,height=3.8)
-xlabNR="Years Since Dx of First Cancer Not Treated With Radiation"
-xlabR="Years Since Dx of First Cancer Treated With Radiation"
+xlabNR="Years Since Dx of Non-Heme 1st Cancer Not Treated With Radiation"
+xlabR="Years Since Dx of Non-Heme 1st Cancer Treated With Radiation"
 # cbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7") #black
 theme_update(legend.position = c(.92, .83))
 theme_update(axis.text=element_text(size=rel(1.2)),
@@ -94,6 +93,7 @@ theme_update(axis.text=element_text(size=rel(1.2)),
 # NR=TRUE # for Figure C
 # NR=FALSE  # for Figure B
 for (NR in c(FALSE,TRUE)) {
+  quartz(width=6,height=3.8)
   if (NR) D=d%>%filter(trt=="noRad") else D=d%>%filter(trt=="rad")
   D$t=D$t+(as.numeric(D$cancer2)-1)*0.05 # for CI visibility
   g=qplot(x=t,y=RR,data=D,col=cancer2,geom=c("line","point"),#xlim=c(-.1,24),

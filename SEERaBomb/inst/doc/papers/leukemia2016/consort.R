@@ -6,9 +6,11 @@ library(SEERaBomb)
 library(dplyr)  
 load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
 canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
-table(canc$seqnum)
+(tb=table(canc$seqnum))
+sum(tb[1:2])
 canc=canc%>%filter(cancer!="benign")
-table(canc$seqnum) #60-88 has been removed
+(tb=table(canc$seqnum)) #60-88 has been removed
+sum(tb[1:2])
 #upgrade AML definition to include APL
 # mapCancs# shows cancer definitions (i.e. that APL overwrites AML)
 canc$cancer[canc$cancer=="APL"] ="AML" # overwrite back to AML

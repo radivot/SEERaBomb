@@ -25,7 +25,7 @@ D$Period="Early"  # make two separate time scales for plotting
 D$Period[D$t>5]="Late"
 graphics.off()
 quartz(width=6.5,height=3.8)
-theme_set(theme_bw())
+# theme_set(theme_bw())
 theme_update(legend.position = c(.80, .35))
 theme_update(axis.text=element_text(size=rel(1.4)),
              axis.title=element_text(size=rel(1.4)),
@@ -36,7 +36,7 @@ g=qplot(x=t,y=RR,data=D,col=Radiation,geom=c("line","point"),
         xlab="Years Since Dx of Non-Hematologic 1st Cancer",ylab="CLL 2nd Cancer Relative Risk")
 g=g+scale_y_log10(breaks=c(0.3,1,10),labels=c("0.3","1","10"),limits=c(0.2,20))
 g=g+facet_grid(sex~Period,scales="free")+geom_abline(intercept=0, slope=0)
-g = g + scale_color_grey(start = 0, end = 0.6)
+# g = g + scale_color_grey(start = 0, end = 0.6)
 g=g+  geom_errorbar(aes(ymin=rrL,ymax=rrU,width=.15))+ theme(legend.key.height=unit(.45, "cm"))
 print(g)
 ggsave("~/Results/CLL/timeCrs.eps") 

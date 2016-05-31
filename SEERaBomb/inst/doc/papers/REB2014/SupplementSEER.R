@@ -360,8 +360,9 @@ dbListFields(con,"lymyleuk")
 pop=dbGetQuery(con,"SELECT * from pops where popage>5 and popage<19 and poprace=1")
 head(pop)
 (pop<-ddply(pop, .(popage,popsex,popyear), summarise,py=sum(population)))
-yearS=c("73to77","78to82","83to87","88to92","93to99","00to04","05to13")
-pop$Years=cut(pop$popyear,breaks=c(1972,1977,1982,1987,1992,1999,2004,2014),labels=yearS)
+yearS=c("73to77","78to82","83to87","88to92","93to99","00to04","05to09","10to13")
+yrs=c(1972,1977,1982,1987,1992,1999,2004,2009,2014)
+pop$Years=cut(pop$popyear,breaks=yrs,labels=yearS)
 (pop<-ddply(pop,.(popage,popsex,Years),summarise,py=sum(py)))
 head(pop,20)
 
@@ -375,7 +376,7 @@ d=d[!is.na(d$agerec),]
 # "SELECT * from lymyleuk where race=1 and ICD9=2051 and seqnum<2 and agerec>5 and agerec<19")
 head(d)
 d<-ddply(d, .(agerec,sex,yrdx), summarise,cases=length(agerec))
-d$Years=cut(d$yrdx,breaks=c(1972,1977,1982,1987,1992,1999,2004,2014),labels=yearS)
+d$Years=cut(d$yrdx,breaks=yrs,labels=yearS)
 head(d)
 d<-ddply(d, .(agerec,sex,Years), summarise,cases=sum(cases))
 head(cbind(d,pop)) # just to see that they match up
@@ -391,7 +392,7 @@ head(d,15)
 #                   method="Nelder-Mead",
 #                   start=list(c=-12,k=rep(0.05,7)),data=d)) 
 
-years=c(1975,1980,1985,1990,1996,2002,2007)
+years=c(1975,1980,1985,1990,1996,2002,2007,2011)
 kic=0.05
 k=NULL
 kL=NULL
@@ -414,8 +415,9 @@ pop=dbGetQuery(con,
 "SELECT * from pops where poprace=1 and popyear>1999 and popage>5 and popage<19")
 pop<-ddply(pop, .(popage,popsex,popyear), summarise,py=sum(population))
 head(pop,20)
-yearS=c("00to01","02to03","04to05","06to07","08to13")
-pop$Years=cut(pop$popyear,breaks=c(1999,2001,2003,2005,2007,2014),labels=yearS)
+yearS=c("00to01","02to03","04to05","06to07","08to09","10to11","12to13")
+yrs=c(1999,2001,2003,2005,2007,2009,2011,2014)
+pop$Years=cut(pop$popyear,breaks=yrs,labels=yearS)
 pop<-ddply(pop,.(popage,popsex,Years),summarise,py=sum(py))
 head(pop,20)
 
@@ -428,7 +430,7 @@ d=d[!is.na(d$agerec),]
 # "SELECT * from lymyleuk where race=1 and histo3=9863 and seqnum<2 and agerec>5 and agerec<19")
 # "SELECT * from lymyleuk where race=1 and ICD9=2051 and seqnum<2 and agerec>5 and agerec<19")
 d<-ddply(d, .(agerec,sex,yrdx), summarise,cases=length(agerec))
-d$Years=cut(d$yrdx,breaks=c(1999,2001,2003,2005,2007,2014),labels=yearS)
+d$Years=cut(d$yrdx,breaks=yrs,labels=yearS)
 d<-ddply(d, .(agerec,sex,Years), summarise,cases=sum(cases))
 head(cbind(d,pop)) # just to see that they match up
 d=cbind(d,py=pop[,"py"])
@@ -437,8 +439,8 @@ d$Sex=factor(d$sex,labels=c("Male","Female"))
 age=c(0.5,3,seq(7.5,87.5,5))
 d$age=age[d$agerec+1]
 head(d,15)
-
-years=c(2001,2003,2005,2007,2009)
+yrs
+years=c(2001,2003,2005,2007,2009,2011,2013)
 kic=0.05
 k=NULL
 kL=NULL
@@ -465,7 +467,7 @@ library(ggplot2)
 pd <- position_dodge(1) 
 (p=ggplot(dfk, aes(x=years, y=k,shape=Registries)) + 
    geom_point(size=6,position=pd))
-(p=p+labs(title="SEER9 1973-2011 and SEER18 2000-2013",x="Year", y="k") )     
+(p=p+labs(title="SEER9 1973-2013 and SEER18 2000-2013",x="Year", y="k") )     
 (p=p+geom_errorbar(aes(ymin=kL, ymax=kU),width=.01,position=pd))
 (p=p+theme(plot.title = element_text(size = rel(2)),
            axis.title = element_text(size = rel(2)),
@@ -501,7 +503,7 @@ head(d,15)
 
 library(ggplot2)
 (p <- ggplot(d,aes(x=age,y=incid,shape=Sex))+geom_point(size=5)
- + labs(title="AML Incidence: SEER 2000-2011",x="Age (years)",
+ + labs(title="AML Incidence: SEER 2000-2013",x="Age (years)",
         y=expression(paste("Cases per ",10^5," Person-Years")))  #  y=expression(frac(Cases,paste(10^6," Person-Years")))) 
  + scale_y_log10(limits=c(0.7,30)) )
 
