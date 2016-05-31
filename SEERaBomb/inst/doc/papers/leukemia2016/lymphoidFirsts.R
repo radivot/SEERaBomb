@@ -5,7 +5,7 @@ library(dplyr)
 library(reshape2)
 library(ggplot2)
 library(SEERaBomb)
-LC=c("CLL","SLL","HCL","NHL","MM","hodgkin") # lymphoid first cancers
+LC=c("CLL","SLL","HCL","NHL","MM","HL") # lymphoid first cancers
 system.time(load("~/Results/amlMDS/pm.RData")) # 4 secs to load. 
 system.time(load("~/Results/amlMDS/pf.RData")) # 4 secs to load. 
 brks=c(0,0.25,0.5,0.75,1,1.5,2,2.5,3,4,5,6,8,10,12)
@@ -17,7 +17,7 @@ D=d%>%mutate(RR=O/E, L=qchisq(.025,2*O)/(2*E),U=qchisq(.975,2*O+2)/(2*E))
 D[D$cancer2=="MDS","t"]=D[D$cancer2=="MDS","t"]+0.05
 graphics.off()
 quartz(width=7,height=4)
-theme_set(theme_bw())
+# theme_set(theme_bw())
 theme_update(legend.position = c(.92, .825),
              axis.text=element_text(size=rel(1.2)),
              axis.title=element_text(size=rel(1.3)),
@@ -28,7 +28,7 @@ theme_update(legend.position = c(.92, .825),
 g=qplot(x=t,y=RR,data=D,col=cancer2,geom=c("line","point"),
         xlab="Years Since Dx of Lymphoid First Cancer",ylab="Relative Risk")
 g=g+facet_grid(Sex~.,scales="free")+geom_abline(intercept=1, slope=0)
-g = g + scale_color_grey(start = 0, end = 0.6)
+# g = g + scale_color_grey(start = 0, end = 0.6)
 g1 <- guide_legend("Second\nCancer")
 g=g + guides(color=g1) 
 g=g+  geom_errorbar(aes(ymin=L,ymax=U,width=.15))+scale_y_continuous(breaks=c(0,5,10,15))

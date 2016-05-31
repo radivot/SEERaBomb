@@ -21,7 +21,6 @@ head(d)
 
 
 ############# First Fig 2, then Fig S5, since calcs for Fig 2 are also used for Fig S5
-quartz(width=7,height=4)
 # theme_set(theme_bw())
 theme_update(legend.position = c(.92, .825),
              axis.text=element_text(size=rel(1.2)),
@@ -30,10 +29,11 @@ theme_update(legend.position = c(.92, .825),
              legend.title=element_text(size=rel(1)),
              legend.text=element_text(size=rel(1)),
              strip.text = element_text(size = rel(1.5)))
-xlabNR="Years Since Dx of First Cancer Not Treated With Radiation"
-xlabR="Years Since Dx of First Cancer Treated With Radiation"
+xlabNR="Years Since Dx of Non-Hematologic 1st Cancer Not Treated With Radiation"
+xlabR="Years Since Dx of Non-Hematologic 1st Cancer Treated With Radiation"
 # for Figure 2 (NR (no radiation) = FALSE => radiation)
 for (NR in c(TRUE,FALSE)) { 
+  quartz(width=7,height=4)
   if (NR) D=d%>%filter(trt=="noRad") else D=d%>%filter(trt=="rad")
   D[D$cancer2=="MDS","t"]=D[D$cancer2=="MDS","t"]+0.05 # shift for CI visibility
   g=qplot(x=t,y=RR,data=D,col=cancer2,geom=c("line","point"),#ylim=c(.45,2.9),
