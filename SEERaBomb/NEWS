@@ -1,3 +1,12 @@
+CHANGES IN VERSION 2016.2 (Second version working with SEER data of 2016)
+------------------------
+
+NEW FEATURES
+
+    o msd now takes a ybrks vector for showing calendar year trends     
+
+
+
 CHANGES IN VERSION 2016.1 (First version working with the new SEER data release of 2016)
 ------------------------
 
