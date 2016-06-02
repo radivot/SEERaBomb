@@ -82,6 +82,7 @@ mapCancs<-function(D){
   cancer[histo3==9948]="OL"  # aggressive NK leukemia lumped in here
   #   cancer[(histo3==9812)|(histo3==9806)]="ALLba" #ALL with BCR-ABL (110 cases) 2010-12 + 12 mixed lineage 2011-12
   cancer[(histo3>=9810)&(histo3<9840)]="ALL" # take some OL back to ALL
+  cancer[(histo3==9831)&(D$yrdx>2009)]="LGL" # 9831 is cleanly LGL only starting in 2010
   cancer[(histo3==9823)]="CLL" # pull out the CLLs
   cancer[(histo3==9670)]="SLL" # SLL has different risk time course, so better not merge with CLL.
   # Dutch study placed 9800 and 9820 also in CLL, but incidence age responses are clearly different.
