@@ -11,9 +11,9 @@ age and calendar year.  RR is then O/E where O is the number of observed cases. 
   \item{brkst}{Vector of breaks in years used to form Time intervals/bins since diagnosis. 
   An upper limit of 100, well beyond 40 years of SEER follow up currently available, 
               is assumed/added to brkst internally, and should thus not be in brkst. }
-  \item{brksy}{Vector of breaks used to form groups of calendar year at diagnosis intervals/bins.
+  \item{brksy}{Vector of breaks used to form groups of calendar Year at diagnosis intervals/bins.
                An upper limit of yearEnd (last year in SEER; a seerSet field) is assumed/added to brksy internally.}
-  \item{brksa}{Vector of breaks used to form groups of age at diagnosis intervals/bins. An upper limit of 126 is assumed. }
+  \item{brksa}{Vector of breaks used to form groups of Age at diagnosis intervals/bins. An upper limit of 126 is assumed. }
   \item{trts}{Character vector of treatments of interest. Default of NULL => all levels in seerSet's canc$trt. }
   \item{PYLong}{Set true if in addition to O and E for each tsd interval you also want PY strips
              for each individual; having these big dataframes slows saving seerSets, so only fetch if needed.}

@@ -1,4 +1,4 @@
-msd=function(canc,mrt,brks=c(0,2,5),ybrks=NULL){ #mortality since diagnosis (msd)
+msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (msd)
   yrdx=NULL
   msd2=function(canc,mrt,brks){ #old version
     surv=sex=O=E=NULL
@@ -45,12 +45,12 @@ msd=function(canc,mrt,brks=c(0,2,5),ybrks=NULL){ #mortality since diagnosis (msd
     } # loop on S (sexes)
     DD
   }
-  if (!is.null(ybrks)) {
-    canc=canc%>%mutate(Years=cut(yrdx,breaks=ybrks,dig.lab=4))
+  if (!is.null(brksy)) {
+    canc=canc%>%mutate(Years=cut(yrdx,breaks=brksy,dig.lab=4))
     L=split(canc,canc$Years)
-    LO=lapply(L,function (x) msd2(x,mrt,brks))
+    LO=lapply(L,function (x) msd2(x,mrt,brkst))
     for (i in names(LO)) LO[[i]]$Years=i
     D=bind_rows(LO)
-  } else D=msd2(canc,mrt,brks)
+  } else D=msd2(canc,mrt,brkst)
   D  
 }
