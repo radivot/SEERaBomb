@@ -1,4 +1,4 @@
-mkExcel=function(seerSet,tsdn,outDir="~/Results",outName=NULL,flip=FALSE) {
+mkExcelTsd=function(seerSet,tsdn,outDir="~/Results",outName=NULL,flip=FALSE) {
   if (length(tsdn)>1) {
     cat("collapsing brks vector to a tsdn string\n") 
     tsdn=paste0("b",paste(tsdn,collapse="_"))
