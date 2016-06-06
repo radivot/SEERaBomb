@@ -1,9 +1,9 @@
-\name{mkExcel2}
-\alias{mkExcel2}
-\title{Make RR Excel file}
+\name{mkExcelCsd}
+\alias{mkExcelCsd}
+\title{Make RR Excel file from csd output}
 \description{Provides relative risks (RR) organized by 1st and 2nd cancers, times since 1st cancer diagnoses, and 1st cancer treatment. RR = O/E where O = observed cases and E = cases expected under a null hypothesis that prior cancers do not impact subsequent risks. If flip = FALSE (default), sheets = 1st cancers and rows = 2nd cancers, else sheets = 2nd cancers and rows = 1st cancers; columns are always intervals of years since diagnosis, in 
 1st cancer treatment blocks. RR CI and observed numbers are included in each data cell.}
-\usage{mkExcel2(seerSet,tsdn,biny="[1973,2013)",bina="(0,126]",
+\usage{mkExcelCsd(seerSet,tsdn,biny="[1973,2014)",bina="(0,126]",
                         outDir="~/Results",outName=NULL,flip=FALSE)} 
 \arguments{
   \item{seerSet}{A seerSet list after it has been processed by csd().  }
@@ -33,8 +33,8 @@ pm=mk2D(pm)
 mybrks=c(0,1,5,10)
 pm=csd(pm,brkst=mybrks,trts=c("noRad","rad")) 
 (lab=paste0("b",paste(mybrks,collapse="_")))
-(L=mkExcel2(pm,lab))
-(L=mkExcel2(pm,lab,flip=TRUE))
+(L=mkExcelCsd(pm,lab))
+(L=mkExcelCsd(pm,lab,flip=TRUE))
 }
 
 }
