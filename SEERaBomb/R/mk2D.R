@@ -45,7 +45,8 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secon
       L2D[[i]]=gam(cases ~ s(age)+s(year)+ti(age,year,k=knots)+offset(log(py)),
                    family=poisson(),data=X,method="REML") 
       prd=as.numeric(predict(L2D[[i]]))
-      L2Dp[[i]]=cbind(cancer=i,X,Ecases=exp(prd),Eincid=1e5*exp(prd)/X$py  )
+      # L2Dp[[i]]=cbind(cancer=i,X,Ecases=exp(prd),Eincid=1e5*exp(prd)/X$py  )
+      L2Dp[[i]]=data.frame(cancer=i,X,Ecases=exp(prd),Eincid=1e5*exp(prd)/X$py  )
       D=rbind(D,L2Dp[[i]])
     } # i loop on cancers in secondS
     bfn<-paste0(substr(race,1,1),toupper(substr(sex,1,1)),"s",ageStart,"e",ageEnd,txt) #base of file names
