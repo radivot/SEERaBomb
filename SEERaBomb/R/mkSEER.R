@@ -44,7 +44,8 @@ mkPopsae=function(popsa) { # this replaces the version above it
   nms=names(nelders)
   names(nelders)[which(nms=="age86")]<-c("age")
   elders=elders[,names(nelders)] # reorder columns to match
-  rbind(nelders,elders) # this now becomes popsa extended (i.e. popsae) 
+  # rbind(nelders,elders) # this now becomes popsa extended (i.e. popsae) 
+  bind_rows(nelders,elders) # this now becomes popsa extended (i.e. popsae) 
 }
 
 #  mkPopsae(popsa) # for testing
