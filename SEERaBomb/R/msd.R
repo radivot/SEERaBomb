@@ -9,10 +9,13 @@ msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (ms
     df=canc%>%filter(sex=="female")%>%select(-sex)
     d=list(male=dm,female=df)
     mrtF=mrt$female
-    mrtF=rbind(mrtF,sapply(mrtF[111,],function(x) rep(x,15)))
+    nages=dim(mrt$female)[1]
+    nfill=126-nages
+    # mrtF=rbind(mrtF,sapply(mrtF[111,],function(x) rep(x,15)))
+    mrtF=rbind(mrtF,sapply(mrtF[nages,],function(x) rep(x,nfill)))
     rownames(mrtF)=0:125
     mrtM=mrt$male
-    mrtM=rbind(mrtM,sapply(mrtM[111,],function(x) rep(x,15)))
+    mrtM=rbind(mrtM,sapply(mrtM[nages,],function(x) rep(x,nfill)))
     rownames(mrtM)=0:125
     mrtM=mrtM[,as.character(1973:yearEnd)]
     mrtF=mrtF[,as.character(1973:yearEnd)]
