@@ -80,6 +80,6 @@ riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c
   # D$trt=factor(D$trt,levels=c("Radiation","No Radiation"))
   D$trt=factor(D$trt) # flipped, rad is good, so take natural order
   D$cancer2=factor(D$cancer2)
-  D$age=brksm[as.numeric(as.character(D$agec))] 
+  D$age=brksm[as.numeric(D$agec)] 
   D
 }
