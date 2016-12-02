@@ -1,4 +1,6 @@
 riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c(0,30,50,60,70,80,126)) {
+ COD=L=U=age=age1=ageL=agec=agedx=cancer=cancer1=cancer2=casenum=modx=NULL
+   o=py=qpois=seqnum=sex=surv=trt=trt1=year=yrbrth=yrdiffn=yrdx=yrdx1=yrdx2=NULL
   brksm=brksa[-length(brksa)] + diff(brksa)/2
   brksm[length(brksm)]=brksa[length(brksa)-1]+5 # use this for labels in cut of attained ages later
   canc=canc%>%mutate(year=yrdx) 
@@ -65,9 +67,9 @@ riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c
           # print(sum(OM))
           tD=data.frame(age=0.5:125.5,o=apply(OM,1,sum),py=apply(PYM,1,sum))
           # tD=tD%>%mutate(agec=cut(age,c(0,50,65,126),labels=c(25,57.5,70))) %>%
-          tD=tD%>%mutate(agec=cut(age,brksa,labels=c(15,40,55,65,75,85))) %>%
+          tD=tD%>%mutate(agec=cut(age,brksa)) %>%
             group_by(agec) %>%
-            summarise(age=mean(age),py=sum(py)/1e5,o=sum(o),
+            summarise(py=sum(py)/1e5,o=sum(o),
                       L=qpois(.025,o),U=qpois(.975,o),Incid=o/py,IL=L/py,IU=U/py,trt=j,cancer1=i,cancer2=k,sex=ii)
           D=rbind(D,tD)
         }
@@ -78,7 +80,6 @@ riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c
   # D$trt=factor(D$trt,levels=c("Radiation","No Radiation"))
   D$trt=factor(D$trt) # flipped, rad is good, so take natural order
   D$cancer2=factor(D$cancer2)
-  D$age=as.numeric(as.character(D$agec))+0.5*(as.numeric(D$trt)-1)
-  D$agec=NULL
+  D$age=brksm[as.numeric(as.character(D$agec))] 
   D
 }
