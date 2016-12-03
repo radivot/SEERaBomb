@@ -1,3 +1,12 @@
+CHANGES IN VERSION 2016.3 (Third version working with SEER data of 2016)
+------------------------
+
+NEW FEATURES
+
+    o riskVsAge is a new function that yields risks vs attained age after a first cancer     
+
+
+
 CHANGES IN VERSION 2016.2 (Second version working with SEER data of 2016)
 ------------------------
 
