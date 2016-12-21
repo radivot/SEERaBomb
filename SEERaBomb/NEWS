@@ -5,6 +5,9 @@ NEW FEATURES
 
     o riskVsAge is a new function that yields risks vs attained age after a first cancer     
 
+    o esd (event since diagnosis) is an msd wrapper. It uses SEER incidences instead of mortalities 
+    to yield RR time courses for user defined second cancer data.  
+    
 
 
 CHANGES IN VERSION 2016.2 (Second version working with SEER data of 2016)
