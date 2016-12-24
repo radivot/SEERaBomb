@@ -34,8 +34,11 @@ seerSet<-function(canc,popsa,Sex, Race="pooled",ageStart=15,ageEnd=85) {
   if ("yrbrth"%in%names(canc)) canc=canc%>%select(-yrbrth)  
   # note: modx was removed from canc above
   
-  if ("sex"%in%names(popsa)) popsa=popsa%>%select(-sex) 
-  if ("race"%in%names(popsa)) popsa=popsa%>%select(-race)
+  # if ("sex"%in%names(popsa)) popsa=popsa%>%select(-sex)
+  # if ("race"%in%names(popsa)) popsa=popsa%>%select(-race)
+
+  if ("sex"%in%names(popsa)) popsa$sex=NULL
+  if ("race"%in%names(popsa)) popsa$race=NULL
   
   
   popsa=popsa%>%group_by(age,year)%>%summarize(py=sum(py))
