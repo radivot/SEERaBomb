@@ -10,10 +10,11 @@ CANCS=c("AML","CML","MDS")
 CANCS=names(tb)  
 CANCS=c("stomach","lung","melanoma","prostate")
 CANCS=names(tb)[1:9]  
+CANCS=c("AML","MDS","CMML","AMLti","APL","MPN","CML") # second cancers of interest
 D=canc
-mds="all"
 mds="clean"
-cutyr=2003
+mds="all"
+cutyr=2001
 if (mds=="clean") D=canc%>%filter(yrdx>=cutyr,cancer%in%CANCS,histo3!=9989) else
   D=canc%>%filter(yrdx>=cutyr,cancer%in%CANCS)
 

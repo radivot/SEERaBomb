@@ -1,6 +1,7 @@
-riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c(0,30,50,60,70,80,126)) {
+riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c(0,30,50,60,70,80)) {
  COD=L=U=age=age1=ageL=agec=agedx=cancer=cancer1=cancer2=casenum=modx=NULL
    o=py=qpois=seqnum=sex=surv=trt=trt1=year=yrbrth=yrdiffn=yrdx=yrdx1=yrdx2=NULL
+  brksa=c(brksa,126)
   brksm=brksa[-length(brksa)] + diff(brksa)/2
   brksm[length(brksm)]=brksa[length(brksa)-1]+5 # use this for labels in cut of attained ages later
   canc=canc%>%mutate(year=yrdx) 
