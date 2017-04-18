@@ -3,7 +3,7 @@
 \title{Pick SEER fields of interest}
 \description{ Reduces the full set of SEER data fields to a smaller set of interest.}
 \usage{pickFields(sas,picks=c("casenum","reg","race","sex","agedx",
-        "yrbrth","seqnum","modx","yrdx","histo3","radiatn", %"recno","agerec",
+        "yrbrth","seqnum","modx","yrdx","histo3",%"radiatn", %"recno","agerec",
         "ICD9","COD","surv"))}  % removed "numprims", just before COD 
 
 \arguments{
@@ -11,7 +11,8 @@
   the \file{incidence} directory of \code{seerHome}, the root of the SEER ASCII data installation.}
   \item{picks}{ Vector of names of variables of interest. These must be in the same order as found in the 
   input data frame \code{sas}. Downstream, mkSEER will not work without a minimum of
-   \code{"reg","race","sex","agedx","histo3","radiatn","ICD9"}, but to estimate
+   \code{"reg","race","sex","agedx","histo3",%"radiatn",
+   "ICD9"}, but to estimate
    survival and second cancer risks the default is the minimum.   
 %The default is \code{picks=c("casenum","reg","race",} 
 %\code{"sex","agedx","yrbrth","seqnum","yrdx","histo2","histo3","radiatn",}

@@ -1,3 +1,13 @@
+CHANGES IN VERSION 2017.1 (First version working with SEER data of 2017)
+------------------------
+
+Notes
+
+    o radiatn field no longer with regular SEER release, so it has been removed from the pickFields default
+    list and mkSEER no longer calls mapTrts unless the field is there (if you're using an old SEER release or 
+    requested and got a version of the data that includes radiation and chemotherapy information).     
+
+
 CHANGES IN VERSION 2016.3 (Third version working with SEER data of 2016)
 ------------------------
 

@@ -1,5 +1,5 @@
 pickFields<-function(sas,picks=c("casenum","reg","race","sex","agedx","yrbrth",
-                                 "seqnum","modx","yrdx","histo3","radiatn", #"recno","agerec",
+                                 "seqnum","modx","yrdx","histo3",#"radiatn", #"recno","agerec",
                                  "ICD9",#"numprims",
                                  "COD","surv") ){
   #sas = df 
@@ -8,7 +8,8 @@ pickFields<-function(sas,picks=c("casenum","reg","race","sex","agedx","yrbrth",
   ncols=dim(sas)[1] # in the SEER data files
   nBytesP1=sum(sas[ncols,1:2]) # number of bytes per cancer case in SEER, plus 1
   rownames(sas)<-sas$names
-   musts=c("reg","race","sex","agedx","histo3","radiatn","ICD9") # don't let the user not pick these
+   # musts=c("reg","race","sex","agedx","histo3","radiatn","ICD9") # don't let the user not pick these
+   musts=c("reg","race","sex","agedx","histo3","ICD9") # don't let the user not pick these
    # musts=c("reg","race","sex","agedx","histo3","radiatn","agerec","ICD9") # don't let the user not pick these
   missing=setdiff(musts,picks)
   if (!all(musts%in%picks)) {cat("In sas file order, picks must at least include:")

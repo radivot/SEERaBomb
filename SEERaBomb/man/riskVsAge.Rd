@@ -3,7 +3,7 @@
 \title{Second cancer risk vs attained age after first cancer}
 \description{Computes absolute risk of 2nd cancers as a function of attained age after first cancer. }
 \usage{riskVsAge(canc,firstS=c("NHL","HL","MM"),
-                secondS=c("AML","MDS"),brksa=c(0,30,50,60,70,80,126)) }  
+                secondS=c("AML","MDS"),brksa=c(0,30,50,60,70,80)) }  
 \arguments{
   \item{canc}{canc made by mkSEER().}
   \item{firstS}{Character vector of first cancers of interest.}

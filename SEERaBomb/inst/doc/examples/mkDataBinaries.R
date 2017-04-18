@@ -9,10 +9,12 @@ mkSEER(rdf,seerHome="/Users/radivot/data/SEER") #(new way) makes merged (all can
 
 # these are the default picks for pickFields (see its help page)
 defPicks=c("casenum","reg","race","sex","agedx",
-        "yrbrth","seqnum","modx","yrdx","histo3","radiatn","recno",
+        # "yrbrth","seqnum","modx","yrdx","histo3","radiatn","recno",
+        "yrbrth","seqnum","modx","yrdx","histo3","recno",
         "agerec","ICD9","COD","surv")
 # the required core of this default list is
-c("reg","race","sex","agedx","histo3","radiatn","agerec","ICD9")
+# c("reg","race","sex","agedx","histo3","radiatn","agerec","ICD9")
+c("reg","race","sex","agedx","histo3","agerec","ICD9")
 
 # the user is responsible for assuring that additional fields are inserted in
 # their correct positions corresponding to the SAS file order.
@@ -20,14 +22,16 @@ pickFields(df,picks=c(defPicks,"ICD10","siterwho")) # e.g. this won't fly due to
 
 # instead, the user has to just bite the bullet and do this
 picks=c("casenum","reg","race","sex","agedx",
-        "yrbrth","seqnum","modx","yrdx","histo3","radiatn","recno",
+        # "yrbrth","seqnum","modx","yrdx","histo3","radiatn","recno",
+        "yrbrth","seqnum","modx","yrdx","histo3","recno",
         "agerec","siterwho","ICD9","ICD10","COD","surv") # add ICD10 and who2008 to list, in correct positions
 (rdf=pickFields(df,picks))
 
 
 ## STAGES: if you want to explore different stage fields, you may want something like this
 picks=c("casenum","reg","race","sex","agedx","yrbrth",
-        "seqnum","yrdx","histo2","histo3","eod10sz","eod10nd","cstumsiz","dajcct","dajccn","dajccm", "radiatn","agerec",
+    # "seqnum","yrdx","histo2","histo3","eod10sz","eod10nd","cstumsiz","dajcct","dajccn","dajccm", "radiatn","agerec",
+        "seqnum","yrdx","histo2","histo3","eod10sz","eod10nd","cstumsiz","dajcct","dajccn","dajccm", "agerec",
         "siterwho","ICD9","ICD10","histrec","hststga","ajccstg","aj3seer",
         "COD","odthclass","surv",
         "dajcc7t","dajcc7n","dajcc7m","dajcc7stg")
