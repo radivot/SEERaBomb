@@ -162,7 +162,8 @@ mkPopsae=function(popsa) { # this replaces the version above it
       #       select(-agerec)%>%
       mutate(sex=factor(sex,labels=c("male","female")))
     canc=mapCancs(canc)
-    if ("radiatn"%in%names(canc)) canc=mapTrts(canc)
+    # if ("radiatn"%in%names(canc)) canc=mapTrts(canc)
+    canc=mapTrts(canc)
     delT=proc.time() - ptm  
     cat("Cancer files were processed in ",delT[3]," seconds.\n")
   } #if writeRData or writeDB
