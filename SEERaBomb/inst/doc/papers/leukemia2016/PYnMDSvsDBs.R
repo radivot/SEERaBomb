@@ -22,8 +22,9 @@ g=ggplot(pys)+geom_ribbon(aes(x=year,ymax=npy/1e6,ymin=0,fill=db))+facet_grid(db
 g=g+labs(y=expression(paste(10^6," Person Years")),x="Year") 
 g+guides(fill = guide_legend("SEER\nDatabase"))+scale_x_continuous(breaks=c(1973,seq(1980,2010,by=10))) 
 
-ggsave("~/Results/amlMDS/fig1A.png")
-ggsave("~/Results/amlMDS/fig1A.eps")
+ggsave("~/Results/amlMDS/fig1A.pdf")
+# ggsave("~/Results/amlMDS/fig1A.png")
+# ggsave("~/Results/amlMDS/fig1A.eps")
 
 load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
 mds=canc%>%filter(cancer=="MDS")
@@ -44,8 +45,9 @@ g=ggplot(D)+geom_ribbon(aes(x=yrdx,ymax=cases,ymin=0,fill=db))+facet_grid(db~.)
 # g = g + scale_fill_grey(start = 0.8, end = 0)
 g=g+labs(y="MDS Cases",x="Year")+scale_x_continuous(breaks=seq(2001,2013,by=2)) 
 g+scale_y_continuous(breaks=seq(0,2000,by=1000)) 
-ggsave("~/Results/amlMDS/fig1B.png")
-ggsave("~/Results/amlMDS/fig1B.eps")
+ggsave("~/Results/amlMDS/fig1B.pdf")
+# ggsave("~/Results/amlMDS/fig1B.png")
+# ggsave("~/Results/amlMDS/fig1B.eps")
 
 
 
