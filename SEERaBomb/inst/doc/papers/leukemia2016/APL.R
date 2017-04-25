@@ -5,8 +5,8 @@ library(reshape2)
 library(dplyr)  
 library(grid)
 # the following were made earlier using SEERaBomb's mkSEER
-load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
-load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
+load("~/data/SEER13/mrgd/cancDef.RData") #loads in canc
+load("~/data/SEER13/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
 # trim down columns to bare neccesities before burdening seerSet with more than it needs 
 canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
 popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs

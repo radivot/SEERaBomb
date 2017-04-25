@@ -3,9 +3,15 @@ CHANGES IN VERSION 2017.1 (First version working with SEER data of 2017)
 
 Notes
 
-    o radiatn field no longer with regular SEER release, so it has been removed from the pickFields default
-    list and mkSEER no longer calls mapTrts unless the field is there (if you're using an old SEER release or 
-    requested and got a version of the data that includes radiation and chemotherapy information).     
+    o The field radiatn is no longer in the regular SEER release, so it has been removed from the pickFields default
+    and mkSEER no longer calls mapTrts unless the field is there (if using data released in 2016). 
+    While one can get the radiation data by signing an extra DUA, it is only available through 
+    SEER*stat (one would have to export it from there) and SEER*stat only runs on Windows (and I'm on a mac). 
+    If you need this data acquisition route and are willing to replace getFields, 
+    pickFields, and mkSEER by a new function mkSEERcrt (crt for chemo radiation therapy data out of SEER*Stat),
+    I'm happy to add you as an author to the SEERaBomb project on GitHub. Meanwhile, I will keep data released 
+    in 2016 in ~/data/SEER13 and will place the most recent data in ~/data/SEER. Thus, scripts 
+    that use radiatn now load data from ~/data/SEER13. 
 
 
 CHANGES IN VERSION 2016.3 (Third version working with SEER data of 2016)

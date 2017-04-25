@@ -1,11 +1,11 @@
 # setup.R
 library(SEERaBomb)
 # first chunk builds the SEER binaries 
-(df=getFields("/Users/radivot/data/SEER")) 
+(df=getFields("/Users/radivot/data/SEER13")) 
 (rdf=pickFields(df)) # this uses default picks of fields
-mkSEER(rdf,seerHome="/Users/radivot/data/SEER") 
+mkSEER(rdf,seerHome="/Users/radivot/data/SEER13") 
 # the rest fixes tAML and rewrites the fix into cancDef.RData
-load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
+load("~/data/SEER13/mrgd/cancDef.RData") #loads in canc
 yearEnd=2013
 sc=canc%>%filter(histo3==9920|histo3==9987) #tAML and tMDS  subset of cancs (sc)
 table(sc$yrdx,sc$histo3)  # see that they start in 2001

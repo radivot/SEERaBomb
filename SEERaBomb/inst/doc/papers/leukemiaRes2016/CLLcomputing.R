@@ -6,8 +6,8 @@ library(scales)
 cf=function (x) comma_format()(x)
 cfc=function (x) paste0(comma_format()(x),collapse=", ")
 # the following were made earlier using SEERaBomb's mkSEER
-load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
-load("~/data/SEER/mrgd/popsae.RData") # loads in popsa
+load("~/data/SEER13/mrgd/cancDef.RData") #loads in canc
+load("~/data/SEER13/mrgd/popsae.RData") # loads in popsa
 # seerStats(canc,popsae)
 head(canc)
 # trim down columns to bare neccesities needed for this paper. 

@@ -3,9 +3,9 @@ rm(list=ls())
 library(SEERaBomb)
 library(dplyr)  #the %>% operators below come from here
 # the following was made earlier using SEERaBomb's mkSEER
-load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
+load("~/data/SEER13/mrgd/cancDef.RData") #loads in canc
 canc=canc%>%filter(cancer!="benign")
-load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
+load("~/data/SEER13/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
 # trim down columns to bare neccesities needed for this paper. 
 canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
 # canc=canc%>%select(-reg,-recno,-agerec,-numprims,-COD,-age19,-radiatn,-histo3,-ICD9)

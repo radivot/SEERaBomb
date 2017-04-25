@@ -2,8 +2,8 @@
 rm(list=ls()) 
 library(SEERaBomb) 
 if (1) {
-  load("~/data/SEER/mrgd/cancDef.RData") 
-  load("~/data/SEER/mrgd/popsae.RData") 
+  load("~/data/SEER13/mrgd/cancDef.RData") 
+  load("~/data/SEER13/mrgd/popsae.RData") 
   canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
   canc=canc%>%filter(cancer!="benign")
   popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs

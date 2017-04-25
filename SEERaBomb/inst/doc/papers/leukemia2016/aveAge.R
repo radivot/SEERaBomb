@@ -4,8 +4,8 @@ graphics.off()
 .simpleCap <- function(s) paste(toupper(substring(s, 1, 1)), substring(s, 2),sep = "", collapse = " ")
 library(SEERaBomb)
 if (0) {  # 1 to run, 0 to comment (this way it can be folded while looking more useful than commented code)
-  load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
-  load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
+  load("~/data/SEER13/mrgd/cancDef.RData") #loads in canc
+  load("~/data/SEER13/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
   canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
   popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs
   # canc$cancer=as.character(canc$cancer) # need this if merging types into a new name, like lymphoma=NHL+HL

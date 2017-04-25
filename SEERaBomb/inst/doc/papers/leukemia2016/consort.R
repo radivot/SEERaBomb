@@ -4,7 +4,7 @@ library(scales);  #comma_format comes from here
 cf=function (x) comma_format()(x)
 library(SEERaBomb) 
 library(dplyr)  
-load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
+load("~/data/SEER13/mrgd/cancDef.RData") #loads in canc
 canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
 (tb=table(canc$seqnum))
 sum(tb[1:2])
@@ -36,7 +36,7 @@ mds%>%filter(agedx<100)%>%summarize(cases=n()) # 49502 will be used to form back
 # next line not in a Figure but in Methods text for justification of spreading pop PY in 85+ out to 100
 mds%>%filter(agedx>84,seqnum==2)%>%summarize(cases=n())/mds%>%filter(seqnum==2)%>%summarize(cases=n())# 21% 2nd MDS are >84
 
-load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
+load("~/data/SEER13/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
 cf(popsae%>%summarize(py=sum(py))) # total PY at risk are 1,788,450,864
 cf(popsae%>%filter(year>2000)%>%summarize(py=sum(py))) # total PY at risk for MDS are 1,001,683,402
 popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs
