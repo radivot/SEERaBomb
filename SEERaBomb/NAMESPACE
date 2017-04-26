@@ -1,4 +1,4 @@
-useDynLib(SEERaBomb)
+useDynLib(SEERaBomb, .registration = TRUE)
 import(dplyr)  ## depends
 import(ggplot2)  ## depends
 import(LaF,RSQLite,rgl,XLConnect) ## needed less critically but for too many functions to list
