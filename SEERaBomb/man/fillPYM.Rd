@@ -1,5 +1,6 @@
 \name{fillPYM}
 \alias{fillPYM}
+\alias{SEERaBomb_fillPYM}
 
 \title{Fills age-year person year (PY) matrix}
 \description{This internal function converts a matrix with lots of individual PY contributions and starting ages and years as rows, 
@@ -8,6 +9,7 @@ more square-like (currently at 40 calendar years by 126 age years) than the tall
 }
 \usage{
 fillPYM(PYin,PYM)
+%SEERaBomb_fillPYM(PYin,PYM)
 }
 
 \arguments{
