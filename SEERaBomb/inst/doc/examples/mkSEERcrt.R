@@ -1,7 +1,5 @@
-d=read.table("~/data/SEER/seerstatexport.txt",sep="\t")
-names(d)=c("casenum","reg","race","sex","agedx","yrbrth",
-           "seqnum","modx","yrdx","histo3","ICD9",
-           "COD","surv","RT","CT")
+d=read.csv("~/data/SEER/crt.csv")
+names(d)=c("casenum","seqnum","RT","CT")
 crt=d%>%select(casenum,seqnum,CT,RT)
 save(crt,file="~/data/SEER/crt.RData")
 head(crt)
@@ -34,5 +32,9 @@ crt$radiatn[crt$RT=="Recommended, unknown if administered"]=8
 head(crt,20)
 cr=crt%>%select(casenum,seqnum=seq,ct,radiatn)
 d=left_join(canc,cr)
-save(d,file="~/data/SEER/cr.RData")
+canc=d
+canc$trt="noRad"
+canc$trt[canc$radiatn==8]="unk"
+canc$trt[canc$radiatn%in%c(1:6)]="rad"
+save(canc,file="~/data/SEER/cancCRT.RData")
 
