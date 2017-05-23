@@ -5,7 +5,7 @@
 times since diagnoses of a 1st cancer. 2D spline fits are used to produce 
 expected cases E controlling for background risk dedepence on 
 age and calendar year.  RR is then O/E where O is the number of observed cases. }
-\usage{csd(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,firstS="all") } % ,outDir="~/Results", txt=NULL)} 
+\usage{csd(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,firstS="all",exclUnkSurv=FALSE) } % ,outDir="~/Results", txt=NULL)} 
 \arguments{
   \item{seerSet}{A seerSet object produced by mk2D().  }
   \item{brkst}{Vector of breaks in years used to form Time intervals/bins since diagnosis. 
@@ -19,6 +19,7 @@ age and calendar year.  RR is then O/E where O is the number of observed cases. 
              for each individual; having these big dataframes slows saving seerSets, so only fetch if needed.}
   \item{firstS}{Character vector of first cancers of interest. Default of "all" sets it to the vector of all cancers
                 in the seerSet field cancerS, which is created when the object is first created by seerSet().}
+  \item{exclUnkSurv}{Set true if you wish to exclude all cases with unknown survival times as a marker of bad data.}
 }
 
 \value{The input with an L component added to it or extended it if it already existed. Each component of

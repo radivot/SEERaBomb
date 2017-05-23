@@ -1,4 +1,4 @@
-csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,firstS="all"){ 
+csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,firstS="all",exclUnkSurv=FALSE){ 
   #   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=L2D=NULL
   # brkst=c(0);brksy=c(1973,2000);brksa=c(0);seerSet=pf
   print(binSt<-levels(cut(brkst+0.1,breaks=c(brkst,100)))) #this is just to make a vector of tsd interval/row names 
@@ -12,6 +12,7 @@ csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,
     if (firstS[1]=="all") firstS=cancerS
     SL$firstS=firstS
     if (is.null(trts)) trts=levels(canc$trt)
+    if (exclUnkSurv)  canc=canc%>%filter(surv<200)
     SL$trtS=trts
     print(trts)
     for (R in trts) { 
