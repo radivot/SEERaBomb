@@ -3,6 +3,7 @@ import(dplyr)  ## depends
 import(ggplot2)  ## depends
 import(LaF,RSQLite,rgl,XLConnect) ## needed less critically but for too many functions to list
 importFrom(Rcpp, evalCpp)
+importFrom(survival, survfit,Surv)
 importFrom(DBI, dbDriver)
 importFrom(mgcv, gam,s,ti)
 importFrom(plyr, ldply)

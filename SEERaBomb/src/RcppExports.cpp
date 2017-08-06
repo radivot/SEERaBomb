@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // fillPYM
 NumericMatrix fillPYM(SEXP PYin, SEXP PYM);
-RcppExport SEXP SEERaBomb_fillPYM(SEXP PYinSEXP, SEXP PYMSEXP) {
+RcppExport SEXP _SEERaBomb_fillPYM(SEXP PYinSEXP, SEXP PYMSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
