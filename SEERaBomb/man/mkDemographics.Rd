@@ -9,7 +9,7 @@
   \item{outDir}{Folder of the Excel file(s) that will be generated.}
 }
 
-\value{ Returned invisibly is a list of data frames corresponding to tables of the Excel file.}
+\value{ Returned invisibly is a list of data frames corresponding to tables of the Excel file(s).}
 
 \author{Tom Radivoyevitch (radivot@ccf.org)}
 \seealso{\code{\link{SEERaBomb-package}} }
