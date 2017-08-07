@@ -8,10 +8,10 @@ Check these declarations against the C/Fortran source code.
 */
 
 /* .Call calls */
-extern SEXP SEERaBomb_fillPYM(SEXP, SEXP);
+extern SEXP _SEERaBomb_fillPYM(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-  {"SEERaBomb_fillPYM", (DL_FUNC) &SEERaBomb_fillPYM, 2},
+  {"_SEERaBomb_fillPYM", (DL_FUNC) &_SEERaBomb_fillPYM, 2},
   {NULL, NULL, 0}
 };
 
