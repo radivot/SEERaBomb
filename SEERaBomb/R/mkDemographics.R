@@ -13,7 +13,7 @@ mkDemographics=function(canc,outDir="~/Results/SEERaBomb") {
   cancS=unique(as.character(canc$cancer))
   OL=NULL
   for (icanc in cancS) {
-    D=canc%>%filter(canc==icanc)
+    D=canc%>%filter(cancer==icanc)
     unlink(f<-paste0(outDir,"/",icanc,".xlsx"))
     wb <- loadWorkbook(f,create=T) 
     OL=NULL
