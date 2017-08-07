@@ -28,6 +28,8 @@ getFields<-function(seerHome="~/data/SEER"){
 	sas$names[which(sas$names=="race1")]="race" 
 	sas$names[which(sas$names=="pubcsnum")]="casenum" 
 	sas$names[which(sas$names=="srvtimemon")]="surv" 
+	sas$names[which(sas$names=="radiatnr")]="radiatn" 
+	sas$names[which(sas$names=="chemorxrec")]="chemo" 
 	# to spell out Collaborative Stage = CS, change a desc
   sas$desc[which(sas$names=="cssize")]="Collaborative Stage (CS) Tumor Size"
 

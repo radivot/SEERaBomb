@@ -11,7 +11,7 @@ mkSEER(rdf,seerHome="/Users/radivot/data/SEER") #(new way) makes merged (all can
 defPicks=c("casenum","reg","race","sex","agedx",
         # "yrbrth","seqnum","modx","yrdx","histo3","radiatn","recno",
         "yrbrth","seqnum","modx","yrdx","histo3","recno",
-        "agerec","ICD9","COD","surv")
+        "agerec","ICD9","COD","surv","radiatn","chemo")
 # the required core of this default list is
 # c("reg","race","sex","agedx","histo3","radiatn","agerec","ICD9")
 c("reg","race","sex","agedx","histo3","agerec","ICD9")

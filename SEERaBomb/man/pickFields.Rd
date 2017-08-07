@@ -4,7 +4,7 @@
 \description{ Reduces the full set of SEER data fields to a smaller set of interest.}
 \usage{pickFields(sas,picks=c("casenum","reg","race","sex","agedx",
         "yrbrth","seqnum","modx","yrdx","histo3",%"radiatn", %"recno","agerec",
-        "ICD9","COD","surv"))}  % removed "numprims", just before COD 
+        "ICD9","COD","surv","radiatn","chemo"))}  % removed "numprims", just before COD 
 
 \arguments{
   \item{sas}{A data frame created by \code{getFields()} using the SAS file found in 

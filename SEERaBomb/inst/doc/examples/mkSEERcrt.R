@@ -1,3 +1,4 @@
+#NOTE: this script is outdated now that "CUSTOM".zip data files are available
 d=read.csv("~/data/SEER/crt.csv")
 names(d)=c("casenum","seqnum","RT","CT")
 crt=d%>%select(casenum,seqnum,CT,RT)
