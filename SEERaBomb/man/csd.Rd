@@ -5,7 +5,8 @@
 times since diagnoses of a 1st cancer. 2D spline fits are used to produce 
 expected cases E controlling for background risk dedepence on 
 age and calendar year.  RR is then O/E where O is the number of observed cases. }
-\usage{csd(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,firstS="all",exclUnkSurv=FALSE) } % ,outDir="~/Results", txt=NULL)} 
+\usage{csd(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,
+                    PYLong=FALSE,firstS="all",exclUnkSurv=FALSE) } % ,outDir="~/Results", txt=NULL)} 
 \arguments{
   \item{seerSet}{A seerSet object produced by mk2D().  }
   \item{brkst}{Vector of breaks in years used to form Time intervals/bins since diagnosis. 

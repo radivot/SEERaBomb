@@ -1,5 +1,6 @@
 mkDemographics=function(canc,outDir="~/Results/SEERaBomb") {
-  require(survival)
+  medianOS=te=hi=low=race=sex=age=agedx=year=cancer=trt=.=NULL
+  # require(survival)
   medOS=function(X){
     d1=X%>%summarize(n=n())%>%mutate(prct=paste0(round(100*n/sum(n)),"%"))
     d2=X%>%do(te=summary(survfit(Surv(time=surv, event=COD!=0)~-1,data=.))$table[7:9])%>%mutate(medOS=te[[1]],low=te[[2]],hi=te[[3]])%>%
