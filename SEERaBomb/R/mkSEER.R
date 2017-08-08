@@ -1,6 +1,6 @@
 mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
                  indices = list(c("sex","race"), c("histo3","seqnum"),  "ICD9"),
-                 writePops=TRUE,writeRData=TRUE,writeDB=TRUE){
+                 writePops=TRUE,writeRData=TRUE,writeDB=FALSE){
   #   require(dplyr); require(LaF); seerHome="~/data/SEER"
   #   outDir="mrgd";outFile="cancDef";writePops=T;writeRData=TRUE;writeDB=TRUE  # for debugging
   #   indices = list(c("sex","race"), "histo2", "histo3", "ICD9")

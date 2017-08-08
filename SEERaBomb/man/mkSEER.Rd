@@ -4,7 +4,7 @@
 \description{Converts SEER ASCII text files into large R binaries that include all cancer types and registries combined.}
 \usage{mkSEER(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
                   indices = list(c("sex","race"), c("histo3","seqnum"),  "ICD9"),
-                  writePops=TRUE,writeRData=TRUE,writeDB=TRUE)}
+                  writePops=TRUE,writeRData=TRUE,writeDB=FALSE)}
 
 \arguments{
   \item{df}{ A data frame that was the output of \code{pickFields()}. This determines which fields to transfer. 
