@@ -8,8 +8,8 @@ NEW FEATURES
 Notes
 
     o There is now an ASCII version of the SEER data with radiatn and chemo as rightmost columns, so please ignore
-    my Notes below. I  assume users of SEERaBomb will get the "CUSTOM"  dataset by filling out the  data use
-    agreement, so radiatn and chemo are now default fields in pickFields.
+    my Notes below. I  assume users of SEERaBomb will get this "CUSTOM"  dataset by filling out the  data use
+    agreement: radiatn and chemo are now default fields in pickFields.
 
 
 
