@@ -10,7 +10,7 @@ riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c
     mutate(age=agedx+0.5) #convert ages at diagnosis to best guesses
   canc=canc%>%select(casenum,yrbrth,sex,age,seqnum,year,yrdx,surv,COD,trt,cancer) 
   head(canc)
-  canc$trt
+  trtS=levels(canc$trt)
   D2=canc%>%filter(seqnum==2) # D2 holds second primaries
   D0=canc%>%filter(seqnum==0,surv<200,cancer%in%firstS)
   D0$cancer=factor(D0$cancer,levels=firstS) # get rid of levels not in firstS. 
@@ -47,7 +47,8 @@ riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c
   
   for (ii in c("male","female"))
     for (i in firstS)
-      for (j in c("rad","noRad")) {
+      for (j in trtS) {
+      # for (j in c("rad","noRad")) {
         # PYin=d%>%filter(cancer1==i,trt==j)%>%select(py=surv,ageL=agedx,year=yrdx)
         PYin=d%>%filter(sex==ii,cancer1==i,trt==j)%>%select(py,ageL,year)
         head(PYin)
@@ -76,8 +77,8 @@ riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c
         }
       }
   D
-  D$trt[D$trt=="rad"]="Radiation"
-  D$trt[D$trt=="noRad"]="No Radiation"
+  # D$trt[D$trt=="rad"]="Radiation"
+  # D$trt[D$trt=="noRad"]="No Radiation"
   # D$trt=factor(D$trt,levels=c("Radiation","No Radiation"))
   D$trt=factor(D$trt) # flipped, rad is good, so take natural order
   D$cancer2=factor(D$cancer2)
