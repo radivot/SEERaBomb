@@ -2,10 +2,12 @@
 rm(list=ls()) 
 library(SEERaBomb) 
 if (1) {
-  load("~/data/SEER13/mrgd/cancDef.RData") 
-  load("~/data/SEER13/mrgd/popsae.RData") 
+  load("~/data/SEER/mrgd/cancDef.RData") 
+  load("~/data/SEER/mrgd/popsae.RData") 
   canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
   canc=canc%>%filter(cancer!="benign")
+  canc%<>%separate(trt,c("trt","trtc"))
+  canc$trt=factor(canc$trt)
   popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs
   m=seerSet(canc,popsa,Sex="male",ageStart=0,ageEnd=100) 
   f=seerSet(canc,popsa,Sex="female",ageStart=0,ageEnd=100) 
@@ -19,7 +21,10 @@ if (1) {
   load("~/Results/amlMDS/mfExcel.RData") 
 }
 
-mkExcel(m,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="males") #out filenames are otherwise coded. 
-mkExcel(f,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="females")
-mkExcel(m,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="males",flip=T)
-mkExcel(f,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="females",flip=T)
+mkExcelTsd(m,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="males") #out filenames are otherwise coded. 
+mkExcelTsd(f,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="females")
+mkExcelTsd(m,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="males",flip=T)
+mkExcelTsd(f,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="females",flip=T)
+# test using csd instead of tsd
+mc=csd(m,brkst=brks,trts=c("rad","noRad")) 
+mkExcelCsd(mc,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="malesCsd") #out filenames are otherwise coded. 

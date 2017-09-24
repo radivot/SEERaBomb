@@ -3,11 +3,11 @@ rm(list=ls())
 library(SEERaBomb)
 library(dplyr)  #the %>% operators below come from here
 # the following was made earlier using SEERaBomb's mkSEER
-load("~/data/SEER13/mrgd/cancDef.RData") #loads in canc
+load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
 canc=canc%>%filter(cancer!="benign")
-load("~/data/SEER13/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
+load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
 # trim down columns to bare neccesities needed for this paper. 
-canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
+canc=canc%>%select(-reg,-COD,-histo3,-ICD9)
 # canc=canc%>%select(-reg,-recno,-agerec,-numprims,-COD,-age19,-radiatn,-histo3,-ICD9)
 popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs
 head(canc,1)
@@ -19,6 +19,13 @@ canc$cancer[canc$cancer=="APL"] ="AML" # overwrite back to AML
 canc$cancer[canc$cancer=="AMLti"] ="AML" # overwrite back to AML
 canc$cancer=factor(canc$cancer)#eliminate extra levels: this happens in seerSet() too so not critical
 levels(canc$cancer)
+head(canc,2)
+levels(canc$trt)
+library(tidyverse)
+library(magrittr)
+canc%<>%separate(trt,c("trt","trtc"))
+head(canc,2)
+canc$trt=factor(canc$trt)
 
 pm=seerSet(canc,popsa,Sex="male",ageStart=0,ageEnd=100) #pooled (races) male seerSet
 pf=seerSet(canc,popsa,Sex="female",ageStart=0,ageEnd=100) #pooled (races) female seerSet

@@ -1,14 +1,18 @@
 # consort.R  (figure 1) 
 rm(list=ls()) 
+library(tidyverse)
+library(magrittr)
 library(scales);  #comma_format comes from here   
 cf=function (x) comma_format()(x)
 library(SEERaBomb) 
 library(dplyr)  
-load("~/data/SEER13/mrgd/cancDef.RData") #loads in canc
+load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
 canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
 (tb=table(canc$seqnum))
 sum(tb[1:2])
 canc=canc%>%filter(cancer!="benign")
+canc%<>%separate(trt,c("trt","trtc"))
+canc$trt=factor(canc$trt)
 (tb=table(canc$seqnum)) #60-88 has been removed
 sum(tb[1:2])
 #upgrade AML definition to include APL
@@ -36,7 +40,7 @@ mds%>%filter(agedx<100)%>%summarize(cases=n()) # 49502 will be used to form back
 # next line not in a Figure but in Methods text for justification of spreading pop PY in 85+ out to 100
 mds%>%filter(agedx>84,seqnum==2)%>%summarize(cases=n())/mds%>%filter(seqnum==2)%>%summarize(cases=n())# 21% 2nd MDS are >84
 
-load("~/data/SEER13/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
+load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
 cf(popsae%>%summarize(py=sum(py))) # total PY at risk are 1,788,450,864
 cf(popsae%>%filter(year>2000)%>%summarize(py=sum(py))) # total PY at risk for MDS are 1,001,683,402
 popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs

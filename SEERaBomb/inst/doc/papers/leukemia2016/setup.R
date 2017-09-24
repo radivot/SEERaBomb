@@ -1,12 +1,12 @@
 # setup.R
 library(SEERaBomb)
 # first chunk builds the SEER binaries 
-(df=getFields("/Users/radivot/data/SEER13")) 
+(df=getFields("/Users/radivot/data/SEER")) 
 (rdf=pickFields(df)) # this uses default picks of fields
-mkSEER(rdf,seerHome="/Users/radivot/data/SEER13") 
+mkSEER(rdf,seerHome="/Users/radivot/data/SEER") 
 # the rest fixes tAML and rewrites the fix into cancDef.RData
-load("~/data/SEER13/mrgd/cancDef.RData") #loads in canc
-yearEnd=2013
+load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
+yearEnd=2014
 sc=canc%>%filter(histo3==9920|histo3==9987) #tAML and tMDS  subset of cancs (sc)
 table(sc$yrdx,sc$histo3)  # see that they start in 2001
 table(sc$ICD9,sc$histo3)  # only 2 9920 are ICD9 9999, so cant reverse it using ICD9
@@ -14,7 +14,8 @@ head(sc)
 sc%>%group_by(histo3)%>%summarize(age=mean(agedx))# for kicks, see that tMDS cases arrive 5 years later in life
 d=sc%>%filter(yrdx>2000)%>%group_by(sex,yrdx,histo3)%>%summarize(cnt=n()) #count rows in sex-year-ICDO3 groups
 # Zeros for MDS in 2012 do not show up in d. The next line adds them in just to make the plots look right.
-d=rbind(d,data.frame(sex=c("male","female"),yrdx=2012,histo3=9987,cnt=0)) 
+d=bind_rows(d,data.frame(sex=c("male","female"),yrdx=2012,histo3=9987,cnt=0)) 
+d
 library(ggplot2)
 theme_update(axis.text=element_text(size=rel(1.2)),
              axis.title=element_text(size=rel(1.3)),

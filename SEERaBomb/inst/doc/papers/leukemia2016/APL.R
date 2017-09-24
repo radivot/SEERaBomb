@@ -2,20 +2,23 @@
 rm(list=ls()) 
 library(SEERaBomb) 
 library(reshape2)
-library(dplyr)  
+library(tidyverse)
+library(magrittr)
 library(grid)
 # the following were made earlier using SEERaBomb's mkSEER
-load("~/data/SEER13/mrgd/cancDef.RData") #loads in canc
-load("~/data/SEER13/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
+load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
+load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
 # trim down columns to bare neccesities before burdening seerSet with more than it needs 
 canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
+canc%<>%separate(trt,c("trt","trtc"))
+canc$trt=factor(canc$trt)
 popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs
 
 secs=c("AML","MDS","APL","AMLti") # second cancers of interest
 brks=c(0,0.25,1,2,3,4,5,6,8,10,12)
 (brkS=paste0("b",paste(brks,collapse="_")))
 
-if (0) {
+if (1) {
   pm=seerSet(canc,popsa,Sex="male",ageStart=0,ageEnd=100) #pooled (races) male seerSet
   (pf=seerSet(canc,popsa,Sex="female",ageStart=0,ageEnd=100)) #pooled (races) female seerSet
   pm=mk2D(pm,secondS=secs) 
