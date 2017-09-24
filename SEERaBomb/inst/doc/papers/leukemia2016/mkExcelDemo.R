@@ -1,7 +1,9 @@
 # mkExcelDemo.R
 rm(list=ls()) 
 library(SEERaBomb) 
-if (1) {
+library(tidyverse)
+library(magrittr)
+if (0) {
   load("~/data/SEER/mrgd/cancDef.RData") 
   load("~/data/SEER/mrgd/popsae.RData") 
   canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
@@ -25,6 +27,7 @@ mkExcelTsd(m,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="males") #out f
 mkExcelTsd(f,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="females")
 mkExcelTsd(m,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="males",flip=T)
 mkExcelTsd(f,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="females",flip=T)
+
 # test using csd instead of tsd
-mc=csd(m,brkst=brks,trts=c("rad","noRad")) 
+mc=csd(m,brkst=c(0,0.5,1,2,3,10),trts=c("rad","noRad")) 
 mkExcelCsd(mc,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="malesCsd") #out filenames are otherwise coded. 
