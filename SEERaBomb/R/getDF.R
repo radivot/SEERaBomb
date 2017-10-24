@@ -81,7 +81,7 @@ getDF<-function(seerSet,srs=NULL) {
   d$aoL=d$ageO-ci95
   d$aoU=d$ageO+ci95
   i=sapply(d,is.numeric)
-  d[i]=round(d[i],2)
+  d[i]=round(d[i],3)
   d=tbl_df(d)
   # print(glimpse(d))
   d
