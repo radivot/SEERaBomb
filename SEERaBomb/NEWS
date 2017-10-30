@@ -1,6 +1,11 @@
 CHANGES IN VERSION 2017.3 (Third version working with SEER data of 2017)
 ------------------------
 
+NEW FEATURES
+
+    o p2s generates times between primary/first and second cancers, at the individual level     
+
+
 Notes
 
     o Fixed riskVsAge() so it no longer depends on trt being "rad" and "noRad" 
