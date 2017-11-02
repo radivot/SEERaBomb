@@ -1,8 +1,8 @@
 \name{mapCODs}
 \alias{mapCODs}
-\title{Maps cause of death (COD) integer codes to recognizable Strings in a factor CODS}
-\description{ Adds a factor CODS with recognizable levels to a SEER cancer data frame. This function
-is slow so it is called within mkSEER}
+\title{Map CODs to strings}
+\description{ Maps integer cause of death (COD) codes in COD of a SEER cancer data frame 
+to a factor CODS with recognizable levels. This is a bit slow, so it is called within mkSEER.}
 \usage{mapCODs(D)} 
 \arguments{
   \item{D}{A data frame that includes COD as a column.  }
