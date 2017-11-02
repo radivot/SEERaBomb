@@ -3,6 +3,7 @@ CHANGES IN VERSION 2017.3 (Third version working with SEER data of 2017)
 
 NEW FEATURES
 
+    o mapCODs  maps COD integer codes to strings in CODS     
     o p2s generates times between primary/first and second cancers, at the individual level     
 
 
