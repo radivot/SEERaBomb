@@ -1,6 +1,9 @@
 CHANGES IN VERSION 2017.3 (Third version working with SEER data of 2017)
 ------------------------
 
+TODO
+    o shift dependence onto openxlsx from XLConnect to get rid of rJava dependence  
+
 NEW FEATURES
 
     o mapCODs  maps COD integer codes to strings in CODS     
