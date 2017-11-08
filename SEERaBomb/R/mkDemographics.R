@@ -11,94 +11,103 @@ mkDemographics=function(canc,outDir="~/Results/SEERaBomb") {
   if (!dir.exists(outDir)) dir.create(outDir,recursive=T)
   if (is.null(canc$cancer)) stop("cancer field is empty. Please include it!") 
   cancS=unique(as.character(canc$cancer))
+  # hs1=createStyle(fgFill="#DCE6F1",halign="CENTER",textDecoration="italic",border="Bottom")
+  hs1=createStyle(fgFill="#DCE6F1",halign="CENTER",textDecoration="bold")
+  # hs2=createStyle(fontColour="#ffffff",fgFill="#4F80BD",halign="center",valign="center", 
+  #                 textDecoration="bold",border="TopBottomLeftRight")
   OL=NULL
   for (icanc in cancS) {
     D=canc%>%filter(cancer==icanc)
     unlink(f<-paste0(outDir,"/",icanc,".xlsx"))
-    wb <- loadWorkbook(f,create=T) 
-    createSheet(wb, name = "quantiles")
+    # wb <- loadWorkbook(f,create=T) 
+    wb <- createWorkbook() 
+    # createSheet(wb, name = "quantiles")
+    addWorksheet(wb,"quantiles")
     OL[[icanc]][["Q"]][["fu"]] =D%>%do(data.frame(t(quantile(.$surv))))
     names(OL[[icanc]][["Q"]][["fu"]])=c("min","Q1","median","Q3","max")
     OL[[icanc]][["Q"]][["fu"]]=cbind(D%>%summarize(N=n()),OL[[icanc]][["Q"]][["fu"]]) 
-    writeWorksheet(wb, data.frame("Table 1. Median Follow Up in Months"), sheet = "quantiles",startRow=1,header=F)
-    writeWorksheet(wb, OL[[icanc]][["Q"]][["fu"]], sheet = "quantiles",startRow=2)
+    writeData(wb, "quantiles",data.frame("Table 1. Median Follow Up in Months"), startRow=1,colNames=F)
+    # writeData(wb, data.frame("Table 1. Median Follow Up in Months"), sheet = "quantiles",startRow=1,colNames=F)
+    writeData(wb,"quantiles", OL[[icanc]][["Q"]][["fu"]], startRow=2,headerStyle = hs1)
     
     OL[[icanc]][["Q"]][["age"]]=D%>%do(data.frame(t(quantile(.$agedx))))
     names(OL[[icanc]][["Q"]][["age"]])=c("min","Q1","median","Q3","max")
     OL[[icanc]][["Q"]][["age"]]=cbind(D%>%summarize(N=n()),OL[[icanc]][["Q"]][["age"]]) 
-    writeWorksheet(wb, data.frame("Table 2. Median Age at Dx in Years"), sheet = "quantiles",startRow=5,header=F)
-    writeWorksheet(wb, OL[[icanc]][["Q"]][["age"]], sheet = "quantiles",startRow=6)
+    writeData(wb,"quantiles", data.frame("Table 2. Median Age at Dx in Years"), startRow=5,colNames=F)
+    writeData(wb,"quantiles", OL[[icanc]][["Q"]][["age"]],startRow=6,headerStyle = hs1)
     
     OL[[icanc]][["Q"]][["age.sex"]]=D%>%group_by(sex)%>%do(data.frame(t(quantile(.$agedx))))
     names(OL[[icanc]][["Q"]][["age.sex"]])=c("sex","min","Q1","median","Q3","max")
     OL[[icanc]][["Q"]][["age.sex"]]=left_join(D%>%group_by(sex)%>%summarize(N=n()),OL[[icanc]][["Q"]][["age.sex"]]) 
-    writeWorksheet(wb, data.frame("Table 3. Median Age at Dx vs. Sex"), sheet = "quantiles",startRow=9,header=F)
-    writeWorksheet(wb, OL[[icanc]][["Q"]][["age.sex"]], sheet = "quantiles",startRow=10)
+    writeData(wb,"quantiles", data.frame("Table 3. Median Age at Dx vs. Sex"), startRow=9,colNames=F)
+    writeData(wb,"quantiles", OL[[icanc]][["Q"]][["age.sex"]], startRow=10,headerStyle = hs1)
     
     OL[[icanc]][["Q"]][["age.race"]]=D%>%group_by(race)%>%do(data.frame(t(quantile(.$agedx))))
     names(OL[[icanc]][["Q"]][["age.race"]])=c("race","min","Q1","median","Q3","max")
     OL[[icanc]][["Q"]][["age.race"]]=left_join(D%>%group_by(race)%>%summarize(N=n()),OL[[icanc]][["Q"]][["age.race"]]) 
-    writeWorksheet(wb, data.frame("Table 4. Median Age at Dx vs. Race"), sheet = "quantiles",startRow=14,header=F)
-    writeWorksheet(wb, OL[[icanc]][["Q"]][["age.race"]], sheet = "quantiles",startRow=15)
+    writeData(wb,"quantiles", data.frame("Table 4. Median Age at Dx vs. Race"), startRow=14,colNames=F)
+    writeData(wb,"quantiles", OL[[icanc]][["Q"]][["age.race"]], startRow=15,headerStyle = hs1)
     
     OL[[icanc]][["Q"]][["age.sex.trt"]]=D%>%group_by(sex,trt)%>%do(data.frame(t(quantile(.$agedx))))
     names(OL[[icanc]][["Q"]][["age.sex.trt"]])=c("sex","trt","min","Q1","median","Q3","max")
     OL[[icanc]][["Q"]][["age.sex.trt"]]=left_join(D%>%group_by(sex,trt)%>%summarize(N=n()),OL[[icanc]][["Q"]][["age.sex.trt"]]) 
-    writeWorksheet(wb, data.frame("Table 5. Median Age at Dx vs. Sex, Trt"), sheet = "quantiles",startRow=20,header=F)
-    writeWorksheet(wb, OL[[icanc]][["Q"]][["age.sex.trt"]], sheet = "quantiles",startRow=21)
+    writeData(wb,"quantiles", data.frame("Table 5. Median Age at Dx vs. Sex, Trt"), startRow=20,colNames=F)
+    writeData(wb,"quantiles", OL[[icanc]][["Q"]][["age.sex.trt"]], startRow=21,headerStyle = hs1)
     
     OL[[icanc]][["Q"]][["age.sex.race"]]=D%>%group_by(sex,race)%>%do(data.frame(t(quantile(.$agedx))))
     names(OL[[icanc]][["Q"]][["age.sex.race"]])=c("sex","race","min","Q1","median","Q3","max")
     OL[[icanc]][["Q"]][["age.sex.race"]]=left_join(D%>%group_by(sex,race)%>%summarize(N=n()),OL[[icanc]][["Q"]][["age.sex.race"]]) 
-    writeWorksheet(wb, data.frame("Table 6. Median Age at Dx vs. Sex, Race"), sheet = "quantiles",startCol=11,header=F)
-    writeWorksheet(wb, OL[[icanc]][["Q"]][["age.sex.race"]], sheet = "quantiles",startCol=11,startRow=2)
+    writeData(wb,"quantiles", data.frame("Table 6. Median Age at Dx vs. Sex, Race"), startCol=11,colNames=F)
+    writeData(wb,"quantiles", OL[[icanc]][["Q"]][["age.sex.race"]], startCol=11,startRow=2,headerStyle = hs1)
     
     OL[[icanc]][["Q"]][["age.sex.race.trt"]]=D%>%group_by(sex,race,trt)%>%do(data.frame(t(quantile(.$agedx))))
     names(OL[[icanc]][["Q"]][["age.sex.race.trt"]])=c("sex","race","trt","min","Q1","median","Q3","max")
     OL[[icanc]][["Q"]][["age.sex.race.trt"]]=left_join(D%>%group_by(sex,race,trt)%>%summarize(N=n()),OL[[icanc]][["Q"]][["age.sex.race.trt"]]) 
-    writeWorksheet(wb, data.frame("Table 7. Median Age at Dx vs. Sex, Race, Trt"), sheet = "quantiles",startCol=11,startRow=10,header=F)
-    writeWorksheet(wb, OL[[icanc]][["Q"]][["age.sex.race.trt"]], sheet = "quantiles",startCol=11,startRow=11)
+    writeData(wb,"quantiles", data.frame("Table 7. Median Age at Dx vs. Sex, Race, Trt"),startCol=11,startRow=10,colNames=F)
+    writeData(wb, "quantiles",OL[[icanc]][["Q"]][["age.sex.race.trt"]], startCol=11,startRow=11,headerStyle = hs1)
     
     
-    createSheet(wb, name = "medOS")
+    # createSheet(wb, name = "medOS")
+    addWorksheet(wb,"medOS")
     
     
     OL[[icanc]][["OS"]][["all"]] =medOS(D%>%group_by(cancer))
-    writeWorksheet(wb, data.frame("Table 1. Median OS in Months"), sheet = "medOS",startRow=1,header=F)
-    writeWorksheet(wb, OL[[icanc]][["OS"]][["all"]], sheet = "medOS",startRow=2)
+    writeData(wb, "medOS",data.frame("Table 1. Median OS in Months"), startRow=1,colNames=F)
+    writeData(wb,"medOS", OL[[icanc]][["OS"]][["all"]], startRow=2,headerStyle = hs1)
     
     OL[[icanc]][["OS"]][["sex"]] =medOS(D%>%group_by(sex))
-    writeWorksheet(wb, data.frame("Table 2. Median OS in Months vs. Sex"), sheet = "medOS",startRow=5,header=F)
-    writeWorksheet(wb, OL[[icanc]][["OS"]][["sex"]], sheet = "medOS",startRow=6)
+    writeData(wb, "medOS",data.frame("Table 2. Median OS in Months vs. Sex"), startRow=5,colNames=F)
+    writeData(wb, "medOS",OL[[icanc]][["OS"]][["sex"]],  startRow=6,headerStyle = hs1)
     
     OL[[icanc]][["OS"]][["race"]] =medOS(D%>%group_by(race))
-    writeWorksheet(wb, data.frame("Table 3. Median OS in Months vs. Race"), sheet = "medOS",startRow=10,header=F)
-    writeWorksheet(wb, OL[[icanc]][["OS"]][["race"]], sheet = "medOS",startRow=11)
+    writeData(wb,  "medOS",data.frame("Table 3. Median OS in Months vs. Race"), startRow=10,colNames=F)
+    writeData(wb, "medOS", OL[[icanc]][["OS"]][["race"]],startRow=11,headerStyle = hs1)
     
     OL[[icanc]][["OS"]][["sex.race"]] =medOS(D%>%group_by(sex,race))
-    writeWorksheet(wb, data.frame("Table 4. Median OS in Months vs. Sex, Race"), sheet = "medOS",startRow=16,header=F)
-    writeWorksheet(wb, OL[[icanc]][["OS"]][["sex.race"]], sheet = "medOS",startRow=17)
+    writeData(wb, "medOS",data.frame("Table 4. Median OS in Months vs. Sex, Race"),  startRow=16,colNames=F)
+    writeData(wb, "medOS",OL[[icanc]][["OS"]][["sex.race"]], startRow=17,headerStyle = hs1)
     
     OL[[icanc]][["OS"]][["age"]]=medOS(D%>%group_by(age))
-    writeWorksheet(wb, data.frame("Table 5. Median OS in Months vs. Age"), sheet = "medOS",startRow=25,header=F)
-    writeWorksheet(wb, OL[[icanc]][["OS"]][["age"]], sheet = "medOS",startRow=26)
+    writeData(wb, "medOS",data.frame("Table 5. Median OS in Months vs. Age"), startRow=25,colNames=F)
+    writeData(wb,  "medOS",OL[[icanc]][["OS"]][["age"]], startRow=26,headerStyle = hs1)
     
     OL[[icanc]][["OS"]][["year"]]=medOS(D%>%group_by(year))
-    writeWorksheet(wb, data.frame("Table 6. Median OS in Months vs. Year"),sheet="medOS",
-                   startRow=1,startCol=8,header=F)
-    writeWorksheet(wb, OL[[icanc]][["OS"]][["year"]], sheet = "medOS",startRow=2,startCol=8)
+    writeData(wb,"medOS", data.frame("Table 6. Median OS in Months vs. Year"),
+                   startRow=1,startCol=8,colNames=F)
+    writeData(wb, "medOS",OL[[icanc]][["OS"]][["year"]], startRow=2,startCol=8,headerStyle = hs1)
     
     OL[[icanc]][["OS"]][["age.year"]]=medOS(D%>%group_by(age,year))
-    writeWorksheet(wb, data.frame("Table 7. Median OS in Months vs. Age vs. Year"),sheet="medOS",
-                   startRow=14,startCol=8,header=F)
-    writeWorksheet(wb, OL[[icanc]][["OS"]][["age.year"]], sheet = "medOS",startRow=15,startCol=8)
+    writeData(wb,"medOS", data.frame("Table 7. Median OS in Months vs. Age vs. Year"),
+                   startRow=14,startCol=8,colNames=F)
+    writeData(wb,"medOS", OL[[icanc]][["OS"]][["age.year"]],  startRow=15,startCol=8,headerStyle = hs1)
     
     OL[[icanc]][["OS"]][["age.year.trt"]]=medOS(D%>%group_by(age,year,trt))
-    writeWorksheet(wb, data.frame("Table 8. Median OS in Months vs. Age vs. Year, Trt"),sheet="medOS",
-                   startRow=1,startCol=15,header=F)
-    writeWorksheet(wb, OL[[icanc]][["OS"]][["age.year.trt"]], sheet = "medOS",startRow=2,startCol=15)
+    writeData(wb, "medOS",data.frame("Table 8. Median OS in Months vs. Age vs. Year, Trt"),
+                   startRow=1,startCol=15,colNames=F)
+    writeData(wb,"medOS", OL[[icanc]][["OS"]][["age.year.trt"]],startRow=2,startCol=15,headerStyle = hs1)
     
-    saveWorkbook(wb)
+    # saveWorkbook(wb)
+    saveWorkbook(wb,file=f,overwrite = TRUE)
     cat("Workbook was written to",f,"\n")
   }
   invisible(OL)

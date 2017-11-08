@@ -3,10 +3,10 @@ rm(list=ls())
 library(SEERaBomb) 
 library(tidyverse)
 library(magrittr)
-if (0) {
+if (1) {
   load("~/data/SEER/mrgd/cancDef.RData") 
   load("~/data/SEER/mrgd/popsae.RData") 
-  canc=canc%>%select(-reg,-COD,-radiatn,-histo3,-ICD9)
+  canc=canc%>%select(-reg,-radiatn,-histo3,-ICD9)
   canc=canc%>%filter(cancer!="benign")
   canc%<>%separate(trt,c("trt","trtc"))
   canc$trt=factor(canc$trt)
