@@ -34,11 +34,11 @@ pickFields<-function(sas,picks=c("casenum","reg","race","sex","agedx","yrbrth",
   for (i in 2:N) 
     if (sas$start[i]==(up<-sas$start[i-1]+sas$width[i-1]) ) 
       outdf=rbind(outdf,sas[i,]) else {
-        outdf=rbind(outdf,data.frame(start=up,width=(sas$start[i]-up),names=" ",desc=" ",type="string")) 
+        outdf=rbind(outdf,data.frame(start=up,width=(sas$start[i]-up),sasnames=" ",names=" ",desc=" ",type="string")) 
         outdf=rbind(outdf,sas[i,])
       }
   if ((up<-sas$start[i]+sas$width[i])<nBytesP1)
-    outdf=rbind(outdf,data.frame(start=up,width=(nBytesP1-up),names=" ",desc=" ",type="string")) 
+    outdf=rbind(outdf,data.frame(start=up,width=(nBytesP1-up),sasnames=" ",names=" ",desc=" ",type="string")) 
   outdf$type=as.character(outdf$type)
   if (any(outdf$width<0)) stop("Negative field width. The following pick(s) may be out of order: ", 
                                paste(rownames(outdf)[which(outdf$width<0)-1],collapse=", "))

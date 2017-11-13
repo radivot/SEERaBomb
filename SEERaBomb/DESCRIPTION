@@ -9,7 +9,7 @@ Maintainer: Tomas Radivoyevitch <radivot@ccf.org>
 Depends: dplyr,  ggplot2 
 Suggests:  bbmle, demography
 License: GPL (>= 2)
-Imports: Rcpp (>= 0.11.3), reshape2, mgcv, LaF, DBI, RSQLite, rgl, openxlsx, scales, plyr, survival
+Imports: Rcpp (>= 0.11.3), reshape2, mgcv, LaF, DBI, RSQLite, rgl, openxlsx, labelled, scales, plyr, survival
 LinkingTo: Rcpp
 LazyData: yes
 URL: http://epbi-radivot.cwru.edu/SEERaBomb/SEERaBomb.html

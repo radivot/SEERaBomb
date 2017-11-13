@@ -1,9 +1,9 @@
 mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
                  indices = list(c("sex","race"), c("histo3","seqnum"),  "ICD9"),
                  writePops=TRUE,writeRData=TRUE,writeDB=FALSE){
-  #   require(dplyr); require(LaF); seerHome="~/data/SEER"
-  #   outDir="mrgd";outFile="cancDef";writePops=T;writeRData=TRUE;writeDB=TRUE  # for debugging
-  #   indices = list(c("sex","race"), "histo2", "histo3", "ICD9")
+    # require(dplyr); require(LaF); seerHome="~/data/SEER"
+    # outDir="mrgd";outFile="cancDef";writePops=T;writeRData=TRUE;writeDB=TRUE  # for debugging
+    # indices = list(c("sex","race"), "histo2", "histo3", "ICD9")
   
   # gimic to get rid of unwanted notes in R CMD check
   db=reg=race=sex=age=agerec=year=py=agedx=age19=age86=NULL
@@ -195,6 +195,10 @@ mkPopsae=function(popsa) { # this replaces the version above it
   if (writeRData) {
     print("save()-ing DF canc to disk")
     canc=tbl_df(canc)
+    L=as.list(df$desc)
+    names(L)=df$names
+    L=L[df$names!=" "]
+    labelled::var_label(canc) <- L
     save(canc,file=outF)
     cat("Cancer data has been written to: ",outF,"\n")
   }

@@ -3,7 +3,7 @@ useDynLib(SEERaBomb, .registration = TRUE)
 import(dplyr)  ## depends
 import(ggplot2)  ## depends
 #import(LaF,RSQLite,rgl,XLConnect) ## needed less critically but for too many functions to list
-import(LaF,RSQLite,rgl,openxlsx) ## needed less critically but for too many functions to list
+import(LaF,RSQLite,rgl,openxlsx,labelled) ## needed less critically but for too many functions to list
 importFrom(Rcpp, evalCpp)
 importFrom(survival, survfit,Surv)
 importFrom(DBI, dbDriver)
