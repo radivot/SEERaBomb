@@ -1,7 +1,7 @@
 Package: SEERaBomb
 Title: SEER and Atomic Bomb Survivor Data Analysis Tools
-Version: 2017.3
-Date: 2017-11-7
+Version: 2017.4
+Date: 2018-4-10
 Author: Tomas Radivoyevitch
 Description: Creates SEER (Surveillance, Epidemiology and End Results) and A-bomb data binaries 
              from ASCII sources and provides tools for estimating SEER second cancer risks.      
@@ -9,7 +9,7 @@ Maintainer: Tomas Radivoyevitch <radivot@ccf.org>
 Depends: dplyr,  ggplot2, rgl 
 Suggests:  bbmle, demography
 License: GPL (>= 2)
-Imports: Rcpp (>= 0.11.3), reshape2, mgcv, LaF, DBI, RSQLite, rgl, openxlsx, labelled, scales, plyr, survival
+Imports: Rcpp (>= 0.11.3), reshape2, mgcv, LaF, DBI, RSQLite, openxlsx, labelled, scales, plyr, survival
 LinkingTo: Rcpp
 LazyData: yes
 URL: http://epbi-radivot.cwru.edu/SEERaBomb/SEERaBomb.html

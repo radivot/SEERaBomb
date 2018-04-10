@@ -1,4 +1,4 @@
-mkAbomb<-function(AbombHome="~/data/Abomb"){
+mkAbomb<-function(AbombHome="~/data/abomb"){
   #   library(RSQLite)
   # gimic to get rid of unwanted notes in R CMD check
   marD=py=doseg=ovaD=tesD=uteD=g=NULL #seems to be OK with D and n coming from some global source: function names?
@@ -52,6 +52,8 @@ mkAbomb<-function(AbombHome="~/data/Abomb"){
 #     mutate(dose=cut(D,c(0,.02,.4,10),include.lowest=TRUE,labels=c("low","med","high"))) 
   dbWriteTable(con, "heme", d,overwrite=TRUE)
   dbWriteTable(con, "hemeDesc", df,overwrite=TRUE)
+  heme=as_tibble(d)
+  hemeDesc=as_tibble(df)
   
   colName = c("city", "sex", "un4gy","distg","agexg","ageg","doseg",
               "calg", "subjects", "upy", "py", "gdist", "agex", "age", "year", 
@@ -101,8 +103,13 @@ mkAbomb<-function(AbombHome="~/data/Abomb"){
   
   dbWriteTable(con,"solid",d,overwrite=TRUE)
   dbWriteTable(con,"solidDesc",df,overwrite=TRUE)
+  solid=as_tibble(d)
+  solidDesc=as_tibble(df)
+  save(heme,hemeDesc,solid,solidDesc,file=f<-file.path(AbombHome,"abomb.RData"))
+  
   cat("The following tables:\n")
   print(dbListTables(con)); 	
   dbDisconnect(con)
   cat("have been written to:",outDB,"\n")
+  cat("and as dataframes to:",f,"\n")
 }

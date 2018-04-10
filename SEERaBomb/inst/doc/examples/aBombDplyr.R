@@ -2,6 +2,12 @@
 rm(list=ls())
 library(SEERaBomb)
 mkAbomb() # converts lsshempy.csv and lssinc07.csv in ~\data\abomb into tables heme and sol in ~\data\abomb\abomb.db
+load("~/data/abomb/abomb.RData")
+hemeDesc
+solidDesc
+heme
+solid
+# stuff below was a database idea that is now fading away
 db <- src_sqlite("~/data/abomb/abomb.db") #dplyr interface replaces RSQLite interface functions
 class(db)
 src_tbls(db)
