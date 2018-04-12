@@ -1,7 +1,10 @@
 \name{pickFields}
 \alias{pickFields}
 \title{Pick SEER fields of interest}
-\description{ Reduces the full set of SEER data fields to a smaller set of interest.}
+\description{ Reduces the full set of SEER data fields to a smaller set of interest. SEER fields 
+are rows of the input and output dataframes
+of this function. The output dataframe differs from the input dataframe not only in there being fewer rows  
+but also in there being an additional column needed by \code{mkSEER()} downstream.}
 \usage{pickFields(sas,picks=c("casenum","reg","race","sex","agedx",
         "yrbrth","seqnum","modx","yrdx","histo3",%"radiatn", %"recno","agerec",
         "ICD9","COD","surv","radiatn","chemo"))}  % removed "numprims", just before COD 
@@ -10,9 +13,9 @@
   \item{sas}{A data frame created by \code{getFields()} using the SAS file found in 
   the \file{incidence} directory of \code{seerHome}, the root of the SEER ASCII data installation.}
   \item{picks}{ Vector of names of variables of interest. These must be in the same order as found in the 
-  input data frame \code{sas}. Downstream, mkSEER will not work without a minimum of
-   \code{"reg","race","sex","agedx","histo3",%"radiatn",
-   "ICD9"}, but to estimate
+  input data frame \code{sas}. Downstream, \code{mkSEER()} will not work without a minimum of
+   \code{"reg","race","sex","agedx","histo3"}, and %"radiatn",
+   \code{"ICD9"}, but to estimate
    survival and second cancer risks the default is the minimum.   
 %The default is \code{picks=c("casenum","reg","race",} 
 %\code{"sex","agedx","yrbrth","seqnum","yrdx","histo2","histo3","radiatn",}
@@ -23,7 +26,7 @@
 \details{R binaries become too large if all of the fields are selected. \code{SEERaBomb} is faster than SEER*Stat 
 because it tailors/streamlines the database to your interests. The default picks are a reasonable place to start; if you 
 determine later that you need more fields, you can always rebuild the binaries. Grabbing all fields is  
-discouraged, but if you want this anyway, note that you still need pickFields to create a data type column, i.e. you cannot bypass pickFields by sending the output of getFields straight to mkSEER.}
+discouraged, but if you want this anyway, note that you still need \code{pickFields()} to create a data type column, i.e. you cannot bypass \code{pickFields()} by sending the output of \code{getFields()} straight to \code{mkSEER()}.}
 
 \value{The SAS-based input data frame \code{sas}, shortened to just the rows of \code{picks}, and expanded to include 
 spacer rows of fields of no interest pooled into single strings: the width of such a spacer row is equal to 

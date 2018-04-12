@@ -10,8 +10,8 @@
   \item{df}{ A data frame that was the output of \code{pickFields()}. This determines which fields to transfer. 
   Using the output of \code{getFields()} is a common mistake that must be avoided.}
   \item{seerHome}{ The directory that contains the SEER \file{population} and \file{incidence} directories.  This should be writable by the user.}
-  \item{outDir}{seerHome subdirectory to write to. Default is mrgd for all registries merged together.}
-  \item{outFile}{Base name of the SQLite database and cancer binary. Default = CancDef (Cancer Default). }           
+  \item{outDir}{seerHome subdirectory to write to. Default is \file{mrgd} for all registries merged together.}
+  \item{outFile}{Base name of the SQLite database and cancer binary. Default = cancDef (Cancer Default). }           
   \item{indices}{Passed to \code{copy_to()} in \pkg{dplyr}. }           
   \item{writePops}{TRUE if you wish to write out the population data frame binaries. Doing so takes ~10 seconds, so
   savings of FALSE are small.}           
@@ -20,7 +20,7 @@
 }
 
 \details{This function uses the R package \pkg{LaF} to access the fixed-width format data files 
-of SEER. \pkg{LaF} is fast, but it requires knowledge of all the widths of columns wanted, as well as the the widths of unwanted stretches in between. This knowledge is produced by \code{getFields()} and \code{pickFields()} combined. It is passed to \code{mkSEER} as the argument \code{df}. \code{mkSEER} uses \code{dplyr} objects of class \code{tbl_df}. 
+of SEER. \pkg{LaF} is fast, but it requires knowledge of all the widths of columns wanted, as well as the the widths of unwanted stretches in between. This knowledge is produced by \code{getFields()} and \code{pickFields()} combined. It is passed to \code{mkSEER()} via the argument \code{df}. 
 }
 \value{None, it produces R binary files of the SEER data.}
 
