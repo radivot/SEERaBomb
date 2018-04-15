@@ -2,6 +2,7 @@ useDynLib(SEERaBomb, .registration = TRUE)
 #import(dbplyr)  ## too many warnings, so let user of mkSEER figure out to install this
 import(dplyr)  ## depends
 import(ggplot2)  ## depends
+import(tibble)  ## depends
 #import(LaF,RSQLite,rgl,XLConnect) ## needed less critically but for too many functions to list
 import(LaF,RSQLite,rgl,openxlsx,labelled) ## needed less critically but for too many functions to list
 importFrom(Rcpp, evalCpp)
