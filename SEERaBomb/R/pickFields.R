@@ -2,17 +2,21 @@ pickFields<-function(sas,picks=c("casenum","reg","race","sex","agedx","yrbrth",
                                  "seqnum","modx","yrdx","histo3",#"radiatn", #"recno","agerec",
                                  "ICD9",#"numprims",
                                  "COD","surv","radiatn","chemo") ){
-  #sas = df 
+  sas = df 
   notRows=setdiff(picks,sas$names)
   if (length(notRows)>0) stop(paste0("The following picks are not allowed: ",paste(notRows,collapse=", ")))
   ncols=dim(sas)[1] # in the SEER data files
   nBytesP1=sum(sas[ncols,1:2]) # number of bytes per cancer case in SEER, plus 1
   rownames(sas)<-sas$names
+  ord=1:ncols
+  names(ord)=sas$names
+  ord=ord[picks]
+  picks=names(sort(ord))
    # musts=c("reg","race","sex","agedx","histo3","radiatn","ICD9") # don't let the user not pick these
-   musts=c("reg","race","sex","agedx","histo3","ICD9") # don't let the user not pick these
+   musts=c("reg","race","sex","agedx","histo3","ICD9","radiatn","chemo") # don't let the user not pick these
    # musts=c("reg","race","sex","agedx","histo3","radiatn","agerec","ICD9") # don't let the user not pick these
   missing=setdiff(musts,picks)
-  if (!all(musts%in%picks)) {cat("In sas file order, picks must at least include:")
+  if (!all(musts%in%picks)) {cat("Picks must at least include:")
                              print(musts)
                              stop("\n  The following picks are missing: ",paste(missing,collapse=", "))}
   #   picks=union(musts,picks)  # problem with this is that it did not preserve the order in sas, which it must
@@ -40,7 +44,8 @@ pickFields<-function(sas,picks=c("casenum","reg","race","sex","agedx","yrbrth",
   if ((up<-sas$start[i]+sas$width[i])<nBytesP1)
     outdf=rbind(outdf,data.frame(start=up,width=(nBytesP1-up),sasnames=" ",names=" ",desc=" ",type="string")) 
   outdf$type=as.character(outdf$type)
-  if (any(outdf$width<0)) stop("Negative field width. The following pick(s) may be out of order: ", 
-                               paste(rownames(outdf)[which(outdf$width<0)-1],collapse=", "))
+  if (any(outdf$width<0)) stop("Negative field width. One of your picks may be out of order!") 
+  # if (any(outdf$width<0)) stop("Negative field width. One of your picks may be out of order: ", 
+                               # paste(rownames(outdf)[which(outdf$width<0)-1],collapse=", "))
   outdf	 
 }  # pickFields(df)
