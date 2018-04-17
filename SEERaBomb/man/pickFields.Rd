@@ -12,11 +12,7 @@ but also in there being an additional column needed by \code{mkSEER()} downstrea
 \arguments{
   \item{sas}{A data frame created by \code{getFields()} using the SAS file found in 
   the \file{incidence} directory of \code{seerHome}, the root of the SEER ASCII data installation.}
-  \item{picks}{ Vector of names of variables of interest. These must be in the same order as found in the 
-  input data frame \code{sas}. Downstream, \code{mkSEER()} will not work without a minimum of
-   \code{"reg","race","sex","agedx","histo3"}, and %"radiatn",
-   \code{"ICD9"}, but to estimate
-   survival and second cancer risks the default is the minimum.   
+  \item{picks}{ Vector of names of variables of interest. This set should not be smaller than the default.   
 %The default is \code{picks=c("casenum","reg","race",} 
 %\code{"sex","agedx","yrbrth","seqnum","yrdx","histo2","histo3","radiatn",}
 
