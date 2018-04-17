@@ -2,7 +2,7 @@ pickFields<-function(sas,picks=c("casenum","reg","race","sex","agedx","yrbrth",
                                  "seqnum","modx","yrdx","histo3",#"radiatn", #"recno","agerec",
                                  "ICD9",#"numprims",
                                  "COD","surv","radiatn","chemo") ){
-  sas = df 
+  # sas = df 
   notRows=setdiff(picks,sas$names)
   if (length(notRows)>0) stop(paste0("The following picks are not allowed: ",paste(notRows,collapse=", ")))
   ncols=dim(sas)[1] # in the SEER data files

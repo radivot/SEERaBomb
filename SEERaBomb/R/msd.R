@@ -3,26 +3,26 @@ msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (ms
   msd2=function(canc,mrt,brks){ #old version
     surv=sex=O=E=NULL
     # yearEnd=ceiling(max(canc$yrdx+canc$surv))
-    yearEnd=max(as.numeric(colnames(mrt$female)))
+    yearEnd=max(as.numeric(colnames(mrt$Female)))
     canc=canc%>%filter(surv<200) # restrict to known survival times
-    dm=canc%>%filter(sex=="male")%>%select(-sex)
-    df=canc%>%filter(sex=="female")%>%select(-sex)
-    d=list(male=dm,female=df)
-    mrtF=mrt$female
-    nages=dim(mrt$female)[1]
+    dm=canc%>%filter(sex=="Male")%>%select(-sex)
+    df=canc%>%filter(sex=="Female")%>%select(-sex)
+    d=list(Male=dm,Female=df)
+    mrtF=mrt$Female
+    nages=dim(mrt$Female)[1]
     nfill=126-nages
     # mrtF=rbind(mrtF,sapply(mrtF[111,],function(x) rep(x,15)))
     mrtF=rbind(mrtF,sapply(mrtF[nages,],function(x) rep(x,nfill)))
     rownames(mrtF)=0:125
-    mrtM=mrt$male
+    mrtM=mrt$Male
     mrtM=rbind(mrtM,sapply(mrtM[nages,],function(x) rep(x,nfill)))
     rownames(mrtM)=0:125
     mrtM=mrtM[,as.character(1973:yearEnd)]
     mrtF=mrtF[,as.character(1973:yearEnd)]
-    mrt=list(male=mrtM,female=mrtF)
-    pts=c(male=dim(dm)[1],female=dim(df)[1],total=dim(dm)[1]+dim(df)[1])
-    events=c(male=sum(dm$status),female=sum(df$status),total=sum(dm$status)+sum(df$status))
-    Sexes=c("male","female")[pts[1:2]>0]
+    mrt=list(Male=mrtM,Female=mrtF)
+    pts=c(Male=dim(dm)[1],Female=dim(df)[1],total=dim(dm)[1]+dim(df)[1])
+    events=c(Male=sum(dm$status),Female=sum(df$status),Total=sum(dm$status)+sum(df$status))
+    Sexes=c("Male","Female")[pts[1:2]>0]
     print(Sexes)
     print(binS<-levels(cut(brks+0.1,breaks=c(brks,100)))) #this is just to make a vector of tsd interval/row names 
     DD=NULL

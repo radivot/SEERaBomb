@@ -108,11 +108,11 @@ mkPopsae=function(popsa) { # this replaces the version above it
     #     class(popga)
     
     popsa=popsa%>%    # note: here age groups indices 0-18 are replaced by actual ages 1-85, so no need to remap
-      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
+      mutate(race=cut(race,labels=c("White","Black","Other"),breaks=c(1,2,3,100), right=F))  %>%
       mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
       mutate(reg=mapRegs(reg)) %>%    
       mutate(age86=age86+0.5) %>%    
-      mutate(sex=factor(sex,labels=c("male","female"))) %>%
+      mutate(sex=factor(sex,labels=c("Male","Female"))) %>%
       group_by(db,reg,race,sex,age86,year) %>%
       #       summarise(py=sum(py))%>%   #summing here  over counties and hispanic origin or not, which are in popga as rows but not as columns
       #       group_by(add=F) # clear grouping
@@ -154,13 +154,13 @@ mkPopsae=function(popsa) { # this replaces the version above it
     
     canc=canc%>%
       filter(agedx<200)%>%
-      mutate(race=cut(race,labels=c("white","black","other"),breaks=c(1,2,3,100), right=F))  %>%
+      mutate(race=cut(race,labels=c("White","Black","Other"),breaks=c(1,2,3,100), right=F))  %>%
       mutate(db=cut(reg,labels=c("73","92","00"),breaks=c(1500,1528,1540,1550), right=F))  %>%
       mutate(reg=mapRegs(reg)) %>%
       # mutate(age19=c(0.5,3,seq(7.5,82.5,5),90)[agerec+1]) %>%
       mutate(age86=as.numeric(as.character(cut(agedx,c(0:85,150),right=F,labels=c(0.5:85,90)))))%>%
       #       select(-agerec)%>%
-      mutate(sex=factor(sex,labels=c("male","female")))
+      mutate(sex=factor(sex,labels=c("Male","Female")))
     canc=mapCancs(canc)
     canc=mapCODs(canc)
     # if ("radiatn"%in%names(canc)) canc=mapTrts(canc)
