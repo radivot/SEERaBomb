@@ -17,7 +17,7 @@ windows(width=12,height=7)
 ggplot(aes(x=age86,y=incidence,col=sex),data=d)+ #log="y",
       ylab("Incidence (Cases/100,000 Person-Years)")+
       xlab("Age")+geom_line(size=1)+facet_wrap(~cancer) +
-  scale_y_log10(breaks=c(.01,1,100),labels=c(".01","1","100")) + theme( legend.position = c(.87, .075))  
+  scale_y_log10(breaks=c(.01,1,100),labels=c(".01","1","100")) + theme( legend.position = c(.87, .0))  
 ggsave("~/Results/SEERaBomb/incidMat.eps")
 d%>%filter(cancer%in%c("breast","lung","prostate"))%>%summarise(max(incidence))
 
