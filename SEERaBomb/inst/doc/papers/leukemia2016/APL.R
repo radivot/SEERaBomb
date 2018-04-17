@@ -19,8 +19,8 @@ brks=c(0,0.25,1,2,3,4,5,6,8,10,12)
 (brkS=paste0("b",paste(brks,collapse="_")))
 
 if (1) {
-  pm=seerSet(canc,popsa,Sex="male",ageStart=0,ageEnd=100) #pooled (races) male seerSet
-  (pf=seerSet(canc,popsa,Sex="female",ageStart=0,ageEnd=100)) #pooled (races) female seerSet
+  pm=seerSet(canc,popsa,Sex="Male",ageStart=0,ageEnd=100) #pooled (races) male seerSet
+  (pf=seerSet(canc,popsa,Sex="Female",ageStart=0,ageEnd=100)) #pooled (races) female seerSet
   pm=mk2D(pm,secondS=secs) 
   (pf=mk2D(pf,secondS=secs)) # list object pf goes in and also comes out, with more on it
   
@@ -48,9 +48,9 @@ d=left_join(pL,m)
 d[is.na(d$cases),"cases"]=0 #join left missings where zero's should be, so fix this
 d$cancer=factor(d$cancer,levels=secs)
 d=d%>%mutate(py=py/1e5,incid=cases/py)
-d$sex=gsub("^m","M",d$sex)
-d$sex=gsub("^f","F",d$sex)
-d$sex=factor(d$sex,levels=c("Male","Female"))
+# d$sex=gsub("^m","M",d$sex)
+# d$sex=gsub("^f","F",d$sex)
+# d$sex=factor(d$sex,levels=c("Male","Female"))
 # d$sex=factor(d$sex)
 library(ggplot2)
 theme_set(theme_gray(base_size = 10))

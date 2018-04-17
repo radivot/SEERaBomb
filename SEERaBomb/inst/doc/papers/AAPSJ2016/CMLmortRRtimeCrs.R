@@ -3,7 +3,7 @@ load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
 d=canc%>%filter(cancer=="CML")
 d=d%>%mutate(status=as.numeric(COD>0),surv=(surv+0.5)/12)
 d=d%>%select(yrdx,agedx,sex,surv,status)  #SEER CML survival times
-# mkMrt("username", "password") #Human Mortality Database account info
+# mkMrt("username", "password") #use your Human Mortality Database account info
 load("~/data/usMort/mrt.RData")
 brkst=c(0,0.5,1,2,3,4,5,6,8) 
 brksy=c(1972,1990,2002,2015)
