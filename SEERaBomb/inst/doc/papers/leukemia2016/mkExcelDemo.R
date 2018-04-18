@@ -11,8 +11,8 @@ if (1) {
   canc%<>%separate(trt,c("trt","trtc"))
   canc$trt=factor(canc$trt)
   popsa=popsae%>%group_by(db,race,sex,age,year)%>%summarize(py=sum(py)) # sum on regs
-  m=seerSet(canc,popsa,Sex="male",ageStart=0,ageEnd=100) 
-  f=seerSet(canc,popsa,Sex="female",ageStart=0,ageEnd=100) 
+  m=seerSet(canc,popsa,Sex="Male",ageStart=0,ageEnd=100) 
+  f=seerSet(canc,popsa,Sex="Female",ageStart=0,ageEnd=100) 
   m=mk2D(m) 
   f=mk2D(f) 
   brks=c(0,0.5,1,2,3,10)
@@ -30,4 +30,4 @@ mkExcelTsd(f,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="females",flip=
 
 # test using csd instead of tsd
 mc=csd(m,brkst=c(0,0.5,1,2,3,10),trts=c("rad","noRad")) 
-mkExcelCsd(mc,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="malesCsd") #out filenames are otherwise coded. 
+mkExcelCsd(mc,"b0_0.5_1_2_3_10",biny="[1973,2016)",outDir="~/Results/amlMDS",outName="malesCsd") #out filenames are otherwise coded. 

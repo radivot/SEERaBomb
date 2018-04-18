@@ -27,4 +27,5 @@ library(SEERaBomb)
 for (i in c("73","92","00")) mkSEERold(df,dataset=i)
 }
 }
-\keyword{IO}
+\keyword{internal}
+
