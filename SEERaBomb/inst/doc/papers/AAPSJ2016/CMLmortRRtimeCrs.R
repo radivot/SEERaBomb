@@ -11,7 +11,7 @@ D=msd(d,mrt,brkst,brksy)           #msd()  = Mortality Since Diagnosis
 head(D,2)
 quartz(width=6,height=5)
 # quartz(width=6,height=5)
-theme_update(legend.position = c(.88, .37),axis.text=element_text(size=rel(1.4)),
+theme_update(legend.position = c(.85, .37),axis.text=element_text(size=rel(1.4)),
              axis.title=element_text(size=rel(1.4)),strip.text = element_text(size = rel(1.5)))
 # theme_update(legend.position=c(.48,.43),axis.text=element_text(size=rel(1.4)),
 #              axis.title=element_text(size=rel(1.4)),strip.text=element_text(size=rel(1.5)))

@@ -74,7 +74,7 @@ head(d1)
 ggplot(aes(x=reg,y=stdIncid,col=db),data=d1)+ 
   ylab("Age-adjusted Incidence (Cases/100,000 PY) US2000 Std")+
   xlab("SEER Registry") + 
-  ggtitle(paste0("Cancers in ",cutyr,"-2013")) + 
+  ggtitle(paste0("Cancers in ",cutyr,"-2015")) + 
   geom_errorbar(aes(ymin=stdLo,ymax=stdHi))+
   scale_colour_hue("Dataset", breaks = c("73", "92", "00"), labels = c("1973", "1992", "2000"))+
   theme(axis.title = element_text(size = rel(1.2)),
