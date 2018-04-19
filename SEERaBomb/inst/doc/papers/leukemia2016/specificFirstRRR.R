@@ -7,8 +7,8 @@ system.time(load("~/Results/amlMDS/pf.RData")) # 4 secs to load.
 .simpleCap <- function(s) paste(toupper(substring(s, 1, 1)), substring(s, 2),sep = "", collapse = " ")
 
 names(pm$L)
-hires=FALSE
 hires=TRUE
+hires=FALSE
 if (hires) {
   brks=c(0,0.25,0.5,0.75,1,1.5,2,2.5,3,4,5,6,8,10,12)
   FirstS=c("prostate","breast") # first cancers to be plotted 

@@ -16,6 +16,6 @@ zap=c("cervixCIS","benign")
 # probably isn't worth it from a heme cancer centric perspective.
 canc=canc%>%filter(!cancer%in%zap)
 canc$cancer=factor(canc$cancer)
-pm=seerSet(canc,popsa,Sex="male")
+pm=seerSet(canc,popsa,Sex="Male")
 pm=mk2D(pm,txt="interaction") # pooled race males, all male cancers not zapped get fitted
 plot2D(pm)

@@ -27,8 +27,8 @@ canc%<>%separate(trt,c("trt","trtc"))
 head(canc,2)
 canc$trt=factor(canc$trt)
 
-pm=seerSet(canc,popsa,Sex="male",ageStart=0,ageEnd=100) #pooled (races) male seerSet
-pf=seerSet(canc,popsa,Sex="female",ageStart=0,ageEnd=100) #pooled (races) female seerSet
+pm=seerSet(canc,popsa,Sex="Male",ageStart=0,ageEnd=100) #pooled (races) male seerSet
+pf=seerSet(canc,popsa,Sex="Female",ageStart=0,ageEnd=100) #pooled (races) female seerSet
 pm=mk2D(pm,secondS=c("AML","MDS")) # 4 secs
 pf=mk2D(pf,secondS=c("AML","MDS"))# list object pf goes in and also comes out, with more on it
 # comparing objects, note that mk2D added the dataframe D (for 2D plotting) to the object 
@@ -78,8 +78,8 @@ system.time(save(pf,file="~/Results/amlMDS/pf.RData"))
 ######### START get SEER9 time courses for the left panel of Figure S5 
 canc9=canc%>%filter(db=="73")  
 popsa9=popsa%>%filter(db=="73")
-(pm9=seerSet(canc9,popsa9,Sex="male",ageStart=0,ageEnd=100)) #pooled (races) male seerSet
-(pf9=seerSet(canc9,popsa9,Sex="female",ageStart=0,ageEnd=100)) #pooled (races) female seerSet
+(pm9=seerSet(canc9,popsa9,Sex="Male",ageStart=0,ageEnd=100)) #pooled (races) male seerSet
+(pf9=seerSet(canc9,popsa9,Sex="Female",ageStart=0,ageEnd=100)) #pooled (races) female seerSet
 pm9=mk2D(pm9,secondS=c("AML","MDS")) # 3 secs, was 170 secs with all cancerS
 pf9=mk2D(pf9,secondS=c("AML","MDS"))
 # plot2D(pm9,write=F)  
@@ -92,8 +92,8 @@ system.time(save(pf9,file="~/Results/amlMDS/pf9.RData"))
 ################### END computing RR, O, E and PY for SEER9 for right panel of Fig S5. 
 
 # the next chunk is to validate the codes via Table 1
-pm20=seerSet(canc9,popsa9,Sex="male",ageStart=20,ageEnd=85) #pooled (races) male seerSet
-pf20=seerSet(canc9,popsa9,Sex="female",ageStart=20,ageEnd=85) #pooled (races) female seerSet
+pm20=seerSet(canc9,popsa9,Sex="Male",ageStart=20,ageEnd=85) #pooled (races) male seerSet
+pf20=seerSet(canc9,popsa9,Sex="Female",ageStart=20,ageEnd=85) #pooled (races) female seerSet
 pm20=mk2D(pm20) # 55 secs (goes through all second cancers by default)
 pf20=mk2D(pf20) #
 pm20=tsd(pm20,brks=c(5)) 

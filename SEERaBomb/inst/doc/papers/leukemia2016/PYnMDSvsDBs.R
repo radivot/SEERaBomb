@@ -43,7 +43,7 @@ theme_update(axis.title = element_text(size = rel(2.3)),
              strip.text = element_text(size = rel(1.5)))
 g=ggplot(D)+geom_ribbon(aes(x=yrdx,ymax=cases,ymin=0,fill=db))+facet_grid(db~.)
 # g = g + scale_fill_grey(start = 0.8, end = 0)
-g=g+labs(y="MDS Cases",x="Year")+scale_x_continuous(breaks=seq(2001,2013,by=2)) 
+g=g+labs(y="MDS Cases",x="Year")+scale_x_continuous(breaks=seq(2001,2015,by=2)) 
 g+scale_y_continuous(breaks=seq(0,2000,by=1000)) 
 ggsave("~/Results/amlMDS/fig1B.pdf")
 # ggsave("~/Results/amlMDS/fig1B.png")

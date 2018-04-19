@@ -33,6 +33,8 @@ xlabNR="Years Since Dx of Non-Hematologic 1st Cancer Not Treated With Radiation"
 xlabR="Years Since Dx of Non-Hematologic 1st Cancer Treated With Radiation"
 # for Figure 2 (NR (no radiation) = FALSE => radiation)
 for (NR in c(TRUE,FALSE)) { 
+  # NR=TRUE
+  # NR=FALSE
   quartz(width=7,height=4)
   if (NR) D=d%>%filter(trt=="noRad") else D=d%>%filter(trt=="rad")
   D[D$cancer2=="MDS","t"]=D[D$cancer2=="MDS","t"]+0.05 # shift for CI visibility
@@ -59,8 +61,9 @@ d9=rbind(cbind(df9,Sex="Female"),cbind(dm9,Sex="Male"))
 d9=d9%>%filter(!cancer1%in%HM)%>%group_by(Sex,trt,cancer2,int)%>%summarize(O=sum(O),E=sum(E),t=weighted.mean(t,py,na.rm=T))
 d9=d9%>%mutate(RR=O/E, rrL=qchisq(.025,2*O)/(2*E),rrU=qchisq(.975,2*O+2)/(2*E))
 head(d9)
-
-D=rbind(cbind(d9,DB="SEER-9"),cbind(d,DB="SEER-18"))
+d9$DB="SEER-9"
+d$DB="SEER-18"
+D=bind_rows(d9,d)
 sapply(D,class)
 D=D%>%filter(t<3,cancer2=="MDS",trt=="rad")
 head(D)

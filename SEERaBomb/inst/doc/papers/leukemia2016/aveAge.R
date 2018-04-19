@@ -16,9 +16,9 @@ if (0) {  # 1 to run, 0 to comment (this way it can be folded while looking more
   canc$cancer=factor(canc$cancer) 
   canc%<>%separate(trt,c("trt","trtc"))
   canc$trt=factor(canc$trt)
-  pm=seerSet(canc,popsa,Sex="male",ageStart=0,ageEnd=100) #pooled (races) male seerSet
+  pm=seerSet(canc,popsa,Sex="Male",ageStart=0,ageEnd=100) #pooled (races) male seerSet
   head(pm$canc)
-  pf=seerSet(canc,popsa,Sex="female",ageStart=0,ageEnd=100) #pooled (races) female seerSet
+  pf=seerSet(canc,popsa,Sex="Female",ageStart=0,ageEnd=100) #pooled (races) female seerSet
   head(pf$canc)
   pm=mk2D(pm,secondS=c("AML","MDS"))
   pf=mk2D(pf,secondS=c("AML","MDS"))
@@ -63,7 +63,7 @@ g=qplot(x=t,y=value,data=D,col=trt,shape=variable,geom=c("line","point"),
         xlab=paste("Years Since First Cancer Dx"),ylab="Age at Second Cancer Dx")
 g=g+facet_grid(cancer1~cancer2,scales="free")+geom_abline(intercept=1, slope=0) 
 # g = g + scale_color_grey(start = 0, end = 0.6)
-g+  theme(legend.title = element_blank(),legend.key.height=unit(.45, "cm"),legend.position = c(.22, .5))
+g+  theme(legend.title = element_blank(),legend.key.height=unit(.34, "cm"),legend.position = c(.24, .5))
 ggsave(paste0("~/Results/amlMDS/prosBreastAge.pdf"))
 # ggsave(paste0("~/Results/amlMDS/prosBreastAge.eps"))
 
