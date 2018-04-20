@@ -46,6 +46,7 @@ mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
     } 
     canc[rws,"cancer"]="MDS" # note that we don't need tMDS and tAML as separate cancer types
     canc[rws,"histo3"]=9987 
+    canc$histo3=as.integer(canc$histo3)
     canc$id=NULL
     canc
   }
