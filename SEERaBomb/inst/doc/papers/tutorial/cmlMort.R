@@ -9,7 +9,8 @@ quartz(width=4,height=3)
 theme_update(legend.position = "top")
 g=qplot(x=t,y=RR,data=D,col=Years,geom=c("line","point"), ylim=c(0,18),
         xlab="Years Since CML Diagnosis",ylab="Relative Risk of Mortality")
-g=g+geom_line(size=1)+facet_grid(sex~.)+geom_abline(intercept=1, slope=0) 
+g=g+scale_x_continuous(breaks=seq(0,15,5))
+g=g+geom_line(size=1)+facet_grid(.~sex)+geom_abline(intercept=1, slope=0) 
 g+geom_errorbar(aes(ymin=rrL,ymax=rrU,width=.15)) 
 ggsave("~/Results/tutorial/CMLmortRRtimeCrsTrends.pdf")  
 
