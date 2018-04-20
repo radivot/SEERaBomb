@@ -3,6 +3,9 @@ CHANGES IN VERSION 2018.1 (First version working with SEER release of April 2018
 
 NEW FEATURES
 
+    o mkSEER now automatically maps tAML 9920's into tMDS 9987's post 2009. All 9987 cases after 2009
+    are  ones that were mapped over, so users can undo this if they wish, but I think its best to leave it. 
+
     o pickFields now sorts picks internally, so the user no longer needs to worry about pick ordering.
 
 Notes
