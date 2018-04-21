@@ -49,11 +49,12 @@ msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (ms
     DD
   }
   if (!is.null(brksy)) {
-    canc=canc%>%mutate(Years=cut(yrdx,breaks=brksy,dig.lab=4))
+    canc=canc%>%mutate(Years=cut(yrdx,breaks=brksy,dig.lab=4,include.lowest=T))
     L=split(canc,canc$Years)
     LO=lapply(L,function (x) msd2(x,mrt,brkst))
     for (i in names(LO)) LO[[i]]$Years=i
     D=bind_rows(LO)
+    D$Years=as_factor(D$Years)
   } else D=msd2(canc,mrt,brkst)
   as.tibble(D)  
 }

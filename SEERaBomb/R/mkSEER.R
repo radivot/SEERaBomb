@@ -6,7 +6,7 @@ mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
   # indices = list(c("sex","race"), "histo2", "histo3", "ICD9")
   
   # gimic to get rid of unwanted notes in R CMD check
-  db=reg=race=sex=age=agerec=year=py=agedx=age19=age86=NULL
+  db=reg=race=sex=age=agerec=year=py=agedx=age19=age86=histo3=yrdx=NULL
   #   
   #   mkPopsae=function(popsa) {
   # #     data(stdUS) #load us 2000 standard population up to 99+ and use it for the extrapolation
@@ -235,6 +235,9 @@ mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
     # popga=tbl_df(popga)
     popsa=tbl_df(popsa)
     popsae=tbl_df(popsae)
+    labelled::var_label(popsa)[2:7] <- c("SEER Registry","Race/ethnicity","Sex","Age at diagnosis","Year of diagnosis","Person years")
+    labelled::var_label(popsae)[2:7] <- c("SEER Registry","Race/ethnicity","Sex","Age at diagnosis","Year of diagnosis","Person years")
+    # "db"   "reg"  "race" "sex"  "age"  "year" "py" 
     # save(popga,file=file.path(outD,"popga.RData"))  
     save(popsa,file=file.path(outD,"popsa.RData"))  
     save(popsae,file=file.path(outD,"popsae.RData"))  
