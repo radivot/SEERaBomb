@@ -12,9 +12,16 @@ d=d%>%mutate(ageg=cut(age,seq(20,80,5)))
 d=d%>%mutate(yrg=cut(year,c(2000,2005,2010,2015),dig.lab = 4,include.lowest=T))
 d=d%>%group_by(race,sex,ageg,yrg)%>%
   summarize(age=mean(age),py=sum(py)/1e5,n=sum(n))%>%mutate(incid=n/py)
+library(bbmle)
+summary(mm1<-mle2(n~dpois(lambda=exp(c+k*(age-50))*py),
+                  # parameters=list(c~sex,k~sex), # no k sex diff, P=0.7
+                  parameters=list(c~sex,k~race), #k W-B P=.13;k W-O P=7e-8
+                  method="Nelder-Mead",
+                  start=list(c=0,k=0.04),data=d)) 
+d$EI=predict(mm1)/d$py
 graphics.off() 
 quartz(height=5,width=6)
-theme_update(legend.position = c(.20, .73), 
+theme_update(legend.position = c(.23, .73), 
              axis.text=element_text(size=rel(1.3)),
              axis.title=element_text(size=rel(1.5)),
              strip.text = element_text(size = rel(1.3)),
@@ -26,6 +33,7 @@ ggplot(d,aes(x=age,y=incid,col=sex,shape=sex))+geom_point(size=3.3)+
        y=expression(paste("CML Cases per ",10^5," Person Years"))) +  
   facet_grid(yrg~race) +
   scale_y_log10(breaks=c(1,2,5))+
-  scale_x_continuous(breaks=c(25,50,75))
+  scale_x_continuous(breaks=c(25,50,75)) +
+  geom_line(aes(y=EI)) # update just y component of aes
 ggsave("~/Results/tutorial/incidCML.pdf") # Fig 3
 

@@ -14,8 +14,7 @@ g=g+scale_x_continuous(breaks=seq(0,15,5))
 g=g+geom_line(size=1)+facet_grid(.~sex)+geom_abline(intercept=1, slope=0) 
 g+geom_errorbar(aes(ymin=rrL,ymax=rrU,width=.15)) 
 ggsave("~/Results/tutorial/CMLmortRRtimeCrsTrends.pdf") # Fig 2A
-# Survival probs below
-d=d%>%mutate(yrg=cut(yrdx,c(1973,1990,2005,2015),dig.lab = 4,include.lowest=T))
+d=d%>%mutate(yrg=cut(yrdx,c(1972,1990,2005,2015),dig.lab = 4))
 d=d%>%filter(surv < 200)
 library(survival)
 fit <- survfit(Surv(surv, status) ~ yrg + sex,data=d) 
@@ -23,8 +22,7 @@ library(survminer)
 ggsurvplot_facet(fit,d,facet.by=c("sex"), legend.title="Years",
                  xlab="Years Since CML Diagnosis", 
                  xlim=c(0,12), short.panel.labs=T,
-                 ylab="Survival Probability",
-                 legend.labs=levels(d$yrg))+
+                 ylab="Survival Probability")+
   scale_x_continuous(breaks=seq(0,15,5))
 ggsave("~/Results/tutorial/CMLsurvTrends.pdf")  # Fig 2B 
 
