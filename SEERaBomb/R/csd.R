@@ -59,6 +59,7 @@ csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,
   seerSet$DF$trt=seerSet$DF$trt%>%str_replace_all("no","No ")
   seerSet$DF=seerSet$DF%>%separate(trt,c("rad","chemo"),sep="[\\.]",fixed=T)
   seerSet$DF=seerSet$DF%>%mutate_at(vars(rad:chemo),funs(str_to_title))
+  seerSet$DF$sex=seerSet$sex
   print(proc.time() - ptm)
   seerSet
 }
