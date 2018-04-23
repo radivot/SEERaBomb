@@ -1,5 +1,6 @@
 csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,firstS="all",exclUnkSurv=FALSE){ 
   #   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=L2D=NULL
+  trt=rad=chemo=NULL
   # brkst=c(0);brksy=c(1973,2000);brksa=c(0);seerSet=pf
   print(binSt<-levels(cut(brkst+0.1,breaks=c(brkst,100)))) #this is just to make a vector of tsd interval/row names 
   print(binSy<-levels(cut(brksy,breaks=c(brksy,seerSet$yearEnd+1),right=FALSE,dig.lab=4))) # year at diagnosis break points
@@ -55,6 +56,9 @@ csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,
   cat(paste("Current active series:",seerSet$active,"\n")) 
   print(seerSet$series) 
   seerSet$DF=getDF(seerSet)
+  seerSet$DF$trt=seerSet$DF$trt%>%str_replace_all("no","No ")
+  seerSet$DF=seerSet$DF%>%separate(trt,c("rad","chemo"),sep="[\\.]",fixed=T)
+  seerSet$DF=seerSet$DF%>%mutate_at(vars(rad:chemo),funs(str_to_title))
   print(proc.time() - ptm)
   seerSet
 }

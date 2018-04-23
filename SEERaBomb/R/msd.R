@@ -56,5 +56,5 @@ msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (ms
     D=bind_rows(LO)
     D$Years=as_factor(D$Years)
   } else D=msd2(canc,mrt,brkst)
-  as.tibble(D)  
+  as_tibble(D)  
 }
