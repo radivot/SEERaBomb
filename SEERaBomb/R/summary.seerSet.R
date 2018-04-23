@@ -1,25 +1,27 @@
 summary.seerSet<-function(object, ...) {
-  age=trt=race=surv=year=py=popsa=cancer=NULL 
+  age=rad=trt=race=surv=year=py=popsa=cancer=NULL 
   cf=function (x) comma_format()(x)
-  D=object$canc%>%filter(trt!="unk")%>%group_by(cancer,trt)%>%
+  # object=pf; library(reshape2,scales)
+  object$canc=object$canc%>%tidyr::separate(trt,c("rad","chemo"),sep="[\\.]",fixed=T)
+  D=object$canc%>%filter(rad!="unk")%>%group_by(cancer,rad)%>%
     summarize(n=n(),age=round(mean(age),1),surv=round(median(surv),1)) #,
 #               seq=mean(ifelse(seqnum==0,1,seqnum)) ) #%>%filter(n>9)
   P=object$popsa%>%group_by(year)%>%summarize(PY=round(sum(py)/1e6,1))
-  A=dcast(D,cancer~trt,value.var="age")
-  S=dcast(D,cancer~trt,value.var="surv")
+  A=dcast(D,cancer~rad,value.var="age")
+  S=dcast(D,cancer~rad,value.var="surv")
   #   Sq=dcast(D,cancer~trt,value.var="seq")
-  N=dcast(D,cancer~trt,value.var="n")
+  N=dcast(D,cancer~rad,value.var="n")
   #   N=dcast(D,cancer~trt,value.var="n",margins=c("cancer"),fun.agg=sum)
   d=left_join(N,A,by="cancer")
   d=left_join(d,S,by="cancer")
-  names(d)=c("Cancer",paste(rep(c("Count","Age","Survival"),each=2),c("rad","noRad"),sep="."))
+  names(d)=c("Cancer",paste(rep(c("Count","Age","Survival"),each=2),c("noRad","rad"),sep="."))
   seerSetSum=NULL
   seerSetSum$title=paste0("              Counts, Means of Ages, and Median Survivals in Years\n               Sex: ",
                           object$sex,"    Race: ",object$race,
                           "   Years: ",min(object$popsa$year),"-",max(object$popsa$year) ,"\n")
   Cnts=c(total=dim(object$canc)[1],
-         unkTrt=dim(object$canc%>%filter(trt=="unk"))[1],
-         unkTrtNsurv=dim(object$canc%>%filter(trt=="unk",surv>100))[1],
+         unkTrt=dim(object$canc%>%filter(rad=="unk"))[1],
+         unkTrtNsurv=dim(object$canc%>%filter(rad=="unk",surv>100))[1],
          unkSurv=dim(object$canc%>%filter(surv>100))[1])
   seerSetSum$cnts=Cnts
   seerSetSum$sex=object$sex
