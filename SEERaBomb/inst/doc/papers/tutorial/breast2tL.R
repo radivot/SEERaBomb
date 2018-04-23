@@ -5,9 +5,7 @@ load("~/data/SEER/mrgd/cancDef.RData") #get canc
 canc$cancer=fct_collapse(canc$cancer,AML=c("AML","AMLti","APL"))
 secs=c("CML","AML","ALL") #second cancers of interest
 (d=canc%>%filter(sex=="Female",cancer%in%c("breast",secs)))
-d%>%count(cancer,trt)%>%print(n=50)
 pf=seerSet(d,p,Sex="Female") #pooled (races) females 
-summary(pf)
 pf=mk2D(pf,secondS=secs)# adds secs background rates to pf
 trts=c("rad.chemo", "rad.noChemo", "noRad.chemo", "noRad.noChemo")
 (pf=csd(pf, brkst=c(0,1,2,3,5,10), brksa=c(0,60), trts=trts, firstS="breast"))
@@ -29,4 +27,4 @@ g=g+facet_grid(rad~chemo)+geom_abline(intercept=1, slope=0)
 g+geom_errorbar(aes(ymin=rrL,ymax=rrU)) 
 ggsave("~/Results/tutorial/breast2leu.pdf") # Fig 4
 D%>%filter(cancer2=="CML",rad=="Rad") # see values of CML RR CI at peaks
-pf$DF%>%group_by(trt)%>%summarize(meanPYage=weighted.mean(age,w=py)) 
+pf$DF%>%group_by(trt)%>%summarize(O=sum(O),E=sum(E),meanPYage=weighted.mean(age,w=py)) 
