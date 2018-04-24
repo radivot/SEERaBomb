@@ -13,13 +13,14 @@ d=d%>%group_by(Dose,ageG)
 (D=D%>%gather(value="O",key="leuk",-(Dose:py)))
 D=D%>%mutate(py=py/1e5,I=O/py,LL=qpois(0.025,O)/py,UL=qpois(0.975,O)/py)
 graphics.off();quartz(width=4,height=2.5)
-myt=theme(legend.position=c(.25, .85),legend.title=element_blank(),
+myt=theme(legend.position=c(.6, .85),legend.title=element_blank(),
           legend.direction="vertical",legend.margin=margin(0,0,0,0),
           legend.key.height = unit(.7, 'lines'))
 D$Dose=factor(D$Dose,levels=c(">1Sv","<1Sv","Ctrl"))#high to legend top
+D$leuk=factor(D$leuk,levels=c("AML","ALL","CML")) #keep this order in plots
 g=ggplot(D,aes(x=age,y=I,shape=Dose,col=Dose))+geom_point()+geom_line()+
   xlab("Attained-age (PY-weighted)")+scale_y_log10() + facet_wrap(~leuk)+
-  ylab(expression(paste("Cases per ",10^5," Person-Years"))) + myt+   
+  ylab(expression(paste("Cases per ",10^5," Person-Years"))) + myt   
 g+geom_errorbar(aes(ymin=LL,ymax=UL),width=0.1)+coord_cartesian(ylim=c(.1,100))
 ggsave("~/Results/tutorial/abombLeu.pdf") # Fig 6A
 
