@@ -21,7 +21,7 @@ g=ggplot(aes(x=t,y=RR,col=cancer2),data=D)+geom_point()+geom_line()+myt+
   labs(x="Years Since Breast Cancer Diagnosis",y="Relative Risk of Leukemia")
 g=g+facet_grid(rad~chemo)+geom_abline(intercept=1, slope=0) 
 g+geom_errorbar(aes(ymin=rrL,ymax=rrU),width=0.05)+coord_cartesian(ylim = c(0, 25)) 
-ggsave("~/Results/tutorial/breast2leu.pdf") # Fig 4
+ggsave("~/Results/tutorial/breast2leu.pdf") # Fig 4A
 
 # D%>%filter(cancer2=="CML",rad=="Rad") # see values of CML RR CI at peaks
 # D%>%group_by(rad,chemo)%>%summarize(O=sum(O),E=sum(E),meanPYage=weighted.mean(age,w=py)) 
