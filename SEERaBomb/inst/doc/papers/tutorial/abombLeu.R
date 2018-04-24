@@ -21,5 +21,8 @@ g=ggplot(D,aes(x=age,y=I,shape=Dose,col=Dose))+geom_point()+geom_line()+
   xlab("Attained-age (PY-weighted)")+scale_y_log10() + facet_wrap(~leuk)+
   ylab(expression(paste("Cases per ",10^5," Person-Years"))) + myt+   
 g+geom_errorbar(aes(ymin=LL,ymax=UL),width=0.1)+coord_cartesian(ylim=c(.1,100))
+<<<<<<< HEAD
 ggsave("~/Results/tutorial/abombLeu.pdf") # Fig 6A
+=======
+>>>>>>> 87d58efcf957d34bf438e786f795911a361cf77b
 
