@@ -43,9 +43,9 @@ riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c
   d=rbind(PY0,PY12)
   
   D=NULL #will stack these 
-  yrs=1973:2014; ages=0.5:125.5  # used to initiate PYM with zeros (need 1973 start for fillPYM)
+  yrs=1973:max(canc$yrdx); ages=0.5:125.5  # used to initiate PYM with zeros (need 1973 start for fillPYM)
   
-  for (ii in c("male","female"))
+  for (ii in c("Male","Female"))
     for (i in firstS)
       for (j in trtS) {
       # for (j in c("rad","noRad")) {
@@ -81,6 +81,9 @@ riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c
   # D$trt[D$trt=="noRad"]="No Radiation"
   # D$trt=factor(D$trt,levels=c("Radiation","No Radiation"))
   D$trt=factor(D$trt) # flipped, rad is good, so take natural order
+  D$ntrt=D$trt%>%str_replace_all("no","No ")
+  D=D%>%separate(ntrt,c("rad","chemo"),sep="[\\.]",fixed=T)
+  D=D%>%mutate_at(vars(rad:chemo),funs(str_to_title))
   D$cancer2=factor(D$cancer2)
   D$age=brksm[as.numeric(D$agec)] 
   D

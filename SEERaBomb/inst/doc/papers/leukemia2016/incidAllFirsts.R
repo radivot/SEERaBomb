@@ -5,7 +5,7 @@ library(ggplot2)
 library(dplyr)
 load("~/data/SEER/mrgd/cancDef.RData")
 load("~/data/SEER/mrgd/popsae.RData") 
-HM=c("AML","MDS","CMML","CML","MPN","ALL","CLL","SLL","HCL","OL","NHL","MM","hodgkin")
+HM=c("AML","MDS","CMML","CML","MPN","ALL","CLL","SLL","HCL","OL","NHL","MM","HL","LGL")
 
 graphics.off()
 quartz(height=4.5,width=7) 
