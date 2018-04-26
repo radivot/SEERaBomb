@@ -19,7 +19,7 @@ d=d%>%group_by(cancer,ageg)%>%
 d=d%>%select(cancer,grp,everything(),-ageg) #reorder columns
 NHM=c("breast","thyroid","brain","renal") #NHM = non-heme malignancy
 brksa=c(0,40,50,60,70,80) #broad 1st interval avoids 0 CML groups
-system.time(ra<-riskVsAge(canc,firstS=NHM,secondS=leus,brksa=brksa))# ~45 s
+system.time(ra<-riskVsAge(canc,firstS=NHM,secondS=leus,brksa=brksa))# ~15 s
 raCML<-riskVsAge(canc,firstS=c("AML","ALL"),secondS="CML",brksa=brksa)
 D=bind_rows(ra,raCML)
 D=D%>%filter(rad!="Unk",chemo!="Unk")
