@@ -1,5 +1,5 @@
 msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (msd)
-  yrdx=NULL
+  yrdx=Years=start=yearInt=stop=NULL
   msd2=function(canc,mrt,brks){ #old version
     surv=sex=O=E=NULL
     # yearEnd=ceiling(max(canc$yrdx+canc$surv))
@@ -52,8 +52,17 @@ msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (ms
     canc=canc%>%mutate(Years=cut(yrdx,breaks=brksy,dig.lab=4,include.lowest=T))
     L=split(canc,canc$Years)
     LO=lapply(L,function (x) msd2(x,mrt,brkst))
-    for (i in names(LO)) LO[[i]]$Years=i
+    # for (i in names(LO)) LO[[i]]$Years=i
+    for (i in names(LO)) LO[[i]]$yearInt=i
     D=bind_rows(LO)
+    # D=D%>%tidyr::separate(yearInt,c("start","stop"),sep=",",remove=F)
+    D=D%>%tidyr::separate(yearInt,c("start","stop"),sep=",")
+    # D$start
+    strPl1=stringr::str_detect(D$start, "^\\(")
+    D$start=stringr::str_remove(D$start, "[\\[\\(]")
+    D$start[strPl1]=as.numeric(D$start[strPl1])+1
+    D$stop=stringr::str_remove(D$stop, "[\\]\\)]")
+    D=D%>%tidyr::unite(Years,start:stop,sep="-")
     D$Years=as_factor(D$Years)
   } else D=msd2(canc,mrt,brkst)
   as_tibble(D)  
