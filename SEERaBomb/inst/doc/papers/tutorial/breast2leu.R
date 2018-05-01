@@ -10,8 +10,8 @@ pf=mk2D(pf,secondS=secs)#adds secs background rates to pf
 trts=c("rad.chemo","rad.noChemo","noRad.chemo","noRad.noChemo")
 pf=csd(pf,brkst=c(0,1,2,3,5,10),brksa=c(0,60),trts=trts,firstS="breast")
 (D=pf$DF%>%filter(ageG=="(0,60]")) 
-D=D%>%mutate(cancer2=fct_relevel(cancer2,"AML")) #make AML 1st factor level
-D$t=D$t+c(0,0.075,0.15) #shift times to see overlaid error bars
+D=D%>%mutate(cancer2=fct_relevel(cancer2,"AML"))#make AML 1st
+D$t=D$t+c(0,0.075,0.15)#shift times to separate error bars
 myt=theme(legend.title=element_blank(),legend.margin=margin(0,0,0,0))
 myth=theme(legend.direction="horizontal",legend.key.height=unit(.25,'lines'))
 myth=myt+myth+theme(legend.position=c(.25,.95))
