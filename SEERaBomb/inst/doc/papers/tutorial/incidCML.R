@@ -18,8 +18,8 @@ D$EI=predict(mm1)/D$py
 myt=theme(legend.title=element_blank(),legend.margin=margin(0,0,0,0))
 qplot(age,incid,col=sex,shape=sex,data=D)+facet_grid(~race)+geom_line(aes(y=EI))+
   labs(x="Age (years)",y=quote(paste("CML Cases per ",10^5," Person Years")))+
-  myt+theme(legend.position=c(.45,.91),legend.key.height=unit(.7,'lines'))+
-  scale_y_log10(breaks=c(1,2,5))+scale_x_continuous(breaks=c(25,50,75))
+  scale_y_log10(breaks=c(1,2,5))+scale_x_continuous(breaks=c(25,50,75))+
+  myt+theme(legend.position=c(.45,.91),legend.key.height=unit(.7,'lines'))
 ggsave("~/Results/tutorial/incidCML.pdf",width=4,height=3)
 
 # myt=theme(legend.position=c(.55,.97),legend.title=element_blank(),
