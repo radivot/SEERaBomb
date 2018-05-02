@@ -19,7 +19,7 @@
 library(SEERaBomb)
 rm(list=ls())
 load("~/data/SEER/mrgd/cancDef.RData")
-canc$year=cut(canc$yrdx,c(1973,2003,2009,2014),include.lowest = T,dig.lab=4)
+canc$year=cut(canc$yrdx,c(1973,2003,2009,2015),include.lowest = T,dig.lab=4)
 canc$age=cut(canc$agedx,c(0,40,50,60,70,80,90,126),include.lowest = T)
 canc=canc\%>\%filter(surv<9999)
 canc=canc\%>\%select(-age86,-radiatn,-chemo,-db,-casenum,-modx,-seqnum,-yrbrth,-ICD9,-reg,-histo3)
