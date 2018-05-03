@@ -8,6 +8,9 @@ NEW FEATURES
     
     o incidAbomb takes a grouped A-bomb tibble with DG and py, and forms means, sums, and incidences.
 
+    o incidSEER converts canc and popsae into a data frame with py and cases, filtering years on cancers
+    that had not yet started in SEER. 
+
     o mkSEER now automatically maps tAML 9920's into tMDS 9987's post 2009. All 9987 cases after 2009
     are  ones that were mapped over, so users can undo this if they wish, but I think its best to leave it. 
 

@@ -28,5 +28,5 @@ incidAbomb=function(d) {
   D=D%>%tidyr::gather(value="O",key="cancer",cancers)#O=Observed
   options(warn=0)
   D$cancer=factor(D$cancer,levels=cancers)#set order
-  as.tibble(D%>%mutate(py=py/1e5,I=O/py,LL=qpois(0.025,O)/py,UL=qpois(0.975,O)/py))
+  tibble::as_tibble(D%>%mutate(py=py/1e5,I=O/py,LL=qpois(0.025,O)/py,UL=qpois(0.975,O)/py))
 }
