@@ -60,7 +60,7 @@ mkAbomb<-function(AbombHome="~/data/abomb"){
   names(L)=nms
   labelled::var_label(d) <- L
   # View(d)
-  d=d%>%select(city:un4gy,ageG:DG,gdist:year,D:t,upy:py,subjects,NHL:tot)
+  d=d%>%select(city:un4gy,ageG:DG,gdist:year,D:t,py,upy,subjects,NHL:tot)
   # head(d,2)
   #     filter(doseg>1)  #this group has negative doses, which means they are unknown, so take them out. 
   #     filter(D>=0,py>0)%.% 
@@ -126,7 +126,7 @@ mkAbomb<-function(AbombHome="~/data/abomb"){
   names(L)=nms
   labelled::var_label(d) <- L
   # View(d)
-  d=d%>%select(city:un4gy,ageG:DG,gdist:year,colD:t,upy:py,subjects,solid:histnos)
+  d=d%>%select(city:un4gy,ageG:DG,gdist:year,colD:t,py,upy,subjects,solid:histnos)
   # head(d,2)
   
   
