@@ -45,7 +45,7 @@ D=D%>%mutate(RR=O/E,rrL=qchisq(.025,2*O)/(2*E),rrU=qchisq(.975,2*O+2)/(2*E))
 D$ageG=c("Age 0-60","Age >60")[D$ageG]
 Dbot=D%>%mutate(grp=str_c("Rad: ",ageG))
 D=bind_rows(Dtop,Dbot)
-D$grp=as_factor(D$grp)#orders by occurence, as wanted
+D$grp=as_factor(D$grp)#orders by occurrence, as wanted
 g=ggplot(aes(x=t,y=RR,col=cancer2),data=D)+geom_point()+geom_line()+
   labs(x="Years Since Thyroid Cancer Diagnosis",y=ylab)+myt+ge
 g+facet_wrap(~grp)+geom_hline(yintercept=1)+coord_cartesian(ylim=c(0,15)) 

@@ -1,14 +1,11 @@
-library(tidyverse)
+# library(tidyverse)
+library(SEERaBomb)
 load("~/data/SEER/mrgd/cancDef.RData") 
-d=canc%>%filter(cancer=="CML")%>%mutate(age=agedx+0.5,year=yrdx)
-(d=d%>%count(race,sex,age,year))
 load("~/data/SEER/mrgd/popsae.RData")#loads popsae 
-(p=popsae%>%count(race,sex,age,year,wt=py)%>%rename(py=n))
-D=left_join(p,d) 
-D[is.na(D$n),"n"]=0#missing values should be zeros
-D=D%>%filter(age>=20,age<=80,year>=2000)%>%mutate(ageg=cut(age,seq(20,80,5)))
-D=D%>%group_by(race,sex,ageg)%>%
-  summarize(age=mean(age),py=sum(py)/1e5,n=sum(n))%>%mutate(incid=n/py)
+D=incidSEER(canc,popsae,"CML")
+D=D%>%filter(age>=20,age<=80,year>=2000)%>%mutate(ageG=cut(age,seq(20,80,5)))
+D=D%>%group_by(sex,race,ageG)%>%
+  summarize(age=mean(age),py=sum(py),n=sum(n))%>%mutate(incid=n/py)
 library(bbmle)
 summary(mm1<-mle2(n~dpois(lambda=exp(c+k*(age-50))*py),
                   #parameters=list(c~sex,k~sex),#k no diff

@@ -13,28 +13,24 @@ incidSEER=function(canc,popsae,cancers) {
   x=rep(1973,length(outnms))
   names(x)<-outnms
   (startYrs=c(startYrs,x))
-  d=canc%>%select(cancer,sex,agedx,year=yrdx)%>%mutate(age=agedx+0.5)%>%filter(cancer%in%cancers)%>%select(-agedx)
-  dcast(d%>%group_by(cancer,year)%>%summarize(cases=n()),cancer~year)
-  
-  d=d%>%filter(year>=startYrs[as.character(cancer)])
-  dcast(d%>%group_by(cancer,year)%>%summarize(cases=n()),cancer~year)
-  
-  m=d%>%group_by(cancer,sex,age,year)%>%summarise(cases=n())
-  # head(m%>%filter(cancer=="CMML"))
-  p=popsae%>%group_by(sex,age,year)%>%summarise(py=sum(py))
+  D=canc%>%select(cancer,sex,race,agedx,year=yrdx)%>%mutate(age=agedx+0.5)%>%filter(cancer%in%cancers)%>%select(-agedx)
+  # reshape2::dcast(d%>%group_by(cancer,year)%>%summarize(n=n()),cancer~year)
+
+  m=D%>%group_by(cancer,sex,race,age,year)%>%summarise(n=n())
+  p=popsae%>%group_by(sex,race,age,year)%>%summarise(py=sum(py))
   s=data.frame(sex=sort(unique(m$sex)))
+  r=data.frame(race=sort(unique(m$race)))
   c=data.frame(cancer=cancers)
   cs=merge(c,s)
+  csr=merge(cs,r)%>%arrange(cancer,sex,race)
   options(warn=-1)
   pL=left_join(cs,p)
   d=left_join(pL,m)
   options(warn=0)
-  # head(d%>%filter(cancer=="CMML"))
-  d[is.na(d$cases),"cases"]=0 #join left missings where zero's should be, so fix this
-  # d=d%>%filter(year>=startYrs[as.character(cancers)])
-  head(d)
+  d[is.na(d$n),"n"]=0 #join left missings where zero's should be, so fix this
+  # head(d)
   d=d%>%group_by(cancer)%>%filter(year>=startYrs[as.character(cancer[1])])
-  dcast(d%>%group_by(cancer,year)%>%summarize(cases=sum(cases)),cancer~year) #check, should be same
-  head(d)  #OK, now collapse on years
-  d=d%>%group_by(cancer,sex,age)%>%summarize(py=sum(py),cases=sum(cases))%>%mutate(py=py/1e5,incid=cases/py)
+  # reshape2::dcast(d%>%group_by(cancer,year)%>%summarize(n=sum(n)),cancer~year) #check, should be same
+  d%>%mutate(py=py/1e5,incid=n/py)
 }
+

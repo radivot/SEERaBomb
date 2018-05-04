@@ -2,19 +2,14 @@ graphics.off();rm(list=ls())
 library(SEERaBomb);library(tidyverse)
 load("~/data/SEER/mrgd/cancDef.RData") 
 canc$cancer=fct_collapse(canc$cancer,AML=c("AML","AMLti","APL"))
-leus=c("AML","ALL","CML")
-d=canc%>%filter(cancer%in%leus)%>%mutate(age=agedx+0.5,year=yrdx)
-(d=d%>%count(cancer,age,year))
 load("~/data/SEER/mrgd/popsae.RData") 
-(p=popsae%>%count(age,year,wt=py)%>%rename(py=n))
-d=left_join(p,d)
-d[is.na(d$n),"n"]=0
+d=incidSEER(canc,popsae,cancers=leus<-c("AML","ALL","CML"))
 d=d%>%filter(age<=85,year>=2000)
-d=d%>%mutate(ageg=cut(age,seq(0,85,5)))
-d=d%>%group_by(cancer,ageg)%>%
-  summarize(age=mean(age),py=sum(py)/1e5,n=sum(n))%>%
+d=d%>%mutate(ageG=cut(age,seq(0,85,5)))
+d=d%>%group_by(cancer,ageG)%>%
+  summarize(age=mean(age),py=sum(py),n=sum(n))%>%
   mutate(incid=n/py,grp="Background")
-d=d%>%select(cancer,grp,everything(),-ageg)#reorder columns
+d=d%>%select(cancer,grp,everything(),-ageG)#reorder columns
 NHM=c("breast","thyroid","brain","renal")#NHM=non-heme malignancy
 brksa=c(0,40,50,60,70,80)#broad 1st interval avoids 0 CML groups
 system.time(ra<-riskVsAge(canc,firstS=NHM,secondS=leus,brksa=brksa))#~15s
