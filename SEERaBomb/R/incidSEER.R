@@ -1,5 +1,5 @@
 incidSEER=function(canc,popsae,cancers) {
-  cancer=sex=agedx=yrdx=year=age=py=cases=NULL
+  cancer=sex=race=agedx=yrdx=year=age=py=cases=NULL
   
   # load("~/data/SEER/mrgd/popsae.RData") # loads in popsae (extended to ages 85-99)
   # load("~/data/SEER/mrgd/cancDef.RData") #loads in canc
@@ -19,12 +19,12 @@ incidSEER=function(canc,popsae,cancers) {
   m=D%>%group_by(cancer,sex,race,age,year)%>%summarise(n=n())
   p=popsae%>%group_by(sex,race,age,year)%>%summarise(py=sum(py))
   s=data.frame(sex=sort(unique(m$sex)))
-  r=data.frame(race=sort(unique(m$race)))
+  # r=data.frame(race=sort(unique(m$race))) # skip since race is in automatically, like age and year
   c=data.frame(cancer=cancers)
-  cs=merge(c,s)
-  csr=merge(cs,r)%>%arrange(cancer,sex,race)
+  cs=merge(c,s)%>%arrange(cancer,sex)
+  # csr=merge(cs,r)%>%arrange(cancer,sex,race) #comment to keep label of race
   options(warn=-1)
-  pL=left_join(cs,p)
+  pL=left_join(cs,p,by="sex")
   d=left_join(pL,m)
   options(warn=0)
   d[is.na(d$n),"n"]=0 #join left missings where zero's should be, so fix this
