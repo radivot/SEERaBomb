@@ -1,4 +1,3 @@
-# library(tidyverse)
 library(SEERaBomb)
 load("~/data/SEER/mrgd/cancDef.RData") 
 load("~/data/SEER/mrgd/popsae.RData")#loads popsae 
@@ -18,8 +17,4 @@ qplot(age,incid,col=sex,shape=sex,data=D)+facet_grid(~race)+geom_line(aes(y=EI))
   theme(legend.title=element_blank(),legend.margin=margin(0,0,0,0),
         legend.position=c(.45,.91),legend.key.height=unit(.7,'lines'))
 ggsave("~/Results/tutorial/incidCML.pdf",width=4,height=3)
-
-# myt=theme(legend.position=c(.55,.97),legend.title=element_blank(),
-# legend.direction="horizontal",legend.margin=margin(0,0,0,0),
-# legend.key.height=unit(.25,'lines'))
 

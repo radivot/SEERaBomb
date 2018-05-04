@@ -1,7 +1,6 @@
 graphics.off();rm(list=ls())
 library(tidyverse);library(SEERaBomb)
 load("~/data/abomb/abomb.RData")
-head(heme,2)
 (d=heme%>%select(ageG:DG,age,agex,t,D,py,AML=AMLtot,ALL,CML))
 (dA=incidAbomb(d%>%group_by(ageG,DG)))
 myt=theme(legend.position=c(.52,.85),legend.title=element_blank(),
