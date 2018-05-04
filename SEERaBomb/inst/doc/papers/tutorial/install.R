@@ -12,8 +12,9 @@ head(canc,3)                          #returns top 3 rows of canc
 
 library(SEERaBomb)
 mkAbomb()#converts files in ~/data/abomb into ~/data/abomb/abomb.RData
-load("~/data/abomb/abomb.RData")#loads A-bomb data
-View(heme)
+load("~/data/abomb/abomb.RData")#loads data frames heme and solid 
+View(heme)                      #note descriptions under column names
+
 
 mkMrt("username","password")#sub in your account info
 
