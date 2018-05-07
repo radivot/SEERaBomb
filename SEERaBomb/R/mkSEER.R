@@ -193,6 +193,7 @@ mkSEER<-function(df,seerHome="~/data/SEER",outDir="mrgd",outFile="cancDef",
     # if ("radiatn"%in%names(canc)) canc=mapTrts(canc)
     canc=mapTrts(canc)
     canc=tMDSrepair(canc)
+    canc[canc$surv==9999,"surv"]=NA #set missing to NA to simplify survival codes
     delT=proc.time() - ptm  
     cat("Cancer files were processed in ",delT[3]," seconds.\n")
   } #if writeRData or writeDB

@@ -13,7 +13,8 @@ csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,
     if (firstS[1]=="all") firstS=cancerS
     SL$firstS=firstS
     if (is.null(trts)) trts=levels(canc$trt)
-    if (exclUnkSurv)  canc=canc%>%filter(surv<200)
+    # if (exclUnkSurv)  canc=canc%>%filter(surv<200)
+    if (exclUnkSurv)  canc=canc%>%filter(is.na(surv))
     SL$trtS=trts
     print(trts)
     for (R in trts) { 
@@ -60,6 +61,13 @@ csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,
   seerSet$DF=seerSet$DF%>%separate(trt,c("rad","chemo"),sep="[\\.]",fixed=T)
   seerSet$DF=seerSet$DF%>%mutate_at(vars(rad:chemo),funs(str_to_title))
   seerSet$DF$sex=seerSet$sex
+  # seerSet=pf
+  # dput(seerSet$DF$cancer2)
+  seerSet$DF$cancer2=factor(seerSet$DF$cancer2,levels=seerSet$sec)#use sec order for factor levels
+  n=length(unique(seerSet$DF$cancer2))#hope this doesn't get too big
+  shfts=seq(0,0.1*n,0.1) #for multiple cancers out, shift by .1 yrs to stager CI
+  seerSet$DF$t=seerSet$DF$t+shfts[seerSet$DF$cancer2]
+  # seerSet$DF
   print(proc.time() - ptm)
   seerSet
 }
