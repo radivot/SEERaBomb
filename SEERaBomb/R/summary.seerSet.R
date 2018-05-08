@@ -21,8 +21,8 @@ summary.seerSet<-function(object, ...) {
                           "   Years: ",min(object$popsa$year),"-",max(object$popsa$year) ,"\n")
   Cnts=c(total=dim(object$canc)[1],
          unkTrt=dim(object$canc%>%filter(rad=="unk"))[1],
-         unkTrtNsurv=dim(object$canc%>%filter(rad=="unk",surv>100))[1],
-         unkSurv=dim(object$canc%>%filter(surv>100))[1])
+         unkTrtNsurv=dim(object$canc%>%filter(rad=="unk",is.na(surv)))[1],
+         unkSurv=dim(object$canc%>%filter(is.na(surv)))[1])
   seerSetSum$cnts=Cnts
   seerSetSum$sex=object$sex
   

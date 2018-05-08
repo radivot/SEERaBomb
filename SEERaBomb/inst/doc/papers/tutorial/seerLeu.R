@@ -1,4 +1,4 @@
-graphics.off();rm(list=ls())  
+rm(list=ls())  
 library(SEERaBomb);library(tidyverse)
 load("~/data/SEER/mrgd/cancDef.RData") 
 canc$cancer=fct_collapse(canc$cancer,AML=c("AML","AMLti","APL"))
