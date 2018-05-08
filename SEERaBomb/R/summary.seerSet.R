@@ -4,7 +4,7 @@ summary.seerSet<-function(object, ...) {
   # object=pf; library(reshape2,scales)
   object$canc=object$canc%>%tidyr::separate(trt,c("rad","chemo"),sep="[\\.]",fixed=T)
   D=object$canc%>%filter(rad!="unk")%>%group_by(cancer,rad)%>%
-    summarize(n=n(),age=round(mean(age),1),surv=round(median(surv),1)) #,
+    summarize(n=n(),age=round(mean(age),1),surv=round(median(surv,na.rm = TRUE),1)) #,
 #               seq=mean(ifelse(seqnum==0,1,seqnum)) ) #%>%filter(n>9)
   P=object$popsa%>%group_by(year)%>%summarize(PY=round(sum(py)/1e6,1))
   A=dcast(D,cancer~rad,value.var="age")
