@@ -13,22 +13,22 @@ load("~/data/abomb/abomb.RData")
 gx=xlab("Attained Age (Years)")
 (dA=incidAbomb(d%>%group_by(ageG,DG)))
 ggplot(dA,aes(x=age,y=I,shape=DG,col=DG))+gp+gl+gx+sy+gy+ge+f+cc+myt
-ggsave("~/Results/tutorial/abombLeuAge.pdf",width=4,height=2.5)#Fig.5A
+ggsave("~/Results/tutorial/abombLeuAge.pdf",width=4,height=2.5)#Fig.6A
 
 gx=xlab("Age at Time of Bombing (Years)")
 (dB=incidAbomb(d%>%group_by(agexG,DG)))
 ggplot(dB,aes(x=agex,y=I,shape=DG,col=DG))+gp+gl+gx+sy+gy+ge+f+cc+myt
-ggsave("~/Results/tutorial/abombLeuAgex.pdf",width=4,height=2.5)#Fig.5B
+ggsave("~/Results/tutorial/abombLeuAgex.pdf",width=4,height=2.5)#Fig.6B
 
 gx=xlab("Years Since Bombing")
 (dC=incidAbomb(d%>%group_by(tG,DG)))
 ggplot(dC,aes(x=t,y=I,shape=DG,col=DG))+gp+gl+gx+sy+gy+ge+f+cc+myt
-ggsave("~/Results/tutorial/abombLeuTsx.pdf",width=4,height=2.5)#Fig.5C
+ggsave("~/Results/tutorial/abombLeuTsx.pdf",width=4,height=2.5)#Fig.6C
 
 gx=xlab("Dose (Sv)")
 d$DG<-cut(d$D,c(-1,.02,.25,.5,.75,1.5,100))
 (dD=incidAbomb(d%>%group_by(DG)))
 ggplot(dD,aes(x=D,y=I))+gp+gl+gx+sy+gy+ge+f+cc
-ggsave("~/Results/tutorial/abombLeuDoseResp.pdf",width=4,height=2.5)#Fig.5D
+ggsave("~/Results/tutorial/abombLeuDoseResp.pdf",width=4,height=2.5)#Fig.6D
 
 

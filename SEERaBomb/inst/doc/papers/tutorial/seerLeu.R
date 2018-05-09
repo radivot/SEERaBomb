@@ -32,7 +32,7 @@ ggplot(dd,aes(x=age,y=incid,col=grp))+geom_line()+myt+facet_grid(~cancer)+
   xlab("Attained Age (Years)")+scale_x_continuous(breaks=c(0,25,50,75))+
   ylab(quote(paste("Cases per ",10^5," Person-Years")))+
   scale_y_log10()+coord_cartesian(ylim=c(0.01,40))
-ggsave("~/Results/tutorial/seerLeu.pdf",width=3.5,height=2.5)#Fig.6
+ggsave("~/Results/tutorial/seerLeu.pdf",width=3.5,height=2.5)#Fig.5
 
 # dd=dd%>%mutate(LL=qpois(0.025,n)/py,UL=qpois(0.975,n)/py) #look at some CI
 # dd%>%filter(cancer=="CML",grp%in%c("Rad, Chemo","Rad, No Chemo"))%>%arrange(age)

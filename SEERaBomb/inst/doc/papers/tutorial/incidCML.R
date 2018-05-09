@@ -10,7 +10,7 @@ summary(mm1<-mle2(n~dpois(lambda=exp(c+k*(age-50))*py),
                   #parameters=list(c~sex,k~sex),#k no diff
                   parameters=list(c~sex,k~race),#kW-O P=7e-8
                   method="Nelder-Mead",start=list(c=0,k=0.04),data=D)) 
-D$EI=predict(mm1)/D$py
+D$EI=predict(mm1)/D$py#same as D=D%>%ungroup()%>%mutate(EI=predict(mm1)/py) 
 qplot(age,incid,col=sex,shape=sex,data=D)+facet_grid(~race)+geom_line(aes(y=EI))+
   labs(x="Age (years)",y=quote(paste("CML Cases per ",10^5," Person Years")))+
   scale_y_log10(breaks=c(1,2,5))+scale_x_continuous(breaks=c(25,50,75))+
