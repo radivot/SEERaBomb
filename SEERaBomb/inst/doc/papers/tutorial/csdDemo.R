@@ -16,7 +16,7 @@ trts=c("rad.chemo","rad.noChemo","noRad.chemo","noRad.noChemo")
 pf=csd(pf,brkst=c(0,1,2,3,5,10),brksa=c(0,60),trts=trts,firstS="breast")
 (dA=pf$DF%>%filter(ageG=="(0,60]")) 
 gx=xlab("Years Since Breast Cancer Diagnosis")
-g=ggplot(aes(x=t,y=RR,col=cancer2),data=dA)+gp+gl+gx+gy+gh+ge+myt+cc
+g=ggplot(dA,aes(x=t,y=RR,col=cancer2))+gp+gl+gx+gy+gh+ge+myt+cc
 g+facet_grid(rad~chemo) 
 ggsave("~/Results/tutorial/breast2leu.pdf",width=4,height=4)#Fig.4A 
 
@@ -38,7 +38,7 @@ Dbot=D%>%mutate(grp=str_c("Rad: ",ageG))
 dB=bind_rows(Dtop,Dbot)
 dB$grp=as_factor(dB$grp)#orders by occurrence, as wanted
 gx=xlab("Years Since Thyroid Cancer Diagnosis")
-g=ggplot(aes(x=t,y=RR,col=cancer2),data=dB)+gp+gl+gx+gy+gh+ge+myt+cc
+g=ggplot(dB,aes(x=t,y=RR,col=cancer2))+gp+gl+gx+gy+gh+ge+myt+cc
 g+facet_wrap(~grp) 
 ggsave("~/Results/tutorial/thyroid2leu.pdf",width=4,height=4)
 

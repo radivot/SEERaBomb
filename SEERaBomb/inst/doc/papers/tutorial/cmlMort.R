@@ -3,7 +3,7 @@ library(SEERaBomb)
 load("~/data/SEER/mrgd/cancDef.RData")
 d=canc%>%filter(cancer=="CML")%>%print(n=13)
 d%>%summarize(n=n(),na=sum(is.na(surv)),prct=100*na/n)#<2% missing
-d=d%>%mutate(status=as.numeric(COD>0),surv=(surv+0.5)/12)
+d=d%>%mutate(status=as.numeric(COD>0),surv=(surv+0.5)/12)#move into mkSEER?
 d=d%>%select(yrdx,agedx,sex,surv,status)%>%print(n=13)
 load("~/data/usMort/mrt.RData")#loads mrt
 (D=msd(d,mrt,brkst=c(0,0.5,1,2,3,4,5,6,8),brksy=c(1973,1990,2005,2015)))
