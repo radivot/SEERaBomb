@@ -1,11 +1,19 @@
 Package: SEERaBomb
 Title: SEER and Atomic Bomb Survivor Data Analysis Tools
-Version: 2018.1
-Date: 2018-5-10
+Version: 2018.2
+Date: 2018-5-11
 Author: Tomas Radivoyevitch
-Description: Creates SEER (Surveillance, Epidemiology and End Results) and A-bomb data binaries 
-             from ASCII sources and provides tools for estimating SEER second cancer risks.      
+Description: Creates SEER (Surveillance, Epidemiology and End Results) and 
+    A-bomb data binaries from ASCII sources and provides tools for estimating
+    SEER second cancer risks. Methods are described in 
+    Radivoyevitch et al. (2016) <doi:10.1038/leu.2015.258>.
 Maintainer: Tomas Radivoyevitch <radivot@ccf.org>
+Authors@R: c(person("Tomas", "Radivoyevitch", role = c("aut", "cre"),
+                     email = "radivot@ccf.org"),
+              person("R.", "Molenaar", role = "ctb",
+                     email = "r.j.molenaar@amc.uva.nl"))
+Author: Tomas Radivoyevitch [aut, cre],
+        R. Molenaar [ctb]
 Depends: dplyr,  ggplot2, rgl,   demography 
 Suggests:  bbmle
 License: GPL (>= 2)
