@@ -1,5 +1,5 @@
 graphics.off();rm(list=ls())
-library(SEERaBomb)
+library(SEERaBomb)#version 2018.1 or higher is needed for this tutorial
 load("~/data/SEER/mrgd/cancDef.RData")
 d=canc%>%filter(cancer=="CML")%>%print(n=13)
 d%>%summarize(n=n(),na=sum(is.na(surv)),prct=100*na/n)#<2% missing
