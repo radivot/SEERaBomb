@@ -24,16 +24,20 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secon
         d=canc%>%filter(cancer%in%i,year>2009)
         ps=popsa%>%filter(year>2009)
       } else 
-        if (i%in%c("MDS","MPN","RARS","AMLti","unknown"))  {
-        d=canc%>%filter(cancer%in%i,year>2000)
-        ps=popsa%>%filter(year>2000)
-      } else 
-        if (i=="CMML")  {d=canc%>%filter(cancer%in%i,year>1985) 
-        ps=popsa%>%filter(year>1985)
-        } else  {
-          d=canc%>%filter(cancer%in%i)
-          ps=popsa
-        }
+        if (i%in%c("benign"))  {
+          d=canc%>%filter(cancer%in%i,year>2003)
+          ps=popsa%>%filter(year>2003)
+        } else 
+          if (i%in%c("MDS","MPN","RARS","AMLti","unknown"))  {
+            d=canc%>%filter(cancer%in%i,year>2000)
+            ps=popsa%>%filter(year>2000)
+          } else 
+            if (i=="CMML")  {d=canc%>%filter(cancer%in%i,year>1985) 
+            ps=popsa%>%filter(year>1985)
+            } else  {
+              d=canc%>%filter(cancer%in%i)
+              ps=popsa
+            }
       d=d%>%mutate(age=floor(age)+0.5)
       d=d%>%group_by(year,age)%>%summarise(cases=n())
       ps=ps%>%group_by(year,age)%>%summarise(py=sum(py)) 
@@ -41,9 +45,9 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secon
       X[is.na(X)]=0
       cat(knots," knots, working on cancer ",i,":\n")
       if (i=="LGL") L2D[[i]]=gam(cases ~ s(age)+offset(log(py)),
-                   family=poisson(),data=X,method="REML") else
-      L2D[[i]]=gam(cases ~ s(age)+s(year)+ti(age,year,k=knots)+offset(log(py)),
-                   family=poisson(),data=X,method="REML") 
+                                 family=poisson(),data=X,method="REML") else
+                                   L2D[[i]]=gam(cases ~ s(age)+s(year)+ti(age,year,k=knots)+offset(log(py)),
+                                                family=poisson(),data=X,method="REML") 
       prd=as.numeric(predict(L2D[[i]]))
       # L2Dp[[i]]=cbind(cancer=i,X,Ecases=exp(prd),Eincid=1e5*exp(prd)/X$py  )
       L2Dp[[i]]=data.frame(cancer=i,X,Ecases=exp(prd),Eincid=1e5*exp(prd)/X$py  )

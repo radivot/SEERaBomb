@@ -114,7 +114,7 @@ mapCancs<-function(D){
   cancer[(histo3>=9965)&(histo3<=9967)]="MPN" # GFR mutatants 
   cancer[(histo3>=9970)&(histo3<=9971)]="NHL" # ICD9 put it mostly there, so sweep stray 1s into it also. 
   cancer[(histo3==9876)]="MPN" #"aCML"
-  
+  cancer[histo3==9140]="KS" # overwrite mostly skin as Kaposi Sarcoma (KS)
   cancer[(D$seqnum>=60)&(D$seqnum<=88)]="benign" # 88 is benign but unknown sequence
   ## most of below fall into benign, and most started in 2004.
   ##  Bottomline: Bucket to remove since my codes don't handle such seqnums.

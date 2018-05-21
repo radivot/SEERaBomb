@@ -20,6 +20,7 @@ plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots",col="red") {
       (length(ages<-unique(pd$age))*nyrs)
       if (!i%in%c("SLL","CLL")) pd$incid[pd$incid==0]=0.002 # raise a notch from 0.001 to avoid plotting -3 if all above 0.002
        else pd$incid[pd$incid==0]=0.0002 
+      pd$Eincid[pd$Eincid<0.0001]=0.0001 
       with(pd,plot3d(age,year,log10(incid),xlab="",ylab="",zlab="")) #,sub=paste0(j," ",i,"s")))
       # with(pd,plot3d(age,year,log10(incid),xlab="Age",ylab="Year",zlab="Log Incidence",cex=2)) #,sub=paste0(j," ",i,"s")))
       with(pd,surface3d(x=ages,y=yrs,z=matrix(log10(Eincid),ncol=nyrs),alpha=0.8,col=col)) 
