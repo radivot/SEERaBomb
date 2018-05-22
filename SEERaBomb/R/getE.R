@@ -11,36 +11,51 @@ getE=function(LPYM,D,ageStart,ageEnd,yearEnd,firstS,secondS) {
   LPYM[["RARS"]]=LPYM[["RARS"]][,-c(1:28)]
   LPYM[["AMLti"]]=LPYM[["AMLti"]][,-c(1:28)]
   LPYM[["unknown"]]=LPYM[["unknown"]][,-c(1:28)]
+  LPYM[["benign"]]=LPYM[["benign"]][,-c(1:31)] #benign starts in 2004
   LPYM[["LGL"]]=LPYM[["LGL"]][,-c(1:37)] #LGL starts in 2010
 #    secondS=names(EI)
+  strt86=c("CMML")
   strt01=c("MDS","MPN","RARS","AMLti","unknown")
+  strt04=c("benign")
   strt10=c("LGL")
   (E=matrix(0,nrow=length(firstS),ncol=length(secondS),dimnames=list(firstCanc=firstS,secondCanc=secondS)))
   for (i in firstS) {   #i loop on first cancers
     PY=LPYM[[i]]
     for (j in secondS) # j loop on second cancers
     { 
+      # cat(i,j,"\n")
       # if (i=="CMML" & !j%in%c("CMML",strt01))  E[i,j]=sum(PY*EI[[j]][,as.character(1986:yearEnd)])
-      if (i=="CMML" & !j%in%c("CMML",strt01,strt10))  E[i,j]=sum(PY*EI[[j]][,as.character(1986:yearEnd)])
-      if (i=="CMML" & j=="CMML")  E[i,j]=sum(PY*EI[[j]])
-      if (i=="CMML" & j%in%strt01)  E[i,j]=sum(PY[,as.character(2001:yearEnd)]*EI[[j]])
-      if (i=="CMML" & j%in%strt10)  E[i,j]=sum(PY[,as.character(2010:yearEnd)]*EI[[j]])
+      # if (i=="CMML" & !j%in%c("CMML",strt01,strt10))  E[i,j]=sum(PY*EI[[j]][,as.character(1986:yearEnd)])
+      if (i%in%strt86 & !j%in%c(strt86,strt01,strt04,strt10))  E[i,j]=sum(PY*EI[[j]][,as.character(1986:yearEnd)])
+      if (i%in%strt86 & j%in%strt86)  E[i,j]=sum(PY*EI[[j]])
+      if (i%in%strt86 & j%in%strt01)  E[i,j]=sum(PY[,as.character(2001:yearEnd)]*EI[[j]])
+      if (i%in%strt86 & j%in%strt04)  E[i,j]=sum(PY[,as.character(2004:yearEnd)]*EI[[j]])
+      if (i%in%strt86 & j%in%strt10)  E[i,j]=sum(PY[,as.character(2010:yearEnd)]*EI[[j]])
       
       # if (i%in%strt01 & !j%in%c("CMML",strt01))  E[i,j]=sum(PY*EI[[j]][,as.character(2001:yearEnd)])
-      if (i%in%strt01 & !j%in%c("CMML",strt01,strt10))  E[i,j]=sum(PY*EI[[j]][,as.character(2001:yearEnd)])
-      if (i%in%strt01 & j=="CMML")  E[i,j]=sum(PY*EI[[j]][,as.character(2001:yearEnd)])
-      if (i%in%strt01 & j%in%strt01 )  E[i,j]=sum(PY*EI[[j]])
+      if (i%in%strt01 & !j%in%c(strt86,strt01,strt04,strt10))  E[i,j]=sum(PY*EI[[j]][,as.character(2001:yearEnd)])
+      if (i%in%strt01 & j%in%strt86)  E[i,j]=sum(PY*EI[[j]][,as.character(2001:yearEnd)])
+      if (i%in%strt01 & j%in%strt01)  E[i,j]=sum(PY*EI[[j]])
+      if (i%in%strt01 & j%in%strt04)  E[i,j]=sum(PY[,as.character(2004:yearEnd)]*EI[[j]])
       if (i%in%strt01 & j%in%strt10)  E[i,j]=sum(PY[,as.character(2010:yearEnd)]*EI[[j]])
-      
-      if (i%in%strt10 & !j%in%c("CMML",strt01,strt10))  E[i,j]=sum(PY*EI[[j]][,as.character(2010:yearEnd)])
-      if (i%in%strt10 & j=="CMML")  E[i,j]=sum(PY*EI[[j]][,as.character(2010:yearEnd)])
-      if (i%in%strt10 & j%in%strt01 )  E[i,j]=sum(PY*EI[[j]][,as.character(2010:yearEnd)])
+
+      if (i%in%strt04 & !j%in%c(strt86,strt01,strt04,strt10))  E[i,j]=sum(PY*EI[[j]][,as.character(2004:yearEnd)])
+      if (i%in%strt04 & j%in%strt86)  E[i,j]=sum(PY*EI[[j]][,as.character(2004:yearEnd)])
+      if (i%in%strt04 & j%in%strt01)  E[i,j]=sum(PY*EI[[j]][,as.character(2004:yearEnd)])
+      if (i%in%strt04 & j%in%strt04)  E[i,j]=sum(PY*EI[[j]]) 
+      if (i%in%strt04 & j%in%strt10)  E[i,j]=sum(PY[,as.character(2010:yearEnd)]*EI[[j]])
+            
+      if (i%in%strt10 & !j%in%c(strt86,strt01,strt04,strt10))  E[i,j]=sum(PY*EI[[j]][,as.character(2010:yearEnd)])
+      if (i%in%strt10 & j%in%strt86)  E[i,j]=sum(PY*EI[[j]][,as.character(2010:yearEnd)])
+      if (i%in%strt10 & j%in%strt01)  E[i,j]=sum(PY*EI[[j]][,as.character(2010:yearEnd)])
+      if (i%in%strt10 & j%in%strt04)  E[i,j]=sum(PY*EI[[j]][,as.character(2010:yearEnd)])
       if (i%in%strt10 & j%in%strt10)  E[i,j]=sum(PY*EI[[j]])
       
-      if (!i%in%c("CMML",strt01,strt10) & j%in%strt10 )  E[i,j]=sum(PY[,as.character(2010:yearEnd)]*EI[[j]])
-      if (!i%in%c("CMML",strt01,strt10) & j%in%strt01 )  E[i,j]=sum(PY[,as.character(2001:yearEnd)]*EI[[j]])
-      if (!i%in%c("CMML",strt01,strt10) & j=="CMML" )  E[i,j]=sum(PY[,as.character(1986:yearEnd)]*EI[[j]])
-      if (!i%in%c("CMML",strt01,strt10) & !j%in%c("CMML",strt01,strt10) )  E[i,j]=sum(PY*EI[[j]])
+      if (!i%in%c(strt86,strt01,strt04,strt10) & j%in%strt86 )  E[i,j]=sum(PY[,as.character(1986:yearEnd)]*EI[[j]])
+      if (!i%in%c(strt86,strt01,strt04,strt10) & j%in%strt01 )  E[i,j]=sum(PY[,as.character(2001:yearEnd)]*EI[[j]])
+      if (!i%in%c(strt86,strt01,strt04,strt10) & j%in%strt04 )  E[i,j]=sum(PY[,as.character(2004:yearEnd)]*EI[[j]])
+      if (!i%in%c(strt86,strt01,strt04,strt10) & j%in%strt10 )  E[i,j]=sum(PY[,as.character(2010:yearEnd)]*EI[[j]])
+      if (!i%in%c(strt86,strt01,strt04,strt10) & !j%in%c(strt86,strt01,strt04,strt10) )  E[i,j]=sum(PY*EI[[j]])
     }
   }   
   E/1e5

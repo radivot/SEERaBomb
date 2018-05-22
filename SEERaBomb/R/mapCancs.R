@@ -84,7 +84,8 @@ mapCancs<-function(D){
   cancer[(histo3>=9810)&(histo3<9840)]="ALL" # take some OL back to ALL
   cancer[(histo3==9831)&(D$yrdx>2009)]="LGL" # 9831 is cleanly LGL only starting in 2010
   cancer[(histo3==9823)]="CLL" # pull out the CLLs
-  cancer[(histo3==9670)]="SLL" # SLL has different risk time course, so better not merge with CLL.
+  # cancer[(histo3==9670)]="SLL" # SLL has different risk time course, so better not merge with CLL.
+  cancer[(histo3==9670)]="CLL" #more 2nd SLL since earlier DX of CLL=> more likely SLL, so better to pool
   # Dutch study placed 9800 and 9820 also in CLL, but incidence age responses are clearly different.
   cancer[(histo3>=9840)&(histo3<9940)]="AML" # take some OL back to AML, includes next two lines
   #   cancer[(histo3==9910)]="AML" #AMKL 
