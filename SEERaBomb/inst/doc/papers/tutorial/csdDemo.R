@@ -1,10 +1,10 @@
-rm(list=ls());library(tidyverse);library(SEERaBomb)
+rm(list=ls());library(tidyverse);library(SEERaBomb);library(ggsci)
 myt=theme(legend.title=element_blank(),legend.margin=margin(0,0,0,0),
           legend.direction="horizontal",legend.key.height=unit(.25,'lines'),
-          legend.position=c(.25,.95))
-ge=geom_errorbar(aes(ymin=rrL,ymax=rrU),width=0.1)
+          legend.position=c(.5,.95),strip.background=element_blank())
+ge=geom_errorbar(aes(ymin=rrL,ymax=rrU),width=0.1);jco=scale_color_jco()
 gy=ylab("Relative Risk of Leukemia");cc=coord_cartesian(ylim=c(0,25))
-gp=geom_point();gl=geom_line();gh=geom_hline(yintercept=1)
+gp=geom_point();gl=geom_line();gh=geom_hline(yintercept=1);tc=theme_classic()
 
 load("~/data/SEER/mrgd/cancDef.RData");load("~/data/SEER/mrgd/popsae.RData") 
 canc$cancer=fct_collapse(canc$cancer,AML=c("AML","AMLti","APL"))
@@ -16,7 +16,7 @@ trts=c("rad.chemo","rad.noChemo","noRad.chemo","noRad.noChemo")
 pf=csd(pf,brkst=c(0,1,2,3,5,10),brksa=c(0,60),trts=trts,firstS="breast")
 (dA=pf$DF%>%filter(ageG=="(0,60]")) 
 gx=xlab("Years Since Breast Cancer Diagnosis")
-g=ggplot(dA,aes(x=t,y=RR,col=cancer2))+gp+gl+gx+gy+gh+ge+myt+cc
+g=ggplot(dA,aes(x=t,y=RR,col=cancer2))+gp+gl+gx+gy+gh+ge+tc+myt+cc+jco
 g+facet_grid(rad~chemo) 
 ggsave("~/Results/tutorial/breast2leu.pdf",width=4,height=4)#Fig.4A 
 
@@ -38,7 +38,7 @@ Dbot=D%>%mutate(grp=str_c("Rad: ",ageG))
 dB=bind_rows(Dtop,Dbot)
 dB$grp=as_factor(dB$grp)#orders by occurrence, as wanted
 gx=xlab("Years Since Thyroid Cancer Diagnosis")
-g=ggplot(dB,aes(x=t,y=RR,col=cancer2))+gp+gl+gx+gy+gh+ge+myt+cc
+g=ggplot(dB,aes(x=t,y=RR,col=cancer2))+gp+gl+gx+gy+gh+ge+tc+myt+cc+jco
 g+facet_wrap(~grp) 
 ggsave("~/Results/tutorial/thyroid2leu.pdf",width=4,height=4)
 
