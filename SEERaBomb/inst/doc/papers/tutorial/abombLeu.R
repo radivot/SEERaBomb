@@ -5,7 +5,7 @@ myt=theme(legend.position=c(.52,.85),legend.title=element_blank(),
     legend.key.height=unit(.7,'lines'),strip.background=element_blank())
 gy=ylab(quote(paste("Cases per ",10^5," Person-Years")))
 ge=geom_errorbar(aes(ymin=LL,ymax=UL),width=0.1);jco=scale_color_jco()
-cc=coord_cartesian(ylim=c(.2,200));tc=theme_classic()
+cc=coord_cartesian(ylim=c(.2,200));tc=theme_classic(base_size=12)
 gp=geom_point();gl=geom_line();f=facet_wrap(~cancer);sy=scale_y_log10()
 load("~/data/abomb/abomb.RData")
 (d=heme%>%select(ageG:DG,age,agex,t,D,py,AML=AMLtot,ALL,CML))
@@ -28,7 +28,8 @@ ggsave("~/Results/tutorial/abombLeuTsx.pdf",width=4,height=2.5)#Fig.6C
 gx=xlab("Dose (Sv)")
 d$DG<-cut(d$D,c(-1,.02,.25,.5,.75,1.5,100))
 (dD=incidAbomb(d%>%group_by(DG)))
-ggplot(dD,aes(x=D,y=I))+gp+gl+gx+sy+gy+ge+f+cc+tc+myt+jco
+ggplot(dD,aes(x=D,y=I))+gp+gl+gx+sy+gy+ge+f+cc+tc+myt+jco+
+  scale_x_continuous(breaks=0:2)
 ggsave("~/Results/tutorial/abombLeuDoseResp.pdf",width=4,height=2.5)#Fig.6D
 
 

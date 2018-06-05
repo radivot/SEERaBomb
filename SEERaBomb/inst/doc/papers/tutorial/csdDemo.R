@@ -2,9 +2,10 @@ rm(list=ls());library(tidyverse);library(SEERaBomb);library(ggsci)
 myt=theme(legend.title=element_blank(),legend.margin=margin(0,0,0,0),
           legend.direction="horizontal",legend.key.height=unit(.25,'lines'),
           legend.position=c(.5,.95),strip.background=element_blank())
-ge=geom_errorbar(aes(ymin=rrL,ymax=rrU),width=0.1);jco=scale_color_jco()
+ge=geom_errorbar(aes(ymin=rrL,ymax=rrU),width=0.1)
 gy=ylab("Relative Risk of Leukemia");cc=coord_cartesian(ylim=c(0,25))
-gp=geom_point();gl=geom_line();gh=geom_hline(yintercept=1);tc=theme_classic()
+gp=geom_point();gl=geom_line();gh=geom_hline(yintercept=1)
+jco=scale_color_jco();tc=theme_classic(base_size=14)
 
 load("~/data/SEER/mrgd/cancDef.RData");load("~/data/SEER/mrgd/popsae.RData") 
 canc$cancer=fct_collapse(canc$cancer,AML=c("AML","AMLti","APL"))
