@@ -1,29 +1,17 @@
-# rm(list=ls());library(tidyverse);library(SEERaBomb);library(ggsci)
-# myt=theme(legend.direction="horizontal",legend.key.height=unit(.25,'lines'),
-#           legend.position=c(.5,.95),strip.background=element_blank())
-
-# myt=theme(legend.title=element_blank(),legend.margin=margin(0,0,0,0),
-#           legend.direction="horizontal",legend.key.height=unit(.25,'lines'),
-#           legend.position=c(.5,.95),strip.background=element_blank())
-# ge=geom_errorbar(aes(ymin=rrL,ymax=rrU),width=0.1)
-# gp=geom_point();gl=geom_line();gh=geom_hline(yintercept=1)
-# jco=scale_color_jco();tc=theme_classic(base_size=14)
-
-# load("~/data/SEER/mrgd/cancDef.RData");load("~/data/SEER/mrgd/popsae.RData") 
-canc$cancer=fct_collapse(canc$cancer,AML=c("AML","AMLti","APL"))
-secs=c("AML","ALL","CML") 
+#csdEx3.R
 (d=canc%>%filter(sex=="Female",cancer%in%c("breast",secs)))
 pf=seerSet(d,popsae,Sex="Female")#pooled (races) females 
 pf=mk2D(pf,secondS=secs)#adds secs background rates to pf
 trts=c("rad.chemo","rad.noChemo","noRad.chemo","noRad.noChemo")
 pf=csd(pf,brkst=c(0,1,2,3,5,10),brksa=c(0,60),trts=trts,firstS="breast")
 (dA=pf$DF%>%filter(ageG=="(0,60]")) 
-gy=ylab("Relative Risk of Leukemia");
+gy=ylab("Relative Risk of Leukemia")
+myt=theme(legend.key.height=unit(.25,'lines'),legend.position=c(.5,.95))
+cc=coord_cartesian(ylim=c(0,25))#clips high errorbars
 gx=xlab("Years Since Breast Cancer Diagnosis")
-cc=coord_cartesian(ylim=c(0,25))
-g=ggplot(dA,aes(x=t,y=RR,col=cancer2))+gp+gl+gx+gy+RR1+geRR+tc+ltp+cc+jco
-g+facet_grid(rad~chemo) 
-ggsave("~/Results/tutorial/breast2leu.pdf",width=4,height=4)#Fig.4A 
+dA%>%ggplot(aes(x=t,y=RR,col=cancer2))+facet_grid(rad~chemo)+ 
+  gp+gl+gx+gy+gh+geRR+tc(14)+ltp+cc+jco+sbb+ltb+myt+lh
+ggsave("~/Results/tutorial/breast2leu.pdf",width=4,height=4)#Fig.3A 
 
 (d=canc%>%filter(cancer%in%c("thyroid",secs)))
 pf=seerSet(d,popsae,Sex="Female");pm=seerSet(d,popsae,Sex="Male") 
@@ -43,8 +31,8 @@ Dbot=D%>%mutate(grp=str_c("Rad: ",ageG))
 dB=bind_rows(Dtop,Dbot)
 dB$grp=as_factor(dB$grp)#orders by occurrence, as wanted
 gx=xlab("Years Since Thyroid Cancer Diagnosis")
-g=ggplot(dB,aes(x=t,y=RR,col=cancer2))+gp+gl+gx+gy+gh+ge+tc+myt+cc+jco
-g+facet_wrap(~grp) 
-ggsave("~/Results/tutorial/thyroid2leu.pdf",width=4,height=4)
+dB%>%ggplot(aes(x=t,y=RR,col=cancer2))+facet_wrap(~grp)+ 
+          gp+gl+gx+gy+RR1+geRR+tc(14)+myt+cc+jco+sbb+ltb+ltp+myt+lh
+ggsave("~/Results/tutorial/thyroid2leu.pdf",width=4,height=4)#Fig.3B
 
 
