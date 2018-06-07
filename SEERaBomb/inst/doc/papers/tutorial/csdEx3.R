@@ -1,4 +1,4 @@
-#csdEx3.R
+###csdEx3.R
 (d=canc%>%filter(sex=="Female",cancer%in%c("breast",secs)))
 pf=seerSet(d,popsae,Sex="Female")#pooled (races) females 
 pf=mk2D(pf,secondS=secs)#adds secs background rates to pf
@@ -11,7 +11,7 @@ cc=coord_cartesian(ylim=c(0,25))#clips high errorbars
 gx=xlab("Years Since Breast Cancer Diagnosis")
 dA%>%ggplot(aes(x=t,y=RR,col=cancer2))+facet_grid(rad~chemo)+ 
   gp+gl+gx+gy+gh+geRR+tc(14)+ltp+cc+jco+sbb+ltb+myt+lh
-ggsave("~/Results/tutorial/breast2leu.pdf",width=4,height=4)#Fig.3A 
+ggsave("~/Results/tutorial/breastEx3A.pdf",width=4,height=4) 
 
 (d=canc%>%filter(cancer%in%c("thyroid",secs)))
 pf=seerSet(d,popsae,Sex="Female");pm=seerSet(d,popsae,Sex="Male") 
@@ -32,7 +32,7 @@ dB=bind_rows(Dtop,Dbot)
 dB$grp=as_factor(dB$grp)#orders by occurrence, as wanted
 gx=xlab("Years Since Thyroid Cancer Diagnosis")
 dB%>%ggplot(aes(x=t,y=RR,col=cancer2))+facet_wrap(~grp)+ 
-          gp+gl+gx+gy+RR1+geRR+tc(14)+myt+cc+jco+sbb+ltb+ltp+myt+lh
-ggsave("~/Results/tutorial/thyroid2leu.pdf",width=4,height=4)#Fig.3B
+          gp+gl+gx+gy+gh+geRR+tc(14)+myt+cc+jco+sbb+ltb+ltp+myt+lh
+ggsave("~/Results/tutorial/thyroidEx3B.pdf",width=4,height=4)
 
 

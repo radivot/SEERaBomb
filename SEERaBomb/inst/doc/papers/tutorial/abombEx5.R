@@ -1,4 +1,4 @@
-#abombEx5.R
+###abombEx5.R
 (d=heme%>%select(ageG:DG,age,agex,t,D,py,AML=AMLtot,ALL,CML))
 myt=theme(legend.position=c(.52,.85),legend.key.height=unit(.7,'lines'))
 cc=coord_cartesian(ylim=c(.2,200));f=facet_wrap(~cancer)
