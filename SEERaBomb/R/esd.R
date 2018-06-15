@@ -12,14 +12,14 @@ esd=function(d,srfF,srfM,brkst=c(0,2,5),brksy=NULL){
         Left=matrix(rep(X[,1],28),nrow=111)
         X=cbind(Left,X)
       }
-      colnames(X)=1973:2014
+      colnames(X)=1973:2015
       rownames(X)=0:110
       rownames(X)[111]="110+"
       X/1e5
     }
     Xm=extendX(Xm)
     Xf=extendX(Xf)
-    mrt=list(female=Xf,male=Xm)
+    mrt=list(Female=Xf,Male=Xm)
     d=d%>%filter(cancer1==frst)
     d$cancer1=NULL
     d$surv=d$py
@@ -33,6 +33,7 @@ esd=function(d,srfF,srfM,brkst=c(0,2,5),brksy=NULL){
   frstS=unique(d$cancer1)
   secS=setdiff(unique(d$cancer2),"none")
   D=NULL
+  # debug(esd2)
   for (i in frstS) 
     for (j in secS)
       D=rbind(D,cbind(esd2(d,srfF,srfM,frst=i,sec=j,brkst,brksy),cancer1=i,cancer2=j))
