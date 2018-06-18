@@ -1,7 +1,8 @@
 \name{mkMrt}
 \alias{mkMrt}
 \title{Make mortality binaries}
-\description{Gets mortality data from the Human Mortality Database and puts it in the file \file{mrt.RData}.}
+\description{Gets mortality data from the Human Mortality Database \url{http://www.mortality.org/} 
+and puts it in the file \file{mrt.RData}.}
 \usage{ mkMrt(username,passwd,country="USA",mrtHome="~/data/usMort")}
 
 \arguments{
@@ -12,6 +13,8 @@
 }
 
 \value{None. This function is called for its side-effect of producing \file{mrt.RData}. }
+\references{ Barbieri M, Wilmoth JR, Shkolnikov VM, et al. Data Resource Profile: 
+             The Human Mortality Database (HMD). Int J Epidemiol. 2015;44: 1549-1556.}
 \author{ Tom Radivoyevitch (\email{radivot@ccf.org}) }
 \seealso{\code{\link{SEERaBomb-package},\link{mkSEER}} }
 \examples{
