@@ -17,7 +17,7 @@ Author: Tomas Radivoyevitch [aut, cre],
 Depends: dplyr, ggplot2, rgl, demography 
 Suggests:  bbmle
 License: GPL (>= 2)
-Imports: Rcpp (>= 0.11.3), reshape2, mgcv, tibble, LaF, DBI, RSQLite, openxlsx, labelled, scales, forcats, tidyr, stringr, plyr, survival
+Imports: Rcpp (>= 0.11.3), reshape2, mgcv, tibble, LaF, DBI, RSQLite, openxlsx, WriteXLS, labelled, scales, forcats, tidyr, stringr, plyr, survival
 LinkingTo: Rcpp
 LazyData: yes
 URL: http://epbi-radivot.cwru.edu/SEERaBomb/SEERaBomb.html
