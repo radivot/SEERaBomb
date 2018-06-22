@@ -3,7 +3,8 @@ CHANGES IN VERSION 2018.2 (Second version since SEER release of April 2018)
 
 NEW FEATURES
 
-    o Added make life tables function mkLT().
+    o simulated survival simSurv().
+    o make life tables mkLT().
 
 
 
