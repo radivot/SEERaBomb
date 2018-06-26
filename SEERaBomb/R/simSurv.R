@@ -1,4 +1,4 @@
-simSurv<-function(d,mrt,rep=1,ltb=NULL){
+simSurv<-function(d,mrt,rep=1,ltb=NULL,unif=TRUE){
   yrdx=agedx=sex=surv=status=P=NULL
   pullP=function(sex,age,year) {
     # sex="Male";age=10;year=1999
@@ -20,10 +20,14 @@ simSurv<-function(d,mrt,rep=1,ltb=NULL){
     }
     P
   }
-
+  
   simP=function(P) {
-    for (k in 1:length(P))  
-      if(runif(1)<P[k]) return(k-0.5)
+    for (k in 1:length(P)) 
+      if(unif){ 
+        if(runif(1)<P[k]) return(k-runif(1))
+      } else {
+        if(runif(1)<P[k]) return(k-0.5)
+      }
   }
   # library(tidyverse)
   # load("~/data/SEER/mrgd/cancDef.RData")#load SEER cancer data
@@ -47,13 +51,13 @@ simSurv<-function(d,mrt,rep=1,ltb=NULL){
   # head(d,2)
   
   if (!is.null(ltb)) {
-  getLT=function(sex,agedx,yrdx)  ltb[[as.character(sex)]][as.character(agedx),as.character(yrdx)]
-  # getLT("Male",80,2000)
-  ed=d
-  ed$surv=mapply(getLT,d$sex,d$agedx,d$yrdx)
-  ed$status=1
-  ed$type="LT"
-  d=rbind(d,ed)
+    getLT=function(sex,agedx,yrdx)  ltb[[as.character(sex)]][as.character(agedx),as.character(yrdx)]
+    # getLT("Male",80,2000)
+    ed=d
+    ed$surv=mapply(getLT,d$sex,d$agedx,d$yrdx)
+    ed$status=1
+    ed$type="LT"
+    d=rbind(d,ed)
   }
-d
+  d
 }
