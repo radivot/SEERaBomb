@@ -44,9 +44,9 @@ simSurv<-function(d,mrt,rep=1,ltb=NULL,unif=TRUE){
   D=nd%>%select(-P)
   D=D%>%unnest(surv)
   D$status=1
-  D$type="simulated"
+  D$type="Simulated"
   # head(D,2)
-  d$type="observed"
+  d$type="Observed"
   d=rbind(d,D)
   # head(d,2)
   
