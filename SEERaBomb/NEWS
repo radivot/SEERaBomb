@@ -1,3 +1,15 @@
+CHANGES IN VERSION 2018.3 (Third version since SEER release of April 2018)
+------------------------
+
+NEW FEATURES
+
+    o added mkMrtLocal() which makes mortality binaries from a local copy of the HMD data. This replaces mkMrt().
+    The R package demograhphy used by mkMrt() is thus no longer needed. Use this new function if mkMrt() gives you 
+    a password error, but you can get into HMD with your username and password (and thus know they work). Before 
+    running it download to your local drive (and unzip into your ~/data folder) at least one
+    of the two full HMD data file trees (organized by country at the top, the other by statistics at the top).  
+
+
 CHANGES IN VERSION 2018.2 (Second version since SEER release of April 2018)
 ------------------------
 
