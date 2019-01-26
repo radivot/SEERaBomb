@@ -1,5 +1,5 @@
 rm(list=ls()) 
-library(dplyr)
+library(SEERaBomb)
 load("~/data/SEER/mrgd/cancDef.RData")
 load("~/data/SEER/mrgd/popsa.RData")
 
