@@ -8,7 +8,8 @@ i.e. you must obtain this extended dataset
 https://seer.cancer.gov/data/treatment.html
 by signing an additional SEER data use agreement.
 
-To set up SEER data use, unzip the custom radiation and chemotherapy ASCII text version of the SEER data into ~/data/SEER where ~ is your home directory. Now generate SEER binary data via
+To set up SEER data use, unzip the custom radiation and chemotherapy ASCII text version of the SEER data into ~/data/SEER where ~ is your home directory. To use SEER data you must be familiar with field descriptions in ~/data/SEER/incidence/TextData.FileDescription.pdf.   
+To convert your SEER ASCII text data into an R binary file, execute the following at the R prompt
 
 library(SEERaBomb)  #loads installed package SEERaBomb into memory
 
