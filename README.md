@@ -11,10 +11,10 @@ by signing an additional SEER data use agreement.
 To set up SEER data use, unzip the custom radiation and chemotherapy ASCII text version of the SEER data into ~/data/SEER where ~ is your home directory. To use SEER data you must be familiar with field descriptions in ~/data/SEER/incidence/TextData.FileDescription.pdf.   
 To convert your SEER ASCII text data into an R binary file, execute the following at the R prompt
 
-```library(SEERaBomb)  #loads installed package SEERaBomb into memory<br> 
-(df=getFields())    #gets SEER fields into a data frame<br> 
-(rdf=pickFields(df))#picks a subset of SEER fields and defines their types<br> 
-mkSEER(rdf)         #makes merged data file ~/data/SEER/mrgd/cancDef.Rdata```
+```library(SEERaBomb)  #loads installed package SEERaBomb into memory```<br> 
+```(df=getFields())    #gets SEER fields into a data frame```<br> 
+```(rdf=pickFields(df))#picks a subset of SEER fields and defines their types```<br> 
+```mkSEER(rdf)         #makes merged data file ~/data/SEER/mrgd/cancDef.Rdata```
 
 Check the SEER data installation using 
 
