@@ -5,7 +5,7 @@ To install SEERaBomb use:
 devtools::install_github("radivot/SEERaBomb",subdir="SEERaBomb")
 ```
 
-### Surveillance, Epidemiology, and End Results (SEER) Data
+## Surveillance, Epidemiology, and End Results (SEER) Data
 **WARNING:** SEERaBomb does not work with SEER data that does not contain treatment information, 
 i.e. you must obtain this extended dataset 
 https://seer.cancer.gov/data/treatment.html
@@ -26,7 +26,7 @@ head(canc,3)                          #returns top 3 rows of canc
 ``` 
 
 
-###  A-Bomb Survivor Data
+##  A-Bomb Survivor Data
 To use the Japanese atomic bomb survivor data, obtain the files lsshempy.csv and lssinc07.csv from https://www.rerf.or.jp/en/library/data-en/
 under  “The incidence of leukemia, lymphoma and multiple myeloma among atomic bomb survivors: 1950-2001” and 
 “Solid Cancer Incidence Data, 1958-1998”,  place them in ~/data/abomb, and run  
@@ -41,7 +41,7 @@ View(heme)                      #note descriptions under column names
 ```
 should show the hematological A-bomb data in a tab named heme in RStudio’s upper left panel.
 
-### Human Mortality Database (HMD) Data
+## Human Mortality Database (HMD) Data
 To generate relative risk of mortality plots go the human mortality database  https://www.mortality.org/ and register. Then go to the bottom of  https://www.mortality.org/cgi-bin/hmd/hmd_download.php
 and download "All HMD countries" and unzip it into ~/data/hmd_countries.  Now run <br>
 ```
@@ -54,9 +54,7 @@ load("~/data/mrt/mrtUSA.RData")  #loads R binary created by mkMortLocal()
 head(mrt$Female)   #shows first 5 years of female mortality rates 1933-2015
 ```
 
-### Usage
-
-####Set Up
+##  Usage
 The code chunk below must be run before the examples. It loads libraries and data and defines acronyms.
 ```
 graphics.off();rm(list=ls())#clear plots and environment
@@ -86,7 +84,7 @@ gyi=ylab(quote(paste("Cases per ",10^5," Person Years")))
 ```
 
 
-####Example 1: CML mortality analyses
+### Example 1: CML mortality analyses
 
 ![](docs/tutFig1.png)
 
@@ -122,7 +120,7 @@ The 2nd line uses cut() to bin a vector of numbers into levels of a factor; the 
 
 
 
-###Cancer Types
+##Cancer Types
 The function mkSEER() assigns a cancer type, in a column named cancer, to each row in the data frame canc. The names and numbers of each cancer type is seen via:    
 ```
 load("~/data/SEER/mrgd/cancDef.RData")
@@ -131,12 +129,12 @@ table(canc$cancer)
 To see source code of the function mapCancs() that mkSEER() calls to define cancers from codes of International Classification of Disease (ICD) version 9 (ICD-9) and ICD Oncology version 3 (ICD-O3), type mapCancs at the R prompt. The mapCancs line `cancer[(histo3>=9840)&(histo3<9940)]="AML"` shows how acute myeloid leukemia (AML) is defined by ICD-O3 codes, and lines that follow show that acute promyelocytic leukemia (APL) and AML with other translocations or inversions (AMLti) are pulled out of this initial AML definition. 
 
 
-### Statistics
+## Statistics
 SEERaBomb calculations of relative risks (RR) of second cancers are formed as observed cases (O) divided by expected cases (E), where E is based on background rates and person years (PY) at risk, matched on sex, age and year of diagnosis. RR of death are computed similarly, but with background mortality rates replacing background cancer incidence rates.  In both situations 95% confidence intervals (CI) of RR = O/E are formed assuming O is Poisson distributed: lower and upper limits are then `qchisq(.025, 2*O)/(2*E)` and `qchisq(.975, 2*O+2)/(2*E)`.
 
 
 
-### Help
+## Help
 To learn more about a function() type ?function at the R prompt. Help pages reveal, for example, the default values of optional function arguments, e.g. ?pickFields shows
 ```
 pickFields(sas,picks=c("casenum","reg","race","sex","agedx",
