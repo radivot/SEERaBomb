@@ -8,7 +8,7 @@ i.e. you must obtain this extended dataset
 https://seer.cancer.gov/data/treatment.html
 by signing an additional SEER data use agreement.
 
-To set up SEER data use in R, unzip the custom radiation and chemotherapy ASCII text version of the SEER data into ~/data/SEER where ~ is your home directory.  SEER ASCII data in ~/data/SEER/incidence and ~/data/SEER/populations is then converted into an R binary file as follows
+To set up SEER data use in R, unzip the custom radiation and chemotherapy ASCII text version of the SEER data into ~/data/SEER where ~ is your home directory.  SEER ASCII data in ~/data/SEER/incidence and ~/data/SEER/populations is then converted into an R binary file as follows<br>
 ```library(SEERaBomb)  #loads installed package SEERaBomb into memory```<br> 
 ```(df=getFields())    #gets SEER fields into a data frame```<br> 
 ```(rdf=pickFields(df))#picks a subset of SEER fields and defines their types```<br> 
@@ -21,7 +21,7 @@ Check the SEER data installation using <br>
 ###  A-Bomb Survivor Data
 To use the Japanese atomic bomb survivor data, obtain the files lsshempy.csv and lssinc07.csv from https://www.rerf.or.jp/en/library/data-en/
 under  “The incidence of leukemia, lymphoma and multiple myeloma among atomic bomb survivors: 1950-2001” and 
-“Solid Cancer Incidence Data, 1958-1998”,  place them in ~/data/abomb, and run the following 
+“Solid Cancer Incidence Data, 1958-1998”,  place them in ~/data/abomb, and run <br> 
 ```mkAbomb() #converts files in ~/data/abomb into ~/data/abomb/abomb.RData```
 
 As a check,<br/>
