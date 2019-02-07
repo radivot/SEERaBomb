@@ -11,13 +11,17 @@ by signing an additional SEER data use agreement.
 To set up SEER data use, unzip the custom radiation and chemotherapy ASCII text version of the SEER data into ~/data/SEER where ~ is your home directory. Now generate SEER binary data via
 
 library(SEERaBomb)  #loads installed package SEERaBomb into memory
+
 (df=getFields())    #gets SEER fields into a data frame
+
 (rdf=pickFields(df))#picks a subset of SEER fields and defines their types
+
 mkSEER(rdf)         #makes merged data file ~/data/SEER/mrgd/cancDef.Rdata
 
 Check the SEER data installation using 
 
 load("~/data/SEER/mrgd/cancDef.RData")#loads data.frame canc into memory
+
 head(canc,3)                          #returns top 3 rows of canc
 
 To use the Japanese atomic bomb survivor data, obtain the files lsshempy.csv and lssinc07.csv from https://www.rerf.or.jp/en/library/data-en/
@@ -29,6 +33,7 @@ mkAbomb() #converts files in ~/data/abomb into ~/data/abomb/abomb.RData
 As a check,
 
 load("~/data/abomb/abomb.RData")#loads data frames heme and solid 
+
 View(heme)                      #note descriptions under column names
 
 should show the hematological A-bomb data in a tab named heme in RStudio’s upper left panel.
@@ -42,6 +47,7 @@ mkMrtLocal() #converts files in ~/data/hmd_countries/USA into ~/data/mrt/mrtUSA.
 To check the installation run
 
 load("~/data/mrt/mrtUSA.RData")
+
 head(mrt$Female)
 
 
