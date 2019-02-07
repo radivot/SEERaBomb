@@ -29,7 +29,7 @@ under  “The incidence of leukemia, lymphoma and multiple myeloma among atomic 
 
 As a check,
 
-```load("~/data/abomb/abomb.RData")#loads data frames heme and solid``` 
+```load("~/data/abomb/abomb.RData")#loads data frames heme and solid```<br> 
 ```View(heme)                      #note descriptions under column names```
 
 should show the hematological A-bomb data in a tab named heme in RStudio’s upper left panel.
@@ -43,4 +43,5 @@ and download the zip "All HMD countries"  and unzip it into ~/data/hmd_countries
 To check the installation run
 
 ```load("~/data/mrt/mrtUSA.RData")  #loads R binary created by mkMortLocal```
+
 ```head(mrt$Female)   #shows first 5 years of female mortality rates 1933-2015```
