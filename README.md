@@ -11,14 +11,14 @@ by signing an additional SEER data use agreement.
 To set up SEER data use, unzip the custom radiation and chemotherapy ASCII text version of the SEER data into ~/data/SEER where ~ is your home directory. To use SEER data you must be familiar with field descriptions in ~/data/SEER/incidence/TextData.FileDescription.pdf.   
 To convert your SEER ASCII text data into an R binary file, execute the following at the R prompt
 
-```library(SEERaBomb)  #loads installed package SEERaBomb into memory```
-```(df=getFields())    #gets SEER fields into a data frame```
-```(rdf=pickFields(df))#picks a subset of SEER fields and defines their types```
+```library(SEERaBomb)  #loads installed package SEERaBomb into memory```<br> 
+```(df=getFields())    #gets SEER fields into a data frame```<br> 
+```(rdf=pickFields(df))#picks a subset of SEER fields and defines their types```<br> 
 ```mkSEER(rdf)         #makes merged data file ~/data/SEER/mrgd/cancDef.Rdata```
 
 Check the SEER data installation using 
 
-```load("~/data/SEER/mrgd/cancDef.RData")#loads data.frame canc into memory```
+```load("~/data/SEER/mrgd/cancDef.RData")#loads data.frame canc into memory```<br> 
 ```head(canc,3)                          #returns top 3 rows of canc```
 
 To use the Japanese atomic bomb survivor data, obtain the files lsshempy.csv and lssinc07.csv from https://www.rerf.or.jp/en/library/data-en/
@@ -42,6 +42,5 @@ and download the zip "All HMD countries"  and unzip it into ~/data/hmd_countries
 
 To check the installation run
 
-```load("~/data/mrt/mrtUSA.RData")  #loads R binary created by mkMortLocal```
-
+```load("~/data/mrt/mrtUSA.RData")  #loads R binary created by mkMortLocal```<br> 
 ```head(mrt$Female)   #shows first 5 years of female mortality rates 1933-2015```
