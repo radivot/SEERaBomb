@@ -120,7 +120,7 @@ The 2nd line uses cut() to bin a vector of numbers into levels of a factor; the 
 
 
 
-##Cancer Types
+##  Cancer Types
 The function mkSEER() assigns a cancer type, in a column named cancer, to each row in the data frame canc. The names and numbers of each cancer type is seen via:    
 ```
 load("~/data/SEER/mrgd/cancDef.RData")
