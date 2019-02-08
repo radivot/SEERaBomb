@@ -192,7 +192,7 @@ In the first 6 lines sexes are processed in parallel. In the 7th line, the sex s
 
 ![](docs/tutFig4.png)
 
-AML, ALL and CML incidence vs. age curves for individuals with prior 1st cancers show that AML associates with chemotherapy more than radiation therapy, that radiation associates with AML more in the young than in the old, and that chemotherapy potentiates associations of radiation with AML across all ages (Figure 4). These plots also suggest that chemotherapy suppresses radiation-induced CML10 and may further suggest, based on background rates vs. rates in those treated with neither radiation nor chemotherapy, germline links to AML more than ALL. The code for this is: 
+AML, ALL and CML incidence vs. age curves for individuals with prior 1st cancers show that AML associates with chemotherapy more than radiation therapy, that radiation associates with AML more in the young than in the old, and that chemotherapy potentiates associations of radiation with AML across all ages (Figure 4). These plots also suggest that chemotherapy suppresses radiation-induced CML and may further suggest, based on background rates vs. rates in those treated with neither radiation nor chemotherapy, germline links to AML more than ALL. The code for this is: 
 ```
 d=incidSEER(canc,popsae,secs)
 d=d%>%filter(age<=85,year>=2000)
