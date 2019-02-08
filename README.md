@@ -86,7 +86,7 @@ gyi=ylab(quote(paste("Cases per ",10^5," Person Years")))
 
 ### Example 1: CML mortality analyses
 
-![](docs/tutFig1.png)
+![](docs/tutFig1.pdf)
 
 Chronic Myeloid Leukemia (CML) mortality RR time courses peak 4-6 years after diagnoses prior to 1990 (Figure 1A). This peak is not discernible in survival plots of the same data (Figure 1B). The R script for Figure 1A is: 
 ```
