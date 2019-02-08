@@ -1,5 +1,4 @@
 # SEERaBomb
-This R package contains codes that setup SEER and A-bomb survivor data use with R. 
 To install SEERaBomb use:  
 ```
 devtools::install_github("radivot/SEERaBomb",subdir="SEERaBomb")
