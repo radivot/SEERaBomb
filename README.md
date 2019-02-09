@@ -1,5 +1,5 @@
 # SEERaBomb
-To install SEERaBomb use:  
+SEERaBomb facilitates SEER and A-bomb data analyses in R.  To install it use:  
 ```
 devtools::install_github("radivot/SEERaBomb",subdir="SEERaBomb")
 ```
@@ -291,10 +291,23 @@ pickFields(sas,picks=c("casenum","reg","race","sex","agedx",
 ```
 which states that the sas argument is required and that the picks argument can be omitted, in which case the default shown is used; sas is produced by getFields() using information in a SAS file SEER provides in ~/data/SEER/incidence. Examples of using pickFields() can be found in mkDataBinaries.R in the SEERaBomb installation folder SEERaBomb/doc/examples.   
 
-## Discussion
-Advantages of using SEERaBomb over other SEER data analysis tools include: 1) support of other R packages; 2) ease of reproducibility; 3) source code accessibility; and 4) availability on all 3 (Windows, MacOS, Linux)  platforms. 
+## t-MDS labeled as t-AML 
+In 2010 SEER began coding therapy-related myelodysplastic syndrome (t-MDS; ICD-O3 9987) as therapy-related AML (t-AML; ICD-O3 9920). This is problematic. To reverse it to some extent, SEERaBomb fits straight lines to t-AML cases over 2001-2009 to predict numbers in subsequent years, and observed minus predicted t-AML cases, for each sex and year, are then randomly assigned as t-MDS cases (using a fixed random number generator seed to assure reproducibility).  This is done in mkSEER() and it results in exact t-AML linearity, and excess t-MDS noise after 2010 (Figure 6). 
+
+![](docs/tutFig6.png)
+
+Figure 6 is produced as follows: 
+```
+(sc=canc%>%filter(histo3==9920|histo3==9987,yrdx>2000))#subset canc
+(d=sc%>%count(sex,yrdx,histo3))#n in d holds sex-year-ICDO3 group row counts 
+d%>%ggplot(aes(x=yrdx,y=n))+facet_grid(sex~histo3)+ylab("Cases")+gp+
+ xlab("Year of Diagnosis")+scale_x_continuous(breaks=seq(2005,2015,5))+tc(11)+sbb
+ggsave("~/Results/tutorial/tMDSrepaired.pdf",width=3,height=2.5)
+```
+Here canc is first filtered to a subset sc with t-AML (9920) and t-MDS (9987) cases. In the next line, the arguments of count() define the groups over which numbers of cases n are counted: groups are defined by 2 sexes, yrdx (year of diagnosis), and 2 cancers in histo3 (ICD-O3 encodes histology). From the resulting data frame d, ggplot() maps yrdx to the x-axis, n to the y-axis, and at the plot layout level, sex in the vertical direction and histo3 in the horizontal direction; the tilde in the facet_grid() argument creates a formula y~x: sex~histo3 is interpreted as sex in the y direction and histo3 in the x direction. The output of ggplot() is sent to print(), which plots the figure in the plot tab of the lower right panel of RStudio; print() dispatches to specific print.class() functions based on the class of its first argument. 
+
 
 
 ## Acknowledgements  
-I thank the Cleveland Clinic and the National Aeronautics and Space Administration (NNJ13ZSA001N). This work would not be possible without the R community.  The SEER data analyses are solely the responsibility of the author and do not necessarily represent the official views of the National Cancer Institute or the National Institutes of Health. A-bomb survivor data was obtained from the Radiation Effects Research Foundation (RERF), Hiroshima and Nagasaki, Japan. RERF is a public interest foundation funded by the Japanese Ministry of Health, Labor and Welfare (MHLW) and the U.S. Department of Energy (DOE), the latter in part through DOE award DE-HS0000031 to the National Academy of Sciences. Conclusions in this report are of the author and do not necessarily reflect the scientific judgment of RERF or its funding agencies.
+I thank the Cleveland Clinic and the National Aeronautics and Space Administration (NNJ13ZSA001N) for support and the R community for the software it provides.  The analyses do not necessarily represent the official views of the National Cancer Institute (NCI),  the Radiation Effects Research Foundation (RERF), or others. RERF is a public interest foundation funded by the Japanese Ministry of Health, Labor and Welfare and the U.S. Department of Energy, the latter in part through  award DE-HS0000031 to the National Academy of Sciences. 
 
