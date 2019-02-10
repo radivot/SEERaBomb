@@ -324,7 +324,9 @@ Gale RP, Hlatky L, Sachs RK, Radivoyevitch T. Why is there so much therapy-relat
 
 Molenaar RJ, Sidana S, Radivoyevitch T,  et al. Risk of Hematologic Malignancies After Radioiodine Treatment of Well-Differentiated Thyroid Cancer. Journal of clinical oncology  2018 Jun; 36(18):1831-1839.
 
-Radivoyevitch T, Hlatky L, Landaw J, Sachs RK. Quantitative modeling of chronic myeloid leukemia: insights from radiobiology. Blood. 2012;119:4363-71.
+Radivoyevitch T, Hlatky L, Landaw J, Sachs RK. Quantitative modeling of chronic myeloid leukemia: insights from radiobiology. Blood 2012; 119: 4363-71.
+
+Radivoyevitch T et al, Risk of acute myeloid leukemia and myelodysplastic syndrome after autotransplants for lymphomas and plasma cell myeloma.   Leukemia Research 2018 Nov; 74: 130-136
 
 
 
