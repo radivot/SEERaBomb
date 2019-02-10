@@ -311,3 +311,11 @@ Here canc is first filtered to a subset sc with t-AML (9920) and t-MDS (9987) ca
 ## Acknowledgements  
 I thank the Cleveland Clinic and the National Aeronautics and Space Administration (NNJ13ZSA001N) for support and the R community for the software it provides.  The analyses do not necessarily represent the official views of the National Cancer Institute (NCI),  the Radiation Effects Research Foundation (RERF), or others. RERF is a public interest foundation funded by the Japanese Ministry of Health, Labor and Welfare and the U.S. Department of Energy, the latter in part through  award DE-HS0000031 to the National Academy of Sciences. 
 
+## References
+Radivoyevitch T, Sachs RK, Gale RP, Molenaar RJ, Brenner DJ, Hill BT, et al. Defining AML and MDS second cancer risk dynamics after diagnoses of first cancers treated or not with radiation. Leukemia 2016 Feb; 30(2): 285-294.
+
+Hsu WL, Preston DL, Soda M, Sugiyama H, Funamoto S, Kodama K, et al. The incidence of leukemia, lymphoma and multiple myeloma among atomic bomb survivors: 1950-2001. Radiation research 2013 Mar; 179(3): 361-382.
+
+
+
+
