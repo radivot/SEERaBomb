@@ -316,6 +316,15 @@ Radivoyevitch T, Sachs RK, Gale RP, Molenaar RJ, Brenner DJ, Hill BT, et al. Def
 
 Hsu WL, Preston DL, Soda M, Sugiyama H, Funamoto S, Kodama K, et al. The incidence of leukemia, lymphoma and multiple myeloma among atomic bomb survivors: 1950-2001. Radiation research 2013 Mar; 179(3): 361-382.
 
+Jackson RC, Radivoyevitch T. Evolutionary Dynamics of Chronic Myeloid Leukemia Progression: the Progression-Inhibitory Effect of Imatinib. AAPS J 2016 Jul; 18(4): 914-922.
+
+Radivoyevitch T, Jankovic GM, Tiu RV, Saunthararajah Y, Jackson RC, Hlatky LR, et al. Sex differences in the incidence of chronic myeloid leukemia. Radiation and environmental biophysics 2014 Mar; 53(1): 55-63.
+
+Gale RP, Hlatky L, Sachs RK, Radivoyevitch T. Why is there so much therapy-related AML and MDS and so little therapy-related CML? Leukemia research 2014 Oct; 38(10): 1162-1164.
+
+Molenaar RJ, Sidana S, Radivoyevitch T,  et al. Risk of Hematologic Malignancies After Radioiodine Treatment of Well-Differentiated Thyroid Cancer. Journal of clinical oncology  2017 Dec; 36(18):1831-1839.
+
+
 
 
 
