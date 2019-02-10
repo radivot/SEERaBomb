@@ -322,7 +322,7 @@ Radivoyevitch T, Jankovic GM, Tiu RV, Saunthararajah Y, Jackson RC, Hlatky LR, e
 
 Gale RP, Hlatky L, Sachs RK, Radivoyevitch T. Why is there so much therapy-related AML and MDS and so little therapy-related CML? Leukemia research 2014 Oct; 38(10): 1162-1164.
 
-Molenaar RJ, Sidana S, Radivoyevitch T,  et al. Risk of Hematologic Malignancies After Radioiodine Treatment of Well-Differentiated Thyroid Cancer. Journal of clinical oncology  2017 Dec; 36(18):1831-1839.
+Molenaar RJ, Sidana S, Radivoyevitch T,  et al. Risk of Hematologic Malignancies After Radioiodine Treatment of Well-Differentiated Thyroid Cancer. Journal of clinical oncology  2018 Jun; 36(18):1831-1839.
 
 
 
