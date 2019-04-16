@@ -92,7 +92,7 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd,fi
   # print(sapply(LPYin,function(x) range(x$year)))
   LPYM=NULL
   # creat a matrix of zeros that is repeatedly the starting point of age-year PY accrual
-  yrs=1973:yearEnd
+  yrs=1975:yearEnd
   nyears=length(yrs)
   ages=0.5:125.5
   Zs=matrix(0,ncol=nyears,nrow=length(ages))

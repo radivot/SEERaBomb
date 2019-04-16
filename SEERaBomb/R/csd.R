@@ -1,4 +1,4 @@
-csd=function(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,PYLong=FALSE,firstS="all",exclUnkSurv=FALSE){ 
+csd=function(seerSet,brkst=c(0),brksy=c(1975),brksa=c(0),trts=NULL,PYLong=FALSE,firstS="all",exclUnkSurv=FALSE){ 
   #   surv=yrdx=modx=db=casenum=radiatn=cancer=trt=yrbrth=agedx=L2D=NULL
   trt=rad=chemo=NULL
   # brkst=c(0);brksy=c(1973,2000);brksa=c(0);seerSet=pf

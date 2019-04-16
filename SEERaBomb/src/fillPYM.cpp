@@ -24,7 +24,7 @@ NumericMatrix fillPYM(SEXP PYin, SEXP PYM) {
       quo=0;
     }
     strtAgeIndx=floor(age);
-    strtYrIndx=PY1(i,2)-1973;
+    strtYrIndx=PY1(i,2)-1975;
     /*    strtAgeIndx=roundl(PY1(i,1)+.5)-1;
     strtYrIndx=roundl(PY1(i,2)-1972)-1; */
     for (int j = 0; j <= (quo+1) ; j++)   {
