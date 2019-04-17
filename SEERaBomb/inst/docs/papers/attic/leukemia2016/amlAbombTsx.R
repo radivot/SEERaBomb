@@ -12,7 +12,7 @@ collect(tbl(db, sql("SELECT * from hemeDesc")))
 d=collect(tbl(db, sql("SELECT * from heme"))) 
 head(d)
 sapply(d,class)
-(d=d%>%select(city:un4gy,agexg:calg,py,agex:year,AML:AMLtot,D))
+# (d=d%>%select(city:un4gy,agexG:calG,py,agex:year,AML:AMLtot,D))
 # d=round(d,2)
 negs=d%>%filter(D<0) 
 sum(negs$AMLtot) # 16 AMLs with unknown doses

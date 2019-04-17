@@ -1,5 +1,5 @@
 ### fig1abcTab1.R    Figure 1abc and Table 1  and calculations in the text 
-source("~/case/active/seer/CML/naga/common.R")
+# source("~/case/active/seer/CML/naga/common.R") #run it first directly
 load("~/data/abomb/abomb.RData")#loads data frames heme and solid 
 (d=heme%>%select(city,sex,ageG:DG,age,year,t,D,py,CML))
 d%>%filter(CML>0)%>%print(n=100)

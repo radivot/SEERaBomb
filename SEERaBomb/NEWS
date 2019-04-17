@@ -4,11 +4,11 @@ CHANGES IN VERSION 2019.1 (First version since SEER release of April 2019)
 Notes
 
     o The SEER9 registries now all start in 1975. This caused problems since I had assumed that 
-    1973 would always be the starting year. If you want to use older SEER data please
-    use an older version of SEERaBomb. 
+    1973 would always be the starting year. If you want to use older SEER data that 
+    starts in 1973, please use a 2018 version of SEERaBomb. 
     
     o The three new registries (Idaho, Massachusetts and New York) do not seem to 
-    be present in the custom ASCII data release.
+    be present in the custom ASCII SEER data release.
 
 
 

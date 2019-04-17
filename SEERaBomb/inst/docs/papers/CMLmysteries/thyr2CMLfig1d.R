@@ -1,5 +1,5 @@
 ### thyr2CMLfig1d.R   
-source("CML/naga/common.R")
+# source("CML/naga/common.R")#run it first directly
 secs=c("CML")#second cancers of interest
 (d=canc%>%filter(cancer%in%c("thyroid",secs)))
 load("~/data/SEER/mrgd/popsae.RData")
