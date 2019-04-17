@@ -14,7 +14,7 @@ mkMrtLocal=function(country="USA",mrtHome="~/data/mrt",
   if(file.exists(f1)) {f=f1; cat("Using  input file:",f,"\n")} else
     if(file.exists(f2)) {f=f2; cat("Using  input file:",f,"\n")} else stop("Cannot find local Human Mortality Data!") 
   X=read_table(f,skip=2,na=".")
-  X=X%>%filter(Year<2016)  # change this every year to sync with SEER
+  X=X%>%filter(Year<2017)  # change this every year to sync with SEER
   X$Age[X$Age=="110+"]="110"
   X$Age=as.numeric(X$Age)
   # X$Male=as.numeric(X$Male)

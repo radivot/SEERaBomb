@@ -93,7 +93,7 @@ d=canc%>%filter(cancer=="CML")%>%print(n=13)
 d%>%summarize(n=n(),na=sum(is.na(surv)),prct=100*na/n)#<2% missing
 d=d%>%mutate(status=as.numeric(COD>0),surv=(surv+0.5)/12)
 d=d%>%select(yrdx,agedx,sex,surv,status)%>%print(n=13)
-(D=msd(d,mrt,brkst=c(0,0.5,1,2,3,4,5,6,8),brksy=c(1973,1990,2005,2015)))
+(D=msd(d,mrt,brkst=c(0,0.5,1,2,3,4,5,6,8),brksy=c(1975,1990,2005,2016)))
 gx=xlab("Years Since CML Diagnosis")
 gy=ylab("Relative Risk of Mortality")
 myt=theme(legend.text=element_text(size=12),strip.text=element_text(size=12))
@@ -106,8 +106,8 @@ In the 1st line, %>% pipes the object to the left of it into the first argument 
 
 Figure 1B is then produced by this additional code:
 ```
-labs=c("1973-1990","1991-2005","2006-2015")
-d=d%>%mutate(yrg=cut(yrdx,c(1972,1990,2005,2015),labels=labs))%>%print(n=13)
+labs=c("1975-1990","1991-2005","2006-2016")
+d=d%>%mutate(yrg=cut(yrdx,c(1974,1990,2005,2016),labels=labs))%>%print(n=13)
 fit=survfit(Surv(surv,status)~yrg+sex,data=d) 
 gy=ylab("Survival Probability")
 ggsurvplot_facet(fit,d,facet.by="sex",legend.title="",xlim=c(0,12),
