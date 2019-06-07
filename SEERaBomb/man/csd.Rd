@@ -5,7 +5,7 @@
 times since diagnoses of a 1st cancer. 2D spline fits are used to produce 
 expected cases E controlling for background risk dedepence on 
 age and calendar year.  RR is then O/E where O is the number of observed cases. }
-\usage{csd(seerSet,brkst=c(0),brksy=c(1973),brksa=c(0),trts=NULL,
+\usage{csd(seerSet,brkst=c(0),brksy=c(1975),brksa=c(0),trts=NULL,
                     PYLong=FALSE,firstS="all",exclUnkSurv=FALSE) } % ,outDir="~/Results", txt=NULL)} 
 \arguments{
   \item{seerSet}{A seerSet object produced by mk2D().  }
@@ -39,7 +39,7 @@ library(SEERaBomb)
 pm=simSeerSet()
 pm=mk2D(pm)
 pm$canc
-pm=csd(pm,brkst=c(0,5),brksy=c(1973,2000),brksa=c(0,50),trts=c("noRad","rad"))
+pm=csd(pm,brkst=c(0,5),brksy=c(1975,2000),brksa=c(0,50),trts=c("noRad","rad"))
 pm
 library(ggplot2)
 theme_set(theme_gray(base_size = 16)) 

@@ -2,7 +2,7 @@ mkAbomb<-function(AbombHome="~/data/abomb"){
   #   library(RSQLite)
   # gimic to get rid of unwanted notes in R CMD check
   marD=py=doseg=ovaD=tesD=uteD=g=NULL #seems to be OK with D and n coming from some global source: function names?
-  year=city=un4gy=ageG=DG=gdist=upy=subjects=NHL=tot=marg=marn=colD=histnos=NULL
+  year=city=un4gy=calg=ageG=DG=gdist=upy=subjects=NHL=tot=marg=marn=colD=histnos=NULL
 
   AbombHome=path.expand(AbombHome)
   outDB=file.path(AbombHome,"abomb.db") 
