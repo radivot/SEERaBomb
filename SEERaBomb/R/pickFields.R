@@ -33,6 +33,18 @@ pickFields<-function(sas,picks=c("casenum","reg","race","sex","agedx","yrbrth",
   if("primsite" %in% sas$names) sas["primsite","type"]="string"
   if("plcbrthcntry" %in% sas$names) sas["plcbrthcntry","type"]="string"
   if("plcbrthstate" %in% sas$names) sas["plcbrthstate","type"]="string"
+  #new block of 2016+ problems
+  if("tumsizs" %in% sas$names) sas["tumsizs","type"]="string"
+  if("dsrpsg" %in% sas$names) sas["dsrpsg","type"]="string"
+  if("dasrct" %in% sas$names) sas["dasrct","type"]="string"
+  if("dasrcn" %in% sas$names) sas["dasrcn","type"]="string"
+  if("dasrcm" %in% sas$names) sas["dasrcm","type"]="string"
+  if("dasrcts" %in% sas$names) sas["dasrcts","type"]="string"
+  if("dasrcns" %in% sas$names) sas["dasrcns","type"]="string"
+  if("dasrcms" %in% sas$names) sas["dasrcms","type"]="string"
+  if("tnmednum" %in% sas$names) sas["tnmednum","type"]="string"
+  if("metsdxln" %in% sas$names) sas["metsdxln","type"]="string"
+  if("metsdxo" %in% sas$names) sas["metsdxo","type"]="string"
   if (picks[1]=="casenum") outdf=sas[1,,drop=F] else  
     outdf=data.frame(start=1,width=sas$start[1]-1,names=" ",desc=" ",type="string")
   for (i in 2:N) 

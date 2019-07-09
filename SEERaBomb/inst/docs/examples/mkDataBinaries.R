@@ -29,7 +29,9 @@ mkSEER(rdf,outFile="cancStgs",writePops=F) #80 secs + 120 secs
 #thus not likely to be useful on a regular basis, but may be useful from a
 #computer programming perspective for checking out speed in the limit of using all fields.
 rdf=pickFields(df,picks=df$names)
-mkSEER(rdf,outFile="cancAll",writePops=F) #149 secs 
+#2016+ fields are crashing because they are not integers, this fixes it
+rdf=pickFields(df,picks=setdiff(df$names,c("tumsizs","dsrpsg","dasrct","dasrcn","dasrcm","dasrcts","dasrcns","dasrcms","tnmednum","metsdxln","metsdxo")))
+mkSEER(rdf,outFile="cancAll",writePops=F) #149 secs # runs out of memory now
 # making the SQL db was an additional  ~4 minutes. 
 
 # If you want to check to see what fields you have in a binary right now, you can do this
