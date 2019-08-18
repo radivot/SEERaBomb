@@ -10,7 +10,14 @@ i.e. you must obtain this extended dataset
 https://seer.cancer.gov/data/treatment.html
 by signing an additional SEER data use agreement.
 
-To set up SEER data use in R, unzip the custom radiation and chemotherapy ASCII text version of the SEER data into ~/data/SEER where ~ is your home directory.  SEER ASCII data in ~/data/SEER/incidence and ~/data/SEER/populations is then converted into an R binary file as follows<br>
+To set up SEER data use in R, unzip the custom radiation and chemotherapy ASCII text 
+version of the SEER data into ~/data/SEER where ~ is your home directory. 
+On a Mac ~ is /Users/username, on linux it is /home/username, 
+and in Windows ~ is /Users/username/Documents. 
+
+**CAUTION:** It is best to use ~/data as the root location of all data used by SEERaBomb.  
+
+SEER ASCII data in ~/data/SEER/incidence and ~/data/SEER/populations is then converted into an R binary file as follows<br>
 ```
 library(SEERaBomb)  #loads installed package SEERaBomb into memory 
 (df=getFields())    #gets SEER fields into a data frame
