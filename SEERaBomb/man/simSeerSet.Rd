@@ -2,7 +2,7 @@
 \alias{simSeerSet}
 \title{Simulate SEER cancers and population person years}
 \description{Simulates data for two cancers, A and B. }
-\usage{simSeerSet(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,
+\usage{simSeerSet(N=2e9,yearEnd=2016,ka=1e-5,kb=0.04,Ab=1e-5,
                  tauA=10,tauB=1,delay=1,period=4)} 
 \arguments{
   \item{N}{Number of person years to simulate. Default is roughly that of SEER. }

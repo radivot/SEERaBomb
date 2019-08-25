@@ -3,7 +3,7 @@
 \title{Make RR Excel file from csd output}
 \description{Provides relative risks (RR) organized by 1st and 2nd cancers, times since 1st cancer diagnoses, and 1st cancer treatment. RR = O/E where O = observed cases and E = cases expected under a null hypothesis that prior cancers do not impact subsequent risks. If flip = FALSE (default), sheets = 1st cancers and rows = 2nd cancers, else sheets = 2nd cancers and rows = 1st cancers; columns are always intervals of years since diagnosis, in 
 1st cancer treatment blocks. RR CI and observed numbers are included in each data cell.}
-\usage{mkExcelCsd(seerSet,tsdn,biny="[1973,2016)",bina="(0,126]",
+\usage{mkExcelCsd(seerSet,tsdn,biny="[1975,2017)",bina="(0,126]",
                         outDir="~/Results",outName=NULL,flip=FALSE)} 
 \arguments{
   \item{seerSet}{A seerSet list after it has been processed by csd().  }

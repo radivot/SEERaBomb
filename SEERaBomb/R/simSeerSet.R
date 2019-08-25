@@ -1,4 +1,4 @@
-simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,tauA=10,tauB=1,delay=1,period=4) {
+simSeerSet<-function(N=2e9,yearEnd=2016,ka=1e-5,kb=0.04,Ab=1e-5,tauA=10,tauB=1,delay=1,period=4) {
   #   agedx=age=age86=canc=yrdx=sex=race=surv=modx=yrbrth=NULL 
   trt=cancers=NULL 
   data(stdUS, envir = environment())
@@ -7,7 +7,7 @@ simSeerSet<-function(N=2e9,yearEnd=2012,ka=1e-5,kb=0.04,Ab=1e-5,tauA=10,tauB=1,d
   #     print("Warning: shape must be 1 or higher. It was less and is being set to 1. ")
   #   }
   #   N=2e9;yearEnd=2012;ka=1e-5;kb=0.04;Ab=1e-5;tauA=10;tauB=5;delay=1;period=4;shape=1;library(dplyr)
-  popsa=merge(data.frame(age=0.5:99.5),data.frame(year=1973:yearEnd))
+  popsa=merge(data.frame(age=0.5:99.5),data.frame(year=1975:yearEnd))
   popsa$py=N/40*SEERaBomb::stdUS$prop[round(popsa$age+0.5)]
   #   sum(popsa$py)
   head(popsa)

@@ -29,5 +29,16 @@ mkExcelTsd(m,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="males",flip=T)
 mkExcelTsd(f,"b0_0.5_1_2_3_10",outDir="~/Results/amlMDS",outName="females",flip=T)
 
 # test using csd instead of tsd
-mc=csd(m,brkst=c(0,0.5,1,2,3,10),trts=c("rad","noRad")) 
-mkExcelCsd(mc,"b0_0.5_1_2_3_10",biny="[1973,2016)",outDir="~/Results/amlMDS",outName="malesCsd") #out filenames are otherwise coded. 
+if(1) {
+  mc=csd(m,brkst=c(0,0.5,1,2,3,10),trts=c("rad","noRad")) 
+  fc=csd(f,brkst=c(0,0.5,1,2,3,10),trts=c("rad","noRad")) 
+  system.time(save(mc,fc,file="~/Results/amlMDS/mfExcelCSD.RData")) # 33 secs
+} else {
+  load("~/Results/amlMDS/mfExcelCSD.RData") 
+}
+mkExcelCsd(mc,"b0_0.5_1_2_3_10",biny="[1975,2017)",outDir="~/Results/amlMDS",outName="malesCsd") 
+mkExcelCsd(fc,"b0_0.5_1_2_3_10",biny="[1975,2017)",outDir="~/Results/amlMDS",outName="femalesCsd") 
+mkExcelCsd(mc,"b0_0.5_1_2_3_10",biny="[1975,2017)",outDir="~/Results/amlMDS",outName="malesCsd",flip=T) 
+mkExcelCsd(fc,"b0_0.5_1_2_3_10",biny="[1975,2017)",outDir="~/Results/amlMDS",outName="femalesCsd",flip=T) 
+
+
