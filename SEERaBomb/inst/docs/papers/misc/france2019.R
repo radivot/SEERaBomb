@@ -58,6 +58,7 @@ sm1=summary(m1)
 parms=row.names(cf)
 (str=str_c(parms," = ",m1[,1]," (",m1[,2],", ",m1[,3],"), P = ",P,collapse="; "))
 
+
 library(survminer);library(survival)
 ds=d%>%filter(yrdx>2001)
 Ds=simSurv(ds,mrt)
