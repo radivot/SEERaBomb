@@ -57,9 +57,15 @@ csd=function(seerSet,brkst=c(0),brksy=c(1975),brksa=c(0),trts=NULL,PYLong=FALSE,
   cat(paste("Current active series:",seerSet$active,"\n")) 
   print(seerSet$series) 
   seerSet$DF=getDF(seerSet)
-  seerSet$DF$trt=seerSet$DF$trt%>%str_replace_all("no","No ")
-  seerSet$DF=seerSet$DF%>%separate(trt,c("rad","chemo"),sep="[\\.]",fixed=T)
-  seerSet$DF=seerSet$DF%>%mutate_at(vars(rad:chemo),funs(str_to_title))
+  
+  #for off on trt being RS noRS SR or standard
+  if(any(str_detect(levels(seerSet$DF$trt),"rad"))) {
+    seerSet$DF$trt=seerSet$DF$trt%>%str_replace_all("no","No ")
+    # seerSet$DF=seerSet$DF%>%separate(trt,c("rad","chemo"),sep="[\\.]",fixed=T)
+    seerSet$DF=seerSet$DF%>%separate(trt,c("rad","chemo"),sep="[\\.]")
+    seerSet$DF=seerSet$DF%>%mutate_at(vars(rad:chemo),funs(str_to_title))
+  }
+  
   seerSet$DF$sex=seerSet$sex
   # seerSet=pf
   # dput(seerSet$DF$cancer2)
