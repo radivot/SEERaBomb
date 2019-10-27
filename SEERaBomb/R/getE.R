@@ -13,11 +13,12 @@ getE=function(LPYM,D,ageStart,ageEnd,yearEnd,firstS,secondS) {
   LPYM[["unknown"]]=LPYM[["unknown"]][,-c(1:26)]
   LPYM[["benign"]]=LPYM[["benign"]][,-c(1:29)] #benign starts in 2004
   LPYM[["LGL"]]=LPYM[["LGL"]][,-c(1:35)] #LGL starts in 2010
+  LPYM[["TNBC"]]=LPYM[["TNBC"]][,-c(1:35)] 
 #    secondS=names(EI)
   strt86=c("CMML")
   strt01=c("MDS","MPN","RARS","AMLti","unknown")
   strt04=c("benign")
-  strt10=c("LGL")
+  strt10=c("LGL","TNBC")
   (E=matrix(0,nrow=length(firstS),ncol=length(secondS),dimnames=list(firstCanc=firstS,secondCanc=secondS)))
   for (i in firstS) {   #i loop on first cancers
     PY=LPYM[[i]]

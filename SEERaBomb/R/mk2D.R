@@ -11,16 +11,17 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secon
     names(L2D)=secondS
     L2Dp=L2D; D=NULL; 
     knotsIn=knots
+    strt10=c("LGL","TNBC")
     for (i in secondS) {
       knots=knotsIn
       if (i=="ALL" & ageStart<15) knots=20   # make some knot numbers conditional, like this
       if (i=="otherCIS" & knots<10) knots=10   # 5 doesn't cut it for this, 10 does
       if (i=="liver" & knots<10) knots=10   # same here, to capture the cohort effect ripple
       if (i=="APL" & knots>5) knots=5   # here too many knots dive down too much into early calendary years of too few cases
-      if (i=="LGL" & knots>5) knots=3   # here too many knots dive down too much into early calendary years of too few cases
+      if ( i%in%strt10 & knots>5) knots=3  
       #the next if else deals with MDS and CMML starting only later. Not sure what other cancers are like this.
       # if (i=="MDS")  {d=canc%>%filter(cancer%in%i,year>2000)
-      if (i%in%c("LGL"))  {
+      if (i%in%strt10)  {
         d=canc%>%filter(cancer%in%i,year>2009)
         ps=popsa%>%filter(year>2009)
       } else 
@@ -44,7 +45,7 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secon
       X=left_join(ps,d)%>%mutate(incid=1e5*cases/py)
       X[is.na(X)]=0
       cat(knots," knots, working on cancer ",i,":\n")
-      if (i=="LGL") L2D[[i]]=gam(cases ~ s(age)+offset(log(py)),
+      if (i%in%strt10) L2D[[i]]=gam(cases ~ s(age)+offset(log(py)),
                                  family=poisson(),data=X,method="REML") else
                                    L2D[[i]]=gam(cases ~ s(age)+s(year)+ti(age,year,k=knots)+offset(log(py)),
                                                 family=poisson(),data=X,method="REML") 
