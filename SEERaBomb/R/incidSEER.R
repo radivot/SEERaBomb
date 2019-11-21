@@ -10,7 +10,7 @@ incidSEER=function(canc,popsae,cancers) {
   startYrs=c(CMML=1993,MDS=2001,NOS=2001,RA=2001,RAEB=2001,RARS=2001,Del5q=2001,LGL=2010)
   (startYrs=c(startYrs,MPN=2001,unknown=2001,AMLti=2001,LGL=2010))
   (outnms=setdiff(cancers,names(startYrs)))
-  x=rep(1973,length(outnms))
+  x=rep(1975,length(outnms))
   names(x)<-outnms
   (startYrs=c(startYrs,x))
   D=canc%>%select(cancer,sex,race,agedx,year=yrdx)%>%mutate(age=agedx+0.5)%>%filter(cancer%in%cancers)%>%select(-agedx)
