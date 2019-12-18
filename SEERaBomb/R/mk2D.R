@@ -11,7 +11,7 @@ mk2D<-function(seerSet, knots=5, write=FALSE, outDir="~/Results", txt=NULL,secon
     names(L2D)=secondS
     L2Dp=L2D; D=NULL; 
     knotsIn=knots
-    strt10=c("LGL","TNBC")
+    strt10=c("LGL","TNBC","LCH")
     for (i in secondS) {
       knots=knotsIn
       if (i=="ALL" & ageStart<15) knots=20   # make some knot numbers conditional, like this

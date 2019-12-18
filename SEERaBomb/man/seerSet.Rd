@@ -7,7 +7,7 @@ to a race and interval of ages at diagnosis. }
 \arguments{
   \item{canc}{Data frame of cancers that includes agedx, sex, race, yrdx, modx, surv and cancer. }
   \item{popsa}{Data frame of population PY at 1-year age resolution.  }
-  \item{Sex}{"male"  or "female". }
+  \item{Sex}{"Male"  or "Female". }
   \item{Race}{"white", "black", "other",  or "pooled" (default).}
   \item{ageStart,ageEnd}{canc and popsa will be reduced to ages in ageEnd>age>=ageStart.}
 }
