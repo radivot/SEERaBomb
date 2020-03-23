@@ -1,7 +1,7 @@
 Package: SEERaBomb
 Title: SEER and Atomic Bomb Survivor Data Analysis Tools
 Version: 2019.3
-Date: 2019-12-17
+Date: 2020-03-23
 Description: Creates SEER (Surveillance, Epidemiology and End Results) and 
     A-bomb data binaries from ASCII sources and provides tools for estimating
     SEER second cancer risks. Methods are described in <doi:10.1038/leu.2015.258>.

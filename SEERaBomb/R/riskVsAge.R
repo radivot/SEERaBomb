@@ -43,7 +43,7 @@ riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c
   d=rbind(PY0,PY12)
   
   D=NULL #will stack these 
-  yrs=1973:max(canc$yrdx); ages=0.5:125.5  # used to initiate PYM with zeros (need 1973 start for fillPYM)
+  yrs=1975:max(canc$yrdx); ages=0.5:125.5  # used to initiate PYM with zeros (need 1973 start for fillPYM)
   
   for (ii in c("Male","Female"))
     for (i in firstS)
