@@ -82,7 +82,8 @@ riskVsAge=function(canc,firstS=c("NHL","HL","MM"),secondS=c("AML","MDS"),brksa=c
   # D$trt=factor(D$trt,levels=c("Radiation","No Radiation"))
   D$trt=factor(D$trt) # flipped, rad is good, so take natural order
   D$ntrt=D$trt%>%str_replace_all("no","No ")
-  D=D%>%separate(ntrt,c("rad","chemo"),sep="[\\.]",fixed=T)
+  # D=D%>%separate(ntrt,c("rad","chemo"),sep="[\\.]",fixed=T)
+  D=D%>%separate(ntrt,c("rad","chemo"),sep="[\\.]")
   D=D%>%mutate_at(vars(rad:chemo),funs(str_to_title))
   D$cancer2=factor(D$cancer2)
   D$age=brksm[as.numeric(D$agec)] 
