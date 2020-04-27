@@ -8,7 +8,8 @@ devtools::install_github("radivot/SEERaBomb",subdir="SEERaBomb")
 **WARNING:** SEERaBomb does not work with SEER data that does not contain treatment information, 
 i.e. you must obtain this extended dataset 
 https://seer.cancer.gov/data/treatment.html
-by signing an additional SEER data use agreement.
+by signing an additional SEER data use agreement. For now, please continue to use 1975-2016 ASCII data, as 
+the new 1975-2017 dataset is not yet available in this much needed format. 
 
 To set up SEER data use in R, unzip the custom radiation and chemotherapy ASCII text 
 version of the SEER data into ~/data/SEER where ~ is your home directory. 
