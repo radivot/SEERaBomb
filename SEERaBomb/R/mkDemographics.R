@@ -1,6 +1,6 @@
 mkDemographics=function(canc,outDir="~/Results/SEERaBomb") {
   medianOS=te=hi=low=race=sex=age=agedx=year=cancer=trt=.=NULL
-  # require(survival)
+  # require(survival); require(openxlsx)
   medOS=function(X){
     d1=X%>%summarize(n=n())%>%mutate(prct=paste0(round(100*n/sum(n)),"%"))
     d2=X%>%do(te=summary(survfit(Surv(time=surv, event=COD!=0)~-1,data=.))$table[7:9])%>%mutate(medOS=te[[1]],low=te[[2]],hi=te[[3]])%>%
@@ -95,14 +95,20 @@ mkDemographics=function(canc,outDir="~/Results/SEERaBomb") {
     writeData(wb,"medOS", data.frame("Table 6. Median OS in Months vs. Year"),
                    startRow=1,startCol=8,colNames=F)
     writeData(wb, "medOS",OL[[icanc]][["OS"]][["year"]], startRow=2,startCol=8,headerStyle = hs1)
+
+    OL[[icanc]][["OS"]][["trt"]]=medOS(D%>%group_by(trt))
+    writeData(wb,"medOS", data.frame("Table 7. Median OS in Months vs. Treatment"),
+              startRow=14,startCol=8,colNames=F)
+    writeData(wb,"medOS", OL[[icanc]][["OS"]][["trt"]],  startRow=15,startCol=8,headerStyle = hs1)
     
+        
     OL[[icanc]][["OS"]][["age.year"]]=medOS(D%>%group_by(age,year))
-    writeData(wb,"medOS", data.frame("Table 7. Median OS in Months vs. Age vs. Year"),
-                   startRow=14,startCol=8,colNames=F)
-    writeData(wb,"medOS", OL[[icanc]][["OS"]][["age.year"]],  startRow=15,startCol=8,headerStyle = hs1)
+    writeData(wb,"medOS", data.frame("Table 8. Median OS in Months vs. Age vs. Year"),
+                   startRow=30,startCol=8,colNames=F)
+    writeData(wb,"medOS", OL[[icanc]][["OS"]][["age.year"]],  startRow=31,startCol=8,headerStyle = hs1)
     
     OL[[icanc]][["OS"]][["age.year.trt"]]=medOS(D%>%group_by(age,year,trt))
-    writeData(wb, "medOS",data.frame("Table 8. Median OS in Months vs. Age vs. Year, Trt"),
+    writeData(wb, "medOS",data.frame("Table 9. Median OS in Months vs. Age vs. Year, Trt"),
                    startRow=1,startCol=15,colNames=F)
     writeData(wb,"medOS", OL[[icanc]][["OS"]][["age.year.trt"]],startRow=2,startCol=15,headerStyle = hs1)
     
