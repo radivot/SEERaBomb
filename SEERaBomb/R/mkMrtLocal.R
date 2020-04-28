@@ -4,8 +4,8 @@ mkMrtLocal=function(country="USA",mrtHome="~/data/mrt",
                     ){
   Year=NULL
   # country="USA";mrtHome="~/data/mrt"
-  # mrtSrc1="~/data/hmd_statistics/death_rates/Mx_1x1"
-  # mrtSrc2="~/data/hmd_countries"
+  # mrtSrc1="~/data/hmd_countries"
+  # mrtSrc2="~/data/hmd_statistics/death_rates/Mx_1x1"
   mrtSrc1=path.expand(mrtSrc1)
   mrtSrc2=path.expand(mrtSrc2)
   f1<-file.path(mrtSrc1,country,"STATS","Mx_1x1.txt")
