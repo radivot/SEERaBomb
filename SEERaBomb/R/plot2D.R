@@ -9,7 +9,8 @@ plot2D<-function(seerSet, write=TRUE,outDir="~/Results/plots",col="red") {
       dir.create(outDir,recursive=TRUE)    }
     #     require(rgl)
     #     require(dplyr)
-    secondS=levels(D$cancer)
+    # secondS=levels(D$cancer)
+    secondS=unique(as.character(D$cancer))
     #     head(D,2)
     print("If rgl is being loaded for the first time in this R session, make the plot bigger and get a nice angle on it before hitting returns at the R command prompt.")
     for (i in secondS) {
