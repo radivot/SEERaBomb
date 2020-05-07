@@ -49,7 +49,8 @@ post1PYOc=function(canc,brkst=c(0),binIndxt=1,brksy=c(1973),binIndxy=1,brksa=c(0
   PY12=PY12%>%select(cancer1,cancer2,py,ageL,year)
   PYL=rbind(PY0,PY12)
   N=dim(PYL)[1]
-  binMidPnt=LL+sum(PYL$py)/N/2
+  if (N>0) binMidPnt=LL+sum(PYL$py)/N/2 else binMidPnt=LL
+  # binMidPnt=LL+sum(PYL$py)/N/2
   PYL=PYL%>%mutate(ageM=ageL+py/2) 
   PYA=PYL%>%group_by(cancer1)%>%summarize(n=n(),py=sum(py),age=mean(ageM),sig2=var(ageM))%>%mutate(t=LL + py/n/2)
   AgeO=D12%>%filter(cancer2%in%secondS)%>%group_by(cancer1,cancer2)%>%

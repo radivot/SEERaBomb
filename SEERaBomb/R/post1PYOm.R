@@ -13,7 +13,8 @@ post1PYOm=function(D,brks=c(0,2,5),binIndx=1,yearEnd) { survC=surv=agedx=py=year
   D=D%>%mutate(ageL=agedx+LL) 
   D$year=floor(D$yrdx+LL)
   D=D%>%select(py,ageL,year)
-  binMidPnt=LL+sum(D$py)/dim(D)[1]/2
+  if(dim(D)[1]==0) binMidPnt=LL else binMidPnt=LL+sum(D$py)/dim(D)[1]/2
+  # binMidPnt=LL+sum(D$py)/dim(D)[1]/2
   PYin=as.matrix(D)
   yrs=1975:yearEnd; ages=0.5:125.5  # this + next line = initiate PYM with zeros
   PYM=matrix(0,ncol=length(yrs),nrow=length(ages),dimnames=list(ages,yrs)) 

@@ -62,7 +62,8 @@ post1PYO=function(canc,brks=c(0,2,5),binIndx=1,Trt="rad",PYLong=FALSE,yearEnd,fi
   #   print(head(PYL))
   #   print(tail(PYL))
   N=dim(PYL)[1]
-  binMidPnt=LL+sum(PYL$py)/N/2
+  if (N>0) binMidPnt=LL+sum(PYL$py)/N/2 else binMidPnt=LL
+  # binMidPnt=LL+sum(PYL$py)/N/2
   PYL=PYL%>%mutate(ageM=ageL+py/2) 
   #   if (length(brks)==1) { # if length is 1, assume value is zero, i.e. all times t>0 are wanted together, so get Qs
   #     PYT=PYL%>%summarize(cases=n(),pyt=sum(py),mn=mean(py),Q2=median(py),Q1=quantile(py,0.25),Q3=quantile(py,0.75))
