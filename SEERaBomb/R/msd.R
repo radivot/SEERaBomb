@@ -32,16 +32,21 @@ msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (ms
       mids=vector(mode="numeric",length=0)
       Obs=vector(mode="numeric",length=0)
       Exp=vector(mode="numeric",length=0)
+      PY=vector(mode="numeric",length=0)
       for (bin in binS) 
       {
         binIndx=getBinInfo(bin,binS)["index"]
         L1=post1PYOm(d[[S]],brks,binIndx,yearEnd)
+        PY[bin]=sum(L1$PYM) 
         Exp[bin]=sum(L1$PYM*mrt[[S]]) 
         Obs[bin]=L1$O
         mids[bin]=L1$binMidPnt
       } # loop on tsx bins
-      D=data.frame(int=factor(names(mids)),t=mids,O=Obs,E=Exp)
-      D=D%>%mutate(RR=O/E,
+      D=data.frame(int=factor(names(mids)),t=mids,O=Obs,E=Exp,PY)
+      D=D%>%mutate(EAR=(O-E)/PY,
+                   LL=EAR-1.96*sqrt(O)/PY,
+                   UL=EAR+1.96*sqrt(O)/PY,
+                   RR=O/E,
                    rrL=qchisq(.025,2*O)/(2*E),
                    rrU=qchisq(.975,2*O+2)/(2*E),sex=S)
       DD=rbind(DD,D)
