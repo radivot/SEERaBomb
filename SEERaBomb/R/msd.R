@@ -1,7 +1,7 @@
 msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (msd)
   yrdx=Years=start=yearInt=stop=NULL
   msd2=function(canc,mrt,brks){ #old version
-    surv=sex=O=E=NULL
+    surv=sex=O=E=EAR=NULL
     # yearEnd=ceiling(max(canc$yrdx+canc$surv))
     yearEnd=max(as.numeric(colnames(mrt$Female)))
     canc=canc%>%filter(surv<200) # restrict to known survival times

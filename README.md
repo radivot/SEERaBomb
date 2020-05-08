@@ -57,7 +57,7 @@ mkMrtLocal() #converts files in ~/data/hmd_countries/USA into ~/data/mrt/mrtUSA.
 
 To check the installation run 
 ```
-load("~/data/mrt/mrtUSA.RData")  #loads R binary created by mkMortLocal() 
+load("~/data/mrt/mrtUSA.RData")  #loads R binary created by mkMrtLocal() 
 head(mrt$Female)   #shows first 5 years of female mortality rates 1933-2015
 ```
 

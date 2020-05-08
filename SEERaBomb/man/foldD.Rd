@@ -9,7 +9,7 @@
 }
 \value{Tibble with new summed observed and expected cases, and new EAR and RR with CI for each interval. }
 \author{Tom Radivoyevitch (radivot@ccf.org)}
-\seealso{\code{\link{SEERaBomb-package}, \link{msd},\link{mkMortLocal}} }
+\seealso{\code{\link{SEERaBomb-package}, \link{msd},\link{mkMrtLocal}} }
 
 \examples{
 \dontrun{
