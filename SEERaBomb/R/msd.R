@@ -42,7 +42,7 @@ msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (ms
         Obs[bin]=L1$O
         mids[bin]=L1$binMidPnt
       } # loop on tsx bins
-      D=data.frame(int=factor(names(mids)),t=mids,O=Obs,E=Exp,PY)
+      D=data.frame(int=forcats::as_factor(names(mids)),t=mids,O=Obs,E=Exp,PY)
       D=D%>%mutate(EAR=(O-E)/PY,
                    LL=EAR-1.96*sqrt(O)/PY,
                    UL=EAR+1.96*sqrt(O)/PY,
