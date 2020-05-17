@@ -9,10 +9,12 @@ Authors@R: c(person("Tomas", "Radivoyevitch", role = c("aut", "cre"),
                      email = "radivot@ccf.org"),
               person("R.", "Molenaar", role = "ctb",
                      email = "r.j.molenaar@amc.uva.nl"))
-Depends: dplyr, ggplot2, rgl, demography 
+Depends: dplyr, ggplot2, rgl 
 Suggests:  bbmle
 License: GPL (>= 2)
-Imports: Rcpp (>= 0.11.3), reshape2, mgcv, tibble, LaF, DBI, RSQLite, openxlsx, WriteXLS, labelled, scales, forcats, purrr,readr, tidyr, stringr, plyr, survival
+Imports: Rcpp (>= 0.11.3),demography,   
+         reshape2, mgcv, tibble, LaF, DBI, RSQLite, openxlsx, WriteXLS, 
+         labelled, scales, forcats, purrr,readr, tidyr, stringr, plyr, survival
 LinkingTo: Rcpp
 LazyData: yes
 URL: http://epbi-radivot.cwru.edu/SEERaBomb/SEERaBomb.html

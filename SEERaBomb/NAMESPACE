@@ -1,20 +1,24 @@
 useDynLib(SEERaBomb, .registration = TRUE)
 #import(dbplyr)  ## too many warnings, so let user of mkSEER figure out to install this
+#import(data.table)  ## depends
 import(dplyr)  ## depends
 import(ggplot2)  ## depends
+import(rgl)  ## depends
 #import(tibble)  ## depends
-import(demography)  ## depends
+#import(demography)  ## depends
 #import(LaF,RSQLite,rgl,XLConnect) ## needed less critically but for too many functions to list
 import(LaF,RSQLite,rgl,openxlsx,labelled) ## needed less critically but for too many functions to list
 importFrom(Rcpp, evalCpp)
+importFrom(demography, hmd.mx)
 importFrom(survival, survfit,Surv)
+#importFrom(data.table, as.data.table,=)  # didn't fly
 importFrom(DBI, dbDriver)
 importFrom(mgcv, gam,s,ti)
 importFrom(plyr, ldply)
 importFrom(WriteXLS, WriteXLS)
 importFrom(reshape2, melt, acast,dcast)
 importFrom(scales, comma_format)
-importFrom(forcats, as_factor)
+importFrom(forcats, as_factor,fct_collapse)
 importFrom(purrr, map,pmap)
 importFrom(readr, read_table)
 importFrom(tidyr, separate,gather,spread,unnest)
