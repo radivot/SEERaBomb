@@ -70,5 +70,5 @@ msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (ms
     D=D%>%tidyr::unite(Years,start:stop,sep="-")
     D$Years=as_factor(D$Years)
   } else D=msd2(canc,mrt,brkst)
-  as_tibble(D)  
+  as_tibble(D)%>%filter(E>0)  
 }
