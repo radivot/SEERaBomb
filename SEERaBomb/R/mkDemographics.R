@@ -4,7 +4,7 @@ mkDemographics=function(canc,outDir="~/Results/SEERaBomb") {
   medOS=function(X){
     d1=X%>%summarize(n=n())%>%mutate(prct=paste0(round(100*n/sum(n)),"%"))
     d2=X%>%do(te=summary(survfit(Surv(time=surv, event=COD!=0)~-1,data=.))$table[7:9])%>%mutate(medOS=te[[1]],low=te[[2]],hi=te[[3]])%>%
-      mutate(medianOS=paste0("  ",medOS," (95% CI ",low,", ",hi,")"))
+      mutate(medianOS=paste0("  ",round(medOS,2)," (95% CI ",round(low,2),", ",round(hi,2),")"))
     bind_cols(d1,d2%>%select(medianOS))
   }
   
