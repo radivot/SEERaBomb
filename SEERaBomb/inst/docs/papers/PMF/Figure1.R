@@ -1,11 +1,18 @@
-##### intermediate granularity mesh
-source("pmf/setup.R")  
+##### Figure1.R (makes Figure 1)
+graphics.off();rm(list=ls())#clear plots and environment
+library(tidyverse)
 library(mgcv)
+library(rgl)
 load("pmf/data/maxRes.RData")  # run mkMaxRes.R to create this
 (D=m%>%select(s=sex,a,t,O:PY)%>%arrange(s,a,t))
 Dm=D%>%filter(s=="Male")
 Df=D%>%filter(s=="Female")
-n=8
+n=8 # numbers of bins in t & a. 
+# If n = 8 is increased, the highest age-at-diagnosis x time since diagnosis
+# group will be empty for females, which throws a warning for the background
+# surface plot.
+
+
 foldBins=function(m) {
   m=m%>%mutate(tg=cut(t,breaks=quantile(t,seq(0,1,1/n)),include.lowest = T))
   m=m%>%mutate(ag=cut(a,breaks=quantile(a,seq(0,1,1/n)),include.lowest = T))
@@ -36,6 +43,7 @@ bf5 <- gam(O ~ s(a) + s(t) +ti(a,t)+ offset(log(PY)),family = poisson(),data=Df)
 AIC(bfa,bfsa,bft,bfat,bfast,bf4,bf5)%>%rownames_to_column%>%mutate(dAIC=AIC-min(AIC))    
 BIC(bfa,bfsa,bft,bfat,bfast,bf4,bf5)%>%rownames_to_column%>%mutate(dBIC=BIC-min(BIC))    
 bf=bfa # use BIC to avoid over fitting
+save(bm,bf,file="pmf/data/models.RDA")
 
 times=seq(0,10,0.5) #go to 11 for females to avoid axis label overlap
 ages=seq(40,90,5)
@@ -50,6 +58,7 @@ Dm$e=exp(predict(bm,newdata=Dm))
 dpm$e=exp(predict(bm,newdata=dpm)) 
 Df$e=exp(predict(bf,newdata=Df)) 
 dpf$e=exp(predict(bf,newdata=dpf)) 
+save(Dm,dpm,Df,dpf,file="pmf/data/Ddp.RDA")
 
 clear3d(type="lights")
 light3d(theta = -90, phi = 75) 
@@ -62,6 +71,4 @@ light3d(theta = -90, phi = 75)
 with(Df,plot3d(a,t,incid,xlab="",ylab="",zlab="",col="violet",radius=.5,type="s")) 
 with(dpf,surface3d(x=ages,y=times,z=matrix(log10(e/PY),ncol=nt,byrow=TRUE),alpha=0.6,col="red")) 
 with(Df,surface3d(x=a[1:n],y=t[seq(1,n*n,n)],z=matrix(log10(E/PY),ncol=n,byrow=F),alpha=0.8,col="yellow")) 
-save(bm,bf,file="pmf/data/models.RDA")
-save(Dm,dpm,Df,dpf,file="pmf/data/Ddp.RDA")
 

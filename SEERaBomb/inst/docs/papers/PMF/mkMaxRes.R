@@ -1,5 +1,8 @@
 #####  aggregate deaths into Max Resolution bins (i.e. only equivalent deaths stacks)
-source("pmf/setup.R")  
+graphics.off();rm(list=ls())#clear plots and environment
+library(tidyverse);library(SEERaBomb)
+load("pmf/data/d.RData") # made in demog.R
+load("~/data/mrt/mrtUSA.RData")#loads US mortality data
 (d=d%>%select(yrdx,agedx,sex,surv,status))
 D=d%>%group_by(sex)%>%nest()
 D$data[[1]]

@@ -1,4 +1,7 @@
 graphics.off();rm(list=ls())#clear plots and environment
+library(tidyverse)
+library(SEERaBomb)
+library(mgcv)
 # # https://www.census.gov/2010census/xls/fips_codes_website.xls
 # # library(gdata)
 # # sc=read.xls("pmf/data/fips_codes_website.xls")
@@ -35,9 +38,6 @@ Dm$e=exp(predict(bm,newdata=Dm))
 Df$e=exp(predict(bf,newdata=Df)) 
 D=bind_rows(Dm,Df)
 
-library(tidyverse)
-library(SEERaBomb)
-library(mgcv)
 
 getOE=function(DD) {
   DD=DD%>%group_by(reg,stcnty)%>%summarize(O=sum(O),E=sum(e),RR=O/E)

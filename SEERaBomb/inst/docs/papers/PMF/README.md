@@ -1,0 +1,5 @@
+### Generalized Additive Model Visualization of Primary Myelofibrosis Mortality 
+These scripts recreate Figure 1 and Table 1.  Begin with mkAllFields.R. Uncomment the commented block to create SEER binaries (from ASCII SEER data) and allfields2019.RData. Now run demog.R  to create PMF data frames with fewer fields and demographics in excel sheets. Next, use mkMaxRes.R to create maxRes.RData wherein deaths are partitioned into bins that preserve resolution as much as possible given ages are in years and survival is in months. These mortalities are then binned into 8x8 (O, PY) matrices and fitted to GAMs in Figure1.R.  Table1.R uses models saved by Figure1.R to produce Table 1 and the Louisiana State result.  Commented code chunks in Table1.R need to be uncommented and run once to create  binaries. One of these (d7.Rdata) is used by demogCheese.R to create an optional demographics table using the R package cheese.  The script pltMaxRes.R optionally yields 3-D rotatable views of the data in maxRes.RData.
+
+
+

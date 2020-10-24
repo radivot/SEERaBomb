@@ -3,6 +3,11 @@ library(tidyverse);library(SEERaBomb)
 library(writexl)
 (df=getFields("~/data/SEER")) # this doesn't fly in windows since ~ maps to /users/radivot/documents
 write_xlsx(df,path="pmf/outs/fieldDefs2019.xlsx") # key to big file above
+# picks=c("casenum","reg","race","sex","agedx",
+#         "yrbrth","seqnum","modx","yrdx","histo3",
+#         "ICD9","primsite","COD","surv","radiatn","chemo")
+# (rdf=pickFields(df,picks))
+# mkSEER(rdf,outFile="cancPrim",writePops=F) 
 # rdf=pickFields(df,picks=df$names)
 # mkSEER(rdf,outFile="cancAll",writePops=F) #149 secs # runs out of mem (fixed via more virt memory)
 # system.time(load("~/data/SEER/mrgd/cancALL.RData")) # which takes ~65 secs

@@ -1,5 +1,7 @@
-source("pmf/setup.R")  
+graphics.off();rm(list=ls())#clear plots and environment
+library(tidyverse)
 library(mgcv)
+library(rgl)
 load("pmf/data/maxRes.RData")
 m
 (D=m%>%select(s=sex,a,t,O:PY)%>%arrange(s,a,t))
