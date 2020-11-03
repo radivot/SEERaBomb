@@ -5,7 +5,7 @@ In 4442 SEER PMF cases diagnosed in 1/1/2001 to 12/31/2016, 2713 deaths were obs
 
 ![](../docs/pmfFigure1.png)
 
-The GAMs in Figure 1 can also be used to estimate expected numbers of deaths in a PMF cohort had members instead been typical/average US PMF patients with the same s, t, and a aggregate PY distribution. Applying then to individual SEER registry PMF cohorts, mortality was highest in Louisiana with 149 PMF deaths observed (O) and 112.6 expected (E) (P=0.001, Poisson test). No other registry’s O/E ratio differed significantly from 1, i.e. was below or above average.  
+The GAMs in Figure 1 can also be used to estimate expected numbers of deaths in a PMF cohort had members instead been typical/average US PMF patients with the same s, t, and a aggregate PY distribution. Applying them to individual SEER registry PMF cohorts, mortality was highest in Louisiana with 149 PMF deaths observed (O) and 112.6 expected (E) (P=0.001, Poisson test). No other registry’s O/E ratio differed significantly from 1, i.e. was below or above average.  
 
 Division of O by PY yields raw mortalities (data points in Figure 1), division of E by PY yields mortalities smoothened by neighboring mortality values (surfaces in Figure 1), and division of total O by total E normalizes total O not only for cohort differences in sizes and follow-up (as division by total PY does) but also PY differences in s, t, and a. Viewing total E as an adjusted form of Poisson process time (as doubling it roughly doubles events) yields P values for O/E differing from 1, e.g. P = 0.001 above for 149/112.6. 
 
