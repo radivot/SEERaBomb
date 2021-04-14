@@ -3,11 +3,12 @@ useDynLib(SEERaBomb, .registration = TRUE)
 #import(data.table)  ## depends
 import(dplyr)  ## depends
 import(ggplot2)  ## depends
-import(rgl)  ## depends
+#import(rgl)  ## depends
 #import(tibble)  ## depends
 #import(demography)  ## depends
 #import(LaF,RSQLite,rgl,XLConnect) ## needed less critically but for too many functions to list
-import(LaF,RSQLite,rgl,openxlsx,labelled) ## needed less critically but for too many functions to list
+#import(LaF,RSQLite,rgl,openxlsx,labelled) ## needed less critically but for too many functions to list
+import(LaF,RSQLite,openxlsx,labelled) ## needed less critically but for too many functions to list
 importFrom(Rcpp, evalCpp)
 importFrom(demography, hmd.mx)
 importFrom(survival, survfit,Surv)

@@ -16,4 +16,5 @@ BuildType: Package
 PackageUseDevtools: Yes
 PackagePath: SEERaBomb
 PackageInstallArgs: --no-multiarch --with-keep.source
+PackageBuildBinaryArgs: '--no-lock'
 PackageCheckArgs: --as-cran

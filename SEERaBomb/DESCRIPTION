@@ -1,7 +1,7 @@
 Package: SEERaBomb
 Title: SEER and Atomic Bomb Survivor Data Analysis Tools
-Version: 2019.3
-Date: 2020-05-08
+Version: 2019.4
+Date: 2021-4-12
 Description: Creates SEER (Surveillance, Epidemiology and End Results) and 
     A-bomb data binaries from ASCII sources and provides tools for estimating
     SEER second cancer risks. Methods are described in <doi:10.1038/leu.2015.258>.
@@ -9,7 +9,7 @@ Authors@R: c(person("Tomas", "Radivoyevitch", role = c("aut", "cre"),
                      email = "radivot@ccf.org"),
               person("R.", "Molenaar", role = "ctb",
                      email = "r.j.molenaar@amc.uva.nl"))
-Depends: dplyr, ggplot2, rgl 
+Depends: dplyr, ggplot2 
 Suggests:  bbmle
 License: GPL (>= 2)
 Imports: Rcpp (>= 0.11.3),demography,   
