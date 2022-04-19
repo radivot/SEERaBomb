@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // fillPYM
 NumericMatrix fillPYM(SEXP PYin, SEXP PYM);
 RcppExport SEXP _SEERaBomb_fillPYM(SEXP PYinSEXP, SEXP PYMSEXP) {
