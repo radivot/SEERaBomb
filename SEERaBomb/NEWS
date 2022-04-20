@@ -1,3 +1,19 @@
+CHANGES IN VERSION 2019.5 (Fifth version since SEER release of April 2019)
+------------------------
+
+    o Commented a line in mkMrtLocal.R that needed yearly updating otherwise. This line 
+    trimmed the mortality final year to match the SEER final year. It seems it is no longer needed
+    and was problematic when not kept up, perhaps via zero mortalities decreasing E and thus increasing O/E.
+    
+    o Added dependence on R >=3.5 to remove a build warning  
+
+
+CHANGES IN VERSION 2019.4 (Fourth version since SEER release of April 2019)
+------------------------
+
+    o removed rgl dependence, giving up 2D plots 
+    
+
 CHANGES IN VERSION 2019.3 (Third version since SEER release of April 2019)
 ------------------------
 
