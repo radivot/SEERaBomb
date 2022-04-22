@@ -112,21 +112,3 @@ mapCancsP<-function(D){
   D$cancer=as.factor(cancer)
   D
 }  
-
-# 314 760   C76.0-Head, face or neck, NOS                               
-# 315 761   C76.1-Thorax, NOS                                           
-# 316 762   C76.2-Abdomen, NOS                                          
-# 317 763   C76.3-Pelvis, NOS                                           
-# 318 764   C76.4-Upper limb, NOS                                       
-# 319 765   C76.5-Lower limb, NOS                                       
-# 320 767   C76.7-Other ill-defined sites                               
-# 321 768   C76.8-Overlapping lesion of ill-defined sites               
-# 322 770   C77.0-Lymph nodes of head, face & neck                      
-# 323 771   C77.1-Intrathoracic lymph nodes                             
-# 324 772   C77.2-Intra-abdominal lymph nodes                           
-# 325 773   C77.3-Lymph nodes of axilla or arm                          
-# 326 774   C77.4-Lymph nodes of inguinal region or leg                 
-# 327 775   C77.5-Pelvic lymph nodes                                    
-# 328 778   C77.8-Lymph nodes of multiple regions                       
-# 329 779   C77.9-Lymph node, NOS                                       
-# 330 809   C80.9-Unknown primary site     
