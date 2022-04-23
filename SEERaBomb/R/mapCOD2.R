@@ -1,7 +1,6 @@
 mapCOD2<-function(D){
   COD=D$COD #start with vec of integers. Map to a vec of Strings
-  # CODS=rep("other",length(COD)) 
-  CODS=rep("other",dim(D)[1]) #set default to "other" type of death
+  CODS=rep("unknown",dim(D)[1]) #set default to "unknown" type of death
   CODS[COD==0]="alive"
   CODS[(COD>=1)&(COD<=10)]="oral"
   CODS[COD==11]="esophagus"
@@ -63,10 +62,11 @@ mapCOD2<-function(D){
   CODS[COD==184]="renFail"
   CODS[COD%in%c(187,193)]="birthing"
   CODS[COD==190]="congenDef"
-  CODS[COD%in%c(196,208)]="other"  #Symptoms, Signs and Ill-Defined Conditions +Other 
+  CODS[COD==196]="illDef"  #Symptoms, Signs and Ill-Defined Conditions 
   CODS[COD==199]="accidents"
   CODS[COD==202]="suicide"
   CODS[COD==205]="homocide"
+  CODS[COD==208]="other"  
   # CODS[COD==24000]="HnN"  # lost Head and Neck cancer just like in Cancer definitions
   CODS[COD==252]="unknown"
   D$CODS=as.factor(CODS)
