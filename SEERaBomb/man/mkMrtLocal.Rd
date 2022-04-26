@@ -1,7 +1,7 @@
 \name{mkMrtLocal}
 \alias{mkMrtLocal}
 \title{Make mortality binaries from local HMD data files}
-\description{Converts locally installed Human Mortality Data \url{http://www.mortality.org/} into an R binary file
+\description{Converts locally installed Human Mortality Data \url{https://www.mortality.org/} into an R binary file
  \file{mrtCOUNTRY.RData}.}
 \usage{mkMrtLocal(country="USA",mrtHome="~/data/mrt",
                     mrtSrc1="~/data/hmd_countries",

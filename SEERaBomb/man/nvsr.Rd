@@ -34,7 +34,7 @@ head(nvsr)
 
 \references{
 National Vital Statistics Reports, Vol. 63, No. 7, November 6, 2014
-\url{http://www.cdc.gov/nchs/data/nvsr/nvsr63/nvsr63_07.pdf}
+\url{https://www.cdc.gov/nchs/data/nvsr/nvsr63/nvsr63_07.pdf}
 }
 
 \keyword{datasets}

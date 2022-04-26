@@ -1,4 +1,4 @@
-msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (msd)
+msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL,yearStart=1975){ #mortality since diagnosis (msd)
   yrdx=Years=start=yearInt=stop=E=int=NULL
   msd2=function(canc,mrt,brks){ #old version
     surv=sex=O=E=EAR=NULL
@@ -17,8 +17,8 @@ msd=function(canc,mrt,brkst=c(0,2,5),brksy=NULL){ #mortality since diagnosis (ms
     mrtM=mrt$Male
     mrtM=rbind(mrtM,sapply(mrtM[nages,],function(x) rep(x,nfill)))
     rownames(mrtM)=0:125
-    mrtM=mrtM[,as.character(1975:yearEnd)]
-    mrtF=mrtF[,as.character(1975:yearEnd)]
+    mrtM=mrtM[,as.character(yearStart:yearEnd)]
+    mrtF=mrtF[,as.character(yearStart:yearEnd)]
     mrt=list(Male=mrtM,Female=mrtF)
     pts=c(Male=dim(dm)[1],Female=dim(df)[1],total=dim(dm)[1]+dim(df)[1])
     events=c(Male=sum(dm$status),Female=sum(df$status),Total=sum(dm$status)+sum(df$status))

@@ -1,7 +1,7 @@
 \name{mkMrt}
 \alias{mkMrt}
 \title{Make mortality binaries}
-\description{Gets mortality data from the Human Mortality Database \url{http://www.mortality.org/} 
+\description{Gets mortality data from the Human Mortality Database \url{https://www.mortality.org/} 
 and puts it in the file \file{mrt.RData}.}
 \usage{ mkMrt(username,passwd,country="USA",mrtHome="~/data/usMort")}
 

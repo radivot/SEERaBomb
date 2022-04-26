@@ -32,7 +32,7 @@ stdUS\%>\%filter(age>=85)\%>\%summarize(weighted.mean(age,w=pop))
 }  
 
 \references{
-\url{http://seer.cancer.gov/stdpopulations/}
+\url{https://seer.cancer.gov/stdpopulations/}
 }
 
 
