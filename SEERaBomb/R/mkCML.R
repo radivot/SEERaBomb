@@ -16,12 +16,12 @@ mkCML<-function(seerHome="~/data/seer25",inDir="csvs",inFiles=c("s8.txt",
   # Radiation_recode
   # Chemotherapy_recode_yes_no_unk
 
-  # seerHome="~/data/seer25";inDir="csvs";infiles=c("s8.txt","s12.txt","s17.txt");outFile="cml.RData"
-  # vars=c("id","agedx","sex","race","yrdx","who","histo3","surv","COD","rad","chemo")  
-  
+  # seerHome="~/data/seer25";inDir="csvs";inFiles=c("s8.txt","s12.txt","s17.txt");outFile="cml.RData"
+  # vars=c("id","agedx","sex","race","yrdx","who","histo3","surv","COD","rad","chemo")
+
   # require(dplyr)
-  # require(readr) 
-  # require(forcats) 
+  # require(readr)
+  # require(forcats)
   # outDir="mrgd";outFile="cancDef";writePops=T;writeRData=TRUE;writeDB=TRUE  # for debugging
   # indices = list(c("sex","race"), "histo2", "histo3", "ICD9")
   
@@ -88,6 +88,6 @@ mkCML<-function(seerHome="~/data/seer25",inDir="csvs",inFiles=c("s8.txt",
   d=d%>%select(-seqnum,-COD,-who,-id,-race,-histo3,-rad,-chemo) # zap what is not  needed, else 40 secs to save all cancs
   # system.time(save(d,file="~/data/seer25/s25.RData")) #15 secs to save all cancers if you want them
   head(d<-d%>%filter(cancer%in%c("CML"))%>%select(-cancer)) # else save only CML data
-  system.time(save(d,file=file.path(seerHome,outFile))) #0.03 secs  33,541 CML cases
+  save(d,file=file.path(seerHome,outFile)) #0.03 secs  33,541 CML cases
 }
  
