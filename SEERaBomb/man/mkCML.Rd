@@ -18,8 +18,8 @@
 \value{None, it produces an R binary file of the SEER data.}
 
 %\note{.}
-\author{ Tom Radivoyevitch (\email{radivot@ccf.org}) }
-\seealso{\code{\link{SEERaBomb-package},\link{getFields},\link{pickFields}} }
+\author{Tom Radivoyevitch (\email{radivot@gmail.com}) }
+\seealso{\code{\link{SEERaBomb-package},\link{mkSEER}} }
 \examples{
 \dontrun{
 library(SEERaBomb)

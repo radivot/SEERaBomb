@@ -26,7 +26,7 @@ mkCML<-function(seerHome="~/data/seer25",inDir="csvs",inFiles=c("s8.txt",
   # indices = list(c("sex","race"), "histo2", "histo3", "ICD9")
   
   # gimmick to get rid of unwanted notes in R CMD check
-  sex=agedx=histo3=surv=yrdx=rad=chemo=cancer=seqnum=who=race=cancerW=NULL
+  id=sex=agedx=histo3=surv=yrdx=rad=chemo=cancer=seqnum=who=race=cancerW=NULL
   L=NULL
   for (i in 1:3) {
     L[[i]]=readr::read_csv(file.path(seerHome,inDir, inFiles[i]), col_names=vars,skip=1) 
