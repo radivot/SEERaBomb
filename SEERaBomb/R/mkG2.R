@@ -1,41 +1,38 @@
-mkG2<-function(seerHome="~/data/seer25",inDir="csvs",inFiles=c("cod4.txt","pops.txt"),
-               outFiles=c("Glc.RData","Goc.RData","Gac.RData"),
-               meanAgeFile="~/data/mrt/Ages.RData",
-               vars=c("sex","age","COD","year","num"),
-               popVars=c("sex","age","year","denom")){
+mkG2<-function(seerHome="~/data/seer25",
+               inFile="seerMrt.RData",
+               outFiles=c("Glc.RData","Goc.RData","Gac.RData")){
 
-  # Go into SEER*stat and use the mortality data to make the inFiles, e.g.
-  # [Format=COD4]    ### in cod4.dic
-  # 0=All Causes of Death
-  # 1="    Lymphoma"
-  # 2="    Myeloma"
-  # 3="    Leukemia"
-
-  # seerHome="~/data/seer25";inDir="csvs"
-  # inFiles=c("cod4.txt","pops.txt")
+  # Use mkSEERmrt() to make inFile and note in code therein that
+  # 66="    Lymphoma"
+  # 67="      Hodgkin Lymphoma"
+  # 68="      Non-Hodgkin Lymphoma"
+  # 69="    Myeloma"
+  # 70="    Leukemia"   ## in cod111.dic
+  
+  # seerHome="~/data/seer25"
+  # inFile="seerMrt.RData"
   # outFiles=c("Glc.RData","Goc.RData","Gac.RData")
-  # meanAgeFile="~/data/mrt/Ages.RData"
-  # vars=c("sex","age","COD","year","num")
-  # popVars=c("sex","age","year","denom")
   # require(dplyr)
   # require(forcats)
   # require(mgcv)
   # require(rgl)
   # require(purrr)
-  COD=num=denom=year=sex=Ages=age=rate=W=NULL
+  d=COD=num=denom=year=sex=Ages=age=rate=W=NULL
   
-  b=readr::read_csv(file.path(seerHome,inDir, inFiles[1]), col_names=vars,skip=1) 
-  p=readr::read_csv(file.path(seerHome,inDir, inFiles[2]), col_names=popVars,skip=1) 
-  b=b|>dplyr::filter(COD==0|COD==3)
-  d=dplyr::left_join(b,p)
-  (d=d|>mutate(rate=num/denom,year=year+1975,sex=ifelse(sex==0,"Male","Female")))
-  tail(d)
-  #load Ages, a list of two sexes of age-year matrices of PY-weighted 5-year bin age-group midpoints 
-  load(meanAgeFile) # made in mrtAges.R
-  getAge=function(age,year,sex) Ages[[sex]][[as.character(age),as.character(year)]]
-  (d=d%>%mutate(age=pmap_dbl(list(age,year,sex),getAge))) #update ages to set up Poisson regressions
+  # b=readr::read_csv(file.path(seerHome,inDir, inFiles[1]), col_names=vars,skip=1) 
+  # p=readr::read_csv(file.path(seerHome,inDir, inFiles[2]), col_names=popVars,skip=1) 
+  # b=b|>dplyr::filter(COD==0|COD==3)
+  # d=dplyr::left_join(b,p)
+  # (d=d|>mutate(rate=num/denom,year=year+1975,sex=ifelse(sex==0,"Male","Female")))
+  # tail(d)
+  # #load Ages, a list of two sexes of age-year matrices of PY-weighted 5-year bin age-group midpoints 
+  # load(meanAgeFile) # made in mrtAges.R
+  # getAge=function(age,year,sex) Ages[[sex]][[as.character(age),as.character(year)]]
+  # (d=d%>%mutate(age=pmap_dbl(list(age,year,sex),getAge))) #update ages to set up Poisson regressions
+  load(file.path(seerHome,inFile)) # get d with dims 219,520 × 7
   (da=d%>%filter(COD==0)%>%mutate(COD="AC")%>%select(-rate))
-  (dl=d%>%filter(COD>0)%>%mutate(COD="LC")%>%select(-rate))
+  # (dl=d%>%filter(COD>0)%>%mutate(COD="LC")%>%select(-rate))
+  (dl=d%>%filter(COD==70)%>%mutate(COD="LC")%>%select(-rate))
   (dl=dl%>%group_by(COD,sex,age,year,denom)%>%summarize(num=sum(num),.groups="drop"))
   sum(dl$num) # 994475 checks with total US leukemia deaths in 1969-2023
   (da=da[,names(dl)]%>%arrange(sex,age,year))
