@@ -1,4 +1,4 @@
-mkG2<-function(seerHome="~/data/seer25",
+mkG2<-function(seerHome="~/data/seer26",
                inFile="seerMrt.RData",
                outFiles=c("Glc.RData","Goc.RData","Gac.RData")){
 
@@ -9,7 +9,7 @@ mkG2<-function(seerHome="~/data/seer25",
   # 69="    Myeloma"
   # 70="    Leukemia"   ## in cod111.dic
   
-  # seerHome="~/data/seer25"
+  # seerHome="~/data/seer26"
   # inFile="seerMrt.RData"
   # outFiles=c("Glc.RData","Goc.RData","Gac.RData")
   # require(dplyr)
@@ -17,7 +17,7 @@ mkG2<-function(seerHome="~/data/seer25",
   # require(mgcv)
   # require(rgl)
   # require(purrr)
-  d=COD=num=denom=year=sex=Ages=age=rate=W=NULL
+  d=COD=num=denom=year=sex=Ages=age=ageMid=a20=rate=rate2=W=NULL
   
   # b=readr::read_csv(file.path(seerHome,inDir, inFiles[1]), col_names=vars,skip=1) 
   # p=readr::read_csv(file.path(seerHome,inDir, inFiles[2]), col_names=popVars,skip=1) 
@@ -29,13 +29,13 @@ mkG2<-function(seerHome="~/data/seer25",
   # load(meanAgeFile) # made in mrtAges.R
   # getAge=function(age,year,sex) Ages[[sex]][[as.character(age),as.character(year)]]
   # (d=d%>%mutate(age=pmap_dbl(list(age,year,sex),getAge))) #update ages to set up Poisson regressions
-  load(file.path(seerHome,inFile)) # get d with dims 219,520 × 7
-  (da=d%>%filter(COD==0)%>%mutate(COD="AC")%>%select(-rate))
-  # (dl=d%>%filter(COD>0)%>%mutate(COD="LC")%>%select(-rate))
-  (dl=d%>%filter(COD==70)%>%mutate(COD="LC")%>%select(-rate))
-  (dl=dl%>%group_by(COD,sex,age,year,denom)%>%summarize(num=sum(num),.groups="drop"))
-  sum(dl$num) # 994475 checks with total US leukemia deaths in 1969-2023
-  (da=da[,names(dl)]%>%arrange(sex,age,year))
+  load(file.path(seerHome,inFile)) # get d with dims 336k × 7
+  (d=d|>select(-rate,-rate2,-a20,-ageMid)) #drop rates since pois reg
+  (da=d|>filter(COD==0)|>mutate(COD="AC"))
+  (dl=d%>%filter(COD==70)%>%mutate(COD="LC")) 
+  # (dl=dl%>%group_by(COD,sex,age,year,denom)%>%summarize(num=sum(num),.groups="drop")) #70 is already all leukemias, so no need
+  dl|>filter(sex=="Both")|>summarize(n=sum(num)) # 1018378 = 1M total US leukemia deaths in 1975-2024
+  # (da=da[,names(dl)]%>%arrange(sex,age,year))  #already ordered the same
   (do=da%>%mutate(COD="OC",num=num-dl$num))
   
   D=dl

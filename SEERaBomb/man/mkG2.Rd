@@ -2,7 +2,7 @@
 \alias{mkG2}
 \title{ Make 2D GAM of SEER Mortality Data for 2 Causes of Death, Leukemic vs Other}
 \description{Converts mortality rates in 5-year age groups into mgcv GAM fits.}
-\usage{mkG2(seerHome="~/data/seer25",inFile="seerMrt.RData",
+\usage{mkG2(seerHome="~/data/seer26",inFile="seerMrt.RData",
                outFiles=c("Glc.RData","Goc.RData","Gac.RData"))}
 
 \arguments{

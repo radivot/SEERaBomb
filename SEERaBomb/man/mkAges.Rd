@@ -10,7 +10,7 @@
 }
 
 \details{Defaults assume "~/data/mrt/mrtUSA.RData" was already made by SEERaBomb::mkMrtLocal()}
-\value{None, it produces a file of mean ages, e.g. "~/data/mrt/agesUSA.RData".}
+\value{None, it produces a file of mean ages, e.g. "~/data/mrt/ages.RData".}
 
 %\note{.}
 \author{ Tom Radivoyevitch (\email{radivot@gmail.com}) }
@@ -18,7 +18,7 @@
 \examples{
 \dontrun{
 library(SEERaBomb)
-mkSEER(seerHome="~/data/seer25")  #for SEER data released in the Spring of 2025
+mkAges()  
 }
 }
 \keyword{IO}

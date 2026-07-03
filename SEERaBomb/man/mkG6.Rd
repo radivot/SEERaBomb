@@ -2,7 +2,7 @@
 \alias{mkG6}
 \title{ Make 2D GAM of SEER Mortality Data for 6 Causes of Death}
 \description{Converts mortality rates in 5-year age groups into mgcv GAM fits.}
-\usage{mkG6(seerHome="~/data/seer25",inFile="seerMrt.RData",outFile="G6.RData")}
+\usage{mkG6(seerHome="~/data/seer26",inFile="seerMrt.RData",outFile="G6.RData")}
 
 \arguments{
   \item{seerHome}{The SEER data directory that contains \file{inFile}.}

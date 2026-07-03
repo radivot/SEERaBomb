@@ -3,6 +3,8 @@ mkMrtLocal=function(country="USA",mrtHome="~/data/mrt",
                     mrtSrc2="~/data/hmd_statistics/death_rates/Mx_1x1"
                     ){
   Year=NULL
+  # library(readr)
+  # library(tidyr)
   # country="USA";mrtHome="~/data/mrt"
   # mrtSrc1="~/data/hmd_countries"
   # mrtSrc2="~/data/hmd_statistics/death_rates/Mx_1x1"
@@ -21,8 +23,10 @@ mkMrtLocal=function(country="USA",mrtHome="~/data/mrt",
   # X$Female=as.numeric(X$Female)
   F=X[,1:3]
   M=X[,c(1:2,4)]
+  B=X[,c(1:2,5)]
   names(M)[3]="rate"
   names(F)[3]="rate"
+  names(B)[3]="rate"
   spreadit=function(M) {
     M=spread(M,key=Year,value="rate")
     M$Age=NULL
@@ -32,9 +36,11 @@ mkMrtLocal=function(country="USA",mrtHome="~/data/mrt",
   }
   M=spreadit(M)
   F=spreadit(F)
+  B=spreadit(B)
   mrt=NULL
   mrt$Female=F
   mrt$Male=M
+  mrt$Both=B
   
   mrtHome=path.expand(mrtHome)
   if(!dir.exists(mrtHome)) dir.create(mrtHome,recursive=T)
