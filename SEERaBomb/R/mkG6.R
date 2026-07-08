@@ -25,29 +25,45 @@ mkG6<-function(seerHome="~/data/seer26",
   tits=NULL
   
   dl=d|>filter(COD==70)|>mutate(COD="LC")
+  (dl=dl%>%group_by(COD,year,age,sex,denom)%>%summarize(num=sum(num),.groups="drop")) # need this to order it same as below
   (L[["LC"]]=dl)
   tits["LC"]="Leukemic Cause"
 
-  (dc=d|>filter(COD%in%c(2:69,83:84))|>mutate(COD="NLC")) # 84 = benign included, 83 unknown primary but also MF et al
-  (L[["NLC"]]=dc|>group_by(COD,sex,year,age,denom)|>summarize(num=sum(num),.groups="drop")) #210k rows => 3k rows
-  tits["NLC"]="Non Leukemic Cancer"
+  dc=d|>filter(COD%in%c(1,84))|>mutate(COD="CA") # 84 = benign included,
+  # dc=d|>filter(COD%in%c(1))|>mutate(COD="CA") # 84 = benign included,
+  (dc=dc%>%group_by(COD,year,age,sex,denom)%>%summarize(num=sum(num),.groups="drop"))
+  dc=dc%>%mutate(num=num-dl$num)  #and LC removed
+  # dc|>arrange(COD,year,age,sex)  # looks ok
+  # dl|>arrange(COD,year,age,sex)  # looks ok
+  # # # (L[["CA"]]=dc)
+  # # # tits["CA"]="Cancer"
+  # (x=dc|>filter(num<0))  # getting some negative, not clear why, so just grab the cancer groups one by one below
+  # # dc1|>filter(year==1976,age<1)
+  # # dl|>filter(year==1976,age<1)
+  # dc=d|>filter(COD%in%c(2,13,30,36:38,41:42,51,56,61:63,66,69,83:84))|>mutate(COD="CA") # 84 = benign included, 83 unknown primary but also MF et al
+  # # dc=d|>filter(COD%in%c(2,13,30,36:38,41:42,51,56,61:63,66,69,83))|>mutate(COD="CA") # 84 = benign included, 83 unknown primary but also MF et al
+  # dc2=dc|>group_by(COD,sex,year,age,denom)|>summarize(num=sum(num),.groups="drop") #210k rows => 3k rows
+  # dc2|>arrange(COD,year,age,sex)  # looks ok
+  L[["CA"]]=dc
+  tits["CA"]="Cancer"
+  # x=dc|>filter(num<0)
   
   (di=d|>filter(COD%in%c(85:89,98,110))|>mutate(COD="IN")) #INfections TB, syph, hiv, septicemia, parasites 98=flu, 110=covid
-  (L[["IN"]]=di|>group_by(COD,sex,year,age,denom)|>summarize(num=sum(num),.groups="drop")) # 21k => 3k
+  (L[["IN"]]=di|>group_by(COD,year,age,sex,denom)|>summarize(num=sum(num),.groups="drop")) # 21k => 3k
   tits["IN"]="Infection"
   
   (dv=d|>filter(COD%in%c(92:97))|>mutate(COD="CV"))
   #92=heart disease, 93=#Hypertension without Heart Disease, 94=Cerebrovascular Diseases 
   # 95 = Atherosclerosis; 96 = Aortic Aneurysm 97 = OD 
-  (L[["CV"]]=dv|>group_by(COD,sex,year,age,denom)|>summarize(num=sum(num),.groups="drop")) # 18k to 3k
+  (L[["CV"]]=dv|>group_by(COD,year,age,sex,denom)|>summarize(num=sum(num),.groups="drop")) # 18k to 3k
   tits["CV"]="Cardio and Vascular"
   
   (dk=d|>filter(COD%in%c(90,102))|>mutate(COD="DK"))  #90=DM,  # 102 = kidney disease
-  (L[["DK"]]=dk|>group_by(COD,sex,year,age,denom)|>summarize(num=sum(num),.groups="drop"))
+  (L[["DK"]]=dk|>group_by(COD,year,age,sex,denom)|>summarize(num=sum(num),.groups="drop"))
   tits["DK"]="DM & Kidney Disease"
   
   dash=d|>filter(COD%in%c(107:109))|>mutate(COD="ASH") #accidents, suicides and homocides
-  (L[["ASH"]]=dash|>group_by(COD,sex,year,age,denom)|>summarize(num=sum(num),.groups="drop"))
+  (L[["ASH"]]=dash|>group_by(COD,year,age,sex,denom)|>summarize(num=sum(num),.groups="drop"))
   tits["ASH"]="Accidents, Suicides and Homocides"
   
   do=d|>filter(COD%in%c(91,99:101,103:106,111))|>mutate(COD="YOC") #yet other causes
@@ -55,7 +71,7 @@ mkG6<-function(seerHome="~/data/seer26",
   # 101= liver disease
   #add perinatal and ulcers to ill-defined conditions and other causes of death 
   # do=d%>%filter(COD%in%c(106,111)) #ill-defined conditions and other causes of death 
-  (L[["YOC"]]=do%>%group_by(COD,year,sex,age,denom)%>%summarize(num=sum(num),.groups="drop"))
+  (L[["YOC"]]=do%>%group_by(COD,year,age,sex,denom)%>%summarize(num=sum(num),.groups="drop"))
   tits["YOC"]="Yet Other Causes"
   (nms=names(L))
   G=vector(mode="list",length=length(L))
@@ -70,7 +86,7 @@ mkG6<-function(seerHome="~/data/seer26",
     D$sex=as_factor(D$sex)
     (Df=D%>%filter(year<2020)) # data for fitting
     print(summary(G[[i]]<-gam(num ~ sex+s(age,year,by=sex)+ti(age,year)+offset(log(denom)),family=poisson(),data=Df)))
-    # D$E=exp(predict(G[[i]],D))
+    # D$E=exp(predict(G[[i]],D))  # with rgl not working right, code below is no longer a useful check
     # head(D<-D%>%mutate(Eincid=E/denom))
     # head(D<-D%>%mutate(incid=num/denom))
     # head(D<-D%>%mutate(incid=if_else(incid==0,0.0001,incid)))
@@ -91,7 +107,7 @@ mkG6<-function(seerHome="~/data/seer26",
     # surface3d(Years,Ages,log10(M),col="red",alpha=0.5) # M for Matrix
     # M=reshape2::acast(nD%>%filter(sex=="Male")%>%select(year,age,E), year~age, value.var="E")
     # surface3d(Years,Ages,log10(M),col="blue",alpha=0.5)
-    # light3d(theta = 0, phi = 75) 
+    # light3d(theta = 0, phi = 75)
     # bgplot3d({
     #   plot.new()
     #   title(main = paste0(i), line = 0,cex.main=1)
@@ -103,16 +119,16 @@ mkG6<-function(seerHome="~/data/seer26",
  
 
 # US mort defs in the sas file
-# 0 = "All Causes of Death"
-# 1 = "  All Malignant Cancers"   # all cancers
-# 2 = "    Oral Cavity and Pharynx"
-# 3 = "      Lip"
-# 4 = "      Tongue"
-# 5 = "      Salivary Gland"
-# 6 = "      Floor of Mouth"
-# 7 = "      Gum and Other Mouth"
-# 8 = "      Nasopharynx"
-# 9 = "      Tonsil"
+#  0 = "All Causes of Death"
+#  1 = "  All Malignant Cancers"   # all cancers
+#  2 = "    Oral Cavity and Pharynx"
+#  3 = "      Lip"
+#  4 = "      Tongue"
+#  5 = "      Salivary Gland"
+#  6 = "      Floor of Mouth"
+#  7 = "      Gum and Other Mouth"
+#  8 = "      Nasopharynx"
+#  9 = "      Tonsil"
 # 10 = "      Oropharynx"
 # 11 = "      Hypopharynx"
 # 12 = "      Other Oral Cavity and Pharynx"
@@ -203,15 +219,15 @@ mkG6<-function(seerHome="~/data/seer26",
 # 97 = "  Other Diseases of Arteries, Arterioles, Capillaries"
 # 98 = "  Pneumonia and Influenza"
 # 99 = "  Chronic Obstructive Pulmonary Disease and Allied Cond"
-# 100 = "  Stomach and Duodenal Ulcers"
-# 101 = "  Chronic Liver Disease and Cirrhosis"
-# 102 = "  Nephritis, Nephrotic Syndrome and Nephrosis"
-# 103 = "  Complications of Pregnancy, Childbirth, Puerperium"
-# 104 = "  Congenital Anomalies"
-# 105 = "  Certain Conditions Originating in Perinatal Period"
-# 106 = "  Symptoms, Signs and Ill-Defined Conditions"
-# 107 = "  Accidents and Adverse Effects"
-# 108 = "  Suicide and Self-Inflicted Injury"
-# 109 = "  Homicide and Legal Intervention"
-# 110 = "  COVID-19 (2020+)"
-# 111 = "  Other Cause of Death"
+#100 = "  Stomach and Duodenal Ulcers"
+#101 = "  Chronic Liver Disease and Cirrhosis"
+#102 = "  Nephritis, Nephrotic Syndrome and Nephrosis"
+#103 = "  Complications of Pregnancy, Childbirth, Puerperium"
+#104 = "  Congenital Anomalies"
+#105 = "  Certain Conditions Originating in Perinatal Period"
+#106 = "  Symptoms, Signs and Ill-Defined Conditions"
+#107 = "  Accidents and Adverse Effects"
+#108 = "  Suicide and Self-Inflicted Injury"
+#109 = "  Homicide and Legal Intervention"
+#110 = "  COVID-19 (2020+)"
+#111 = "  Other Cause of Death"
